@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER",'9.0.5');
+define("ELikjVER",'9.0.6');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -1286,6 +1286,7 @@ class ELimemsql{
 //Captcha
 function ELivcode($sizes='1',$code="0123456789",$shu =4,$width=100,$height=50,$zadian=100,$xiaos = 6){
     ob_clean();
+    $GLOBALS['head'] = "png";
     if(!defined("Residentmemory")){
         header("Content-type: image/png");
     }
@@ -1313,6 +1314,7 @@ function ELivcode($sizes='1',$code="0123456789",$shu =4,$width=100,$height=50,$z
     $zhufu = explode(',',$ELiConfig['vcode']);
     $shu *=2;
     $zzzz = rand(30,60);
+    
     if (class_exists('Imagick')) {
         $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
         $image = new Imagick();
@@ -2032,6 +2034,22 @@ function apptoken( $data = array() ,  $code = '0' , $msg = '' , $apptoken = '',$
     }
     return json_encode($zhuju);
 }
+
+if( !function_exists( "tiaozhuan")) {
+    function tiaozhuan($eangzhan = ""){
+        if(isset($GLOBALS['isend']) && $GLOBALS['isend']){
+            return true;
+        }
+        if(!defined("Residentmemory")){
+            
+            header('HTTP/1.1 301 Moved Permanently');
+            header("Location: ".$eangzhan); 
+            exit();
+        }
+        $GLOBALS['isend'] = true;
+        return true;
+    }
+}
 //echo json communication
 if( !function_exists( "echoapptoken")) {
     function echoapptoken( $data = array() ,  $code = '0' , $msg = '' , $apptoken = '',$kuozan = []){
@@ -2132,7 +2150,7 @@ $ELiConfig = array(
     'urlpath'=>'0', // url 模式
     'Composer'=>0,//Composer 启用
     'whitelist'=>'admin',//白名单不用判断插件开关
-    'iscms'=>1,//只使用cms
+    'iscms'=>0,//只使用cms
     'object'=>'cms',//默认控制器
     'behavior'=> 'index',//默认行为
     'superior'=> '2',

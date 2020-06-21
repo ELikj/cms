@@ -18,7 +18,7 @@
     Residentmemory 启用 常驻内存服务
 */
 //腾讯云函数计算 需要改造接受数据
-define("Residentmemory",true);
+define("Residentmemory","tencent");
 define("ELiTempPath","/tmp/");
 define( 'WWW', dirname(__FILE__).'/');
 
@@ -88,7 +88,7 @@ function main_handler($request, $context){
     ob_clean();
     global $ELiConfig,$ELiHttp,$ELiDataBase,$ELiMem, $ELiMemsession,$SESSIONID,
     $LANG,$CANSHU,$features,$URI,$Composer,$HTTP,$YHTTP,$Plus,$ClassFunc,$REQUEST,$SESSIONIDMK,$POSTBODY;
-    
+    $GLOBALS['head'] = "json";
     $_POST = []; 
     $_GET = [];
     $_FILES = [];
@@ -114,7 +114,19 @@ function main_handler($request, $context){
             $_COOKIE[trim($k)] = trim($v);
         }
     }
-    $ELiHttp = ltrim( urldecode( trim($path)),'/');
+ 
+
+    if(strstr($ELiHttp,'Tpl/') !== false  && strstr($ELiHttp,'.php') === false ){
+       
+        return [
+            "isBase64Encoded"=>true,
+            "statusCode"=> 200,
+            "headers"=>[ "Access-Control-Allow-Origin"=>"*" ],
+            "body" => base64_encode(file_get_contents('./'.$ELiHttp))
+        ];
+    }
+
+
     //POST Security filtering
     if( $_POST ){
         if( strstr( strtolower( json_encode( $_POST)), DBprefix ) !== false ){
@@ -223,5 +235,26 @@ function main_handler($request, $context){
     }
     ELicall($Plus,$ClassFunc,$CANSHU,$features,false );
     $hhh = ob_get_contents();
-    return json_decode($hhh,true);
+    if($GLOBALS['head'] == "html"){
+        $Content = "text/html; charset=UTF-8;";
+    }else if($GLOBALS['head'] == "png"){
+        $Content = "image/png";
+    }else{
+        $Content = "application/json;charset=UTF-8";
+    }
+    $SHUJUXX = [
+        "isBase64Encoded"=>true,
+        "statusCode"=> 200,
+        "headers"=>[ "Content-Type"=>$Content,"Access-Control-Allow-Origin"=>"*" ],
+        "body" => base64_encode($hhh)
+    ];
+
+    if($SESSIONIDMK&& $ELiConfig['sessionSafety']){
+        $SHUJUXX["headers"]["Set-Cookie"] = "apptoken=".$SESSIONID;
+    }
+
+    if($GLOBALS['head']){
+        unset($GLOBALS['head']);
+    }
+    return   $SHUJUXX;
 }

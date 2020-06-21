@@ -131,6 +131,7 @@ function upload(){
         return  array( 'code' => 1 , 'content' =>  array( 'pic' => $returnfile,'size' => $file_size,'houzui' => $file_ext) );
     }else  return  array( 'code'=> 0, 'msg' => $LANG['update']['meiwenjian']);
 }
+
 function parse_raw_http_request($input, $CONTENT_TYPE )
 {
   preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
@@ -247,7 +248,7 @@ function handler($request, $context): Response{
     }
 
 
-    $ELiHttp = ltrim( urldecode( trim($path)),'/');
+
     
     if(strstr($ELiHttp,'Tpl/') !== false  && strstr($ELiHttp,'.php') === false ){
 

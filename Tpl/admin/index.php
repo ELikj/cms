@@ -1,7 +1,7 @@
 <?php if( !defined( 'ELikj')){
     exit( 'Error ELikj'); 
 }
-
+$GLOBALS['head'] = "html";
 /*
 window.ATEST = ["第 1 个属性","第 2 个属性","第 3 个属性","第 4 个属性","第 5 个属性"];
 window.UIMUI = Array();
