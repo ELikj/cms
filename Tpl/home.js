@@ -311,7 +311,8 @@ ELi['home'] = {
     apptongxin( PLUG+'hometongji'+FENGE+TOKEN+FENGE+'get' ,{},function(data){
 
       if(data.code == 99){
-        loadjs("login");
+        window.location.href='?';
+        //loadjs("login");
         return ;
       }
       console.log(data);
