@@ -379,14 +379,14 @@ function handler($request, $context): Response{
     if($hhh && $hhh != ""){
         return new Response(
             200,
-            ($SESSIONIDMK && $ELiConfig['sessionSafety'] ?["Set-Cookie" =>"HttpOnly;apptoken=".$SESSIONID,"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            ($SESSIONIDMK && $ELiConfig['sessionSafety'] ?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly","Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
             ,
             $hhh 
         );
     }else{
         return new Response(
             200,
-            ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"HttpOnly;apptoken=".$SESSIONID,"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly","Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
             ,
 
             

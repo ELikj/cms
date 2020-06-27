@@ -251,7 +251,7 @@ function main_handler($request, $context){
     ];
 
     if($SESSIONIDMK&& $ELiConfig['sessionSafety']){
-        $SHUJUXX["headers"]["Set-Cookie"] = "HttpOnly;apptoken=".$SESSIONID;
+        $SHUJUXX["headers"]["Set-Cookie"] = "apptoken=".$SESSIONID.";HttpOnly";
     }
 
     if($GLOBALS['head']){
