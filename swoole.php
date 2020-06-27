@@ -64,7 +64,9 @@ $http->on("request", function ($request, $response) {
     }
 
    
-    if(strstr($ELiConfig['host'],'://'.$request->header['host']) === false){
+    $_SERVER["HTTP_USER_AGENT"] = $request->header['user-agent'];
+    
+    if(strstr($ELiConfig['host'],'://'.$request->header['host']) === false  ){
         $response-> redirect($ELiConfig['host'],301);
         return "";
     }
@@ -132,7 +134,7 @@ $http->on("request", function ($request, $response) {
         $SESSIONID = md5(rand(1,9999999).microtime()).md5( rand(1,9999999).sha1( microtime()));
     }
     if( $SESSIONIDMK && $ELiConfig['sessionSafety']){
-        $response -> cookie('apptoken', $SESSIONID ,  time() + $ELiConfig['sessiontime'] ,'/');
+        $response -> cookie('apptoken', $SESSIONID ,  time() + $ELiConfig['sessiontime'] ,'/' ,null,null,TRUE );
     }
 
     if( strstr( $ELiHttp , $ELiConfig['houzui'].'&') !== false ){

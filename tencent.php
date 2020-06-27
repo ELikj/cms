@@ -88,6 +88,7 @@ function main_handler($request, $context){
     ob_clean();
     global $ELiConfig,$ELiHttp,$ELiDataBase,$ELiMem, $ELiMemsession,$SESSIONID,
     $LANG,$CANSHU,$features,$URI,$Composer,$HTTP,$YHTTP,$Plus,$ClassFunc,$REQUEST,$SESSIONIDMK,$POSTBODY;
+    $ELiMem= $ELiMemsession =new ELimemsql;
     $GLOBALS['head'] = "json";
     $_POST = []; 
     $_GET = [];
@@ -250,7 +251,7 @@ function main_handler($request, $context){
     ];
 
     if($SESSIONIDMK&& $ELiConfig['sessionSafety']){
-        $SHUJUXX["headers"]["Set-Cookie"] = "apptoken=".$SESSIONID;
+        $SHUJUXX["headers"]["Set-Cookie"] = "HttpOnly;apptoken=".$SESSIONID;
     }
 
     if($GLOBALS['head']){
