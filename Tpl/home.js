@@ -147,8 +147,7 @@ ELi['home'] = {
     ELi['home'].xuancaidan();
     layui.element.render();
 
-  },
-  xuanadmin() {
+  }, xuanadmin() {
     $("#username").html(ELi.DATA.user.admininame);
     $("#quanxianzu").html(ELi.DATA.user.admingroupsname);
     $("#quite").click(function () {
@@ -158,7 +157,7 @@ ELi['home'] = {
         if (data.token && data.token != "") {
           TOKEN = data.token;
         }
-
+       
 
         loadjs("login");
 
@@ -310,6 +309,12 @@ ELi['home'] = {
   },tongji(){
 
     apptongxin( PLUG+'hometongji'+FENGE+TOKEN+FENGE+'get' ,{},function(data){
+
+      if(data.code == 99){
+        loadjs("login");
+        return ;
+      }
+      console.log(data);
 
 /** [TABLE_NAME] => ELi_admin
             [TABLE_COMMENT] => 管理员
