@@ -315,7 +315,7 @@ ELi['home'] = {
         //loadjs("login");
         return ;
       }
-      console.log(data);
+     
 
 /** [TABLE_NAME] => ELi_admin
             [TABLE_COMMENT] => 管理员
