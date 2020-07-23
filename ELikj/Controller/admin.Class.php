@@ -20,11 +20,44 @@ class ELikj_admin{
     //pluginurl
     public  $plugin = "admin";
 
-    function ceshi(){
-        $shuju = ["x"=>time(),"xxx"=>time()];
-       $fan = ELipost("https://service-l6kf0yf4-1302319787.gz.apigw.tencentcs.com/release/elikj/456456/456456", ($shuju));
-        p(json_decode($fan));
+    function makejs($CANSHU,$features){
+
         
+        if(! ELihhGet('adminid')){
+            return echoapptoken([],-1,"login","");
+        }   
+        $table = trim($CANSHU['0']??"");
+        if($table != ""){
+
+            global $ELiConfig,$ELiDataBase;
+            $db = db($table);
+        
+            $DATA = $db ->qurey("select * from information_schema.columns where table_schema='".ELiSecurity($ELiDataBase[$ELiConfig['dbselect']]['database'])."' and table_name ='".$db->biao()."';","erwei");
+            if($DATA){
+                $hh = [];
+                foreach($DATA as $shuju){
+                    $hh[$shuju['COLUMN_NAME']] = "'".$shuju['COLUMN_NAME']."($$)".$shuju['COLUMN_COMMENT']."($$)text($$)($$)".$shuju['COLUMN_COMMENT']."($$)' + D.".$shuju['COLUMN_NAME'];
+
+                }
+                $hhbv = [];
+                $jsson = [];
+                foreach($db->tablejg['1'] as $k =>$v){
+                    if($v != "auto_increment"){
+                        $hhbv[] = $hh[$k];
+                        $jxi = explode("_",$v);
+                        $jsson[$k] =end($jxi );
+                    }
+                    
+                }
+                echo "<pre>";
+                echo  implode(",\n",$hhbv);
+                echo "\n";
+                echo json_encode( $jsson);
+                echo "</pre>";
+            }
+        }
+
+       
     }
 
     function quite($CANSHU,$features){
@@ -65,6 +98,8 @@ class ELikj_admin{
                 $i++;
             }
         }
+        
+       
         $_SESSION = ELihhGet();
         if( !isset($_SESSION['adminid']) || $_SESSION['adminid'] < 1 ){
             $_SESSION['token'] =  (uuid());
@@ -329,7 +364,7 @@ class ELikj_admin{
                 } 
             }
            
-            ELitpl($this -> plugin,$ClassFunc,$this);
+           return ELitpl($this -> plugin,$ClassFunc,$this);
             //$this ->$ClassFunc($CANSHU,$features);
         } catch (\Throwable $th) {
             return echoapptoken([],-1,$th->getmessage());

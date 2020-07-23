@@ -23,6 +23,7 @@ use OSS\OssClient;
 define("Residentmemory",true);
 define("ELiTempPath","/tmp/");
 define( 'WWW', dirname(__FILE__).'/');
+
 function aliyundel($xxx){
     $ossClient = new OssClient('idd','密码', 'oss-cn-hangzhou.aliyuncs.com');
     try {
@@ -106,8 +107,53 @@ function upload(){
         if( strpos( strtolower($tmpneirong), '<?php') !== false){
             return  array( 'code'=> 0, 'msg' => $LANG['update']['meiwenjian']);
         }
+        if( strpos( substr($tmpneirong,0,50), ';base64,') !== false   ){
+            $nnn = explode(';base64,',$tmpneirong);
+            $tmpneirong = base64_decode($nnn['1']);
+        }
 
         $CDN = '';
+
+        /*
+
+        $CDN = '';
+        $APID = "idd";
+        $APKY = "密码";
+
+        $NEIRONG = $tmpneirong ;
+        $duankou = "chongchongzhengba";
+        $cmd5 = base64_encode(md5($NEIRONG, true));
+        $shijia = gmdate('D, d M Y H:i:s \G\M\T',time());
+        $REST   = 'PUT';
+        $LUJIN = $returnfile;
+        $request_url = "http://chongchongzhengba.oss-cn-hangzhou.aliyuncs.com";
+        $string_to_sign =  $REST."\n".
+            $cmd5."\n" .
+            "application/octet-stream\n" .
+            $shijia."\n" .
+            "/".trim( $duankou ,'/').'/'.trim($LUJIN,'/');
+        $qianm = base64_encode(hash_hmac('sha1', $string_to_sign,  $APKY, true));
+        $temp_headers = array( 
+            'Content-MD5: '.$cmd5,
+            'Content-Type: application/octet-stream',
+            'Authorization: OSS '.$APID.':'.($qianm),
+            'Date: '.$shijia,
+            'Host: chongchongzhengba.oss-cn-hangzhou.aliyuncs.com',
+            'Content-Length: '.strlen($NEIRONG)
+        );
+        $fan = ELipost($request_url.$LUJIN,$NEIRONG,[
+            CURLOPT_HTTPHEADER =>$temp_headers,
+            CURLOPT_USERAGENT=>"RequestCore/1.4.3",
+            CURLOPT_CUSTOMREQUEST=>"PUT"
+        ]);
+
+
+        if($fan != ""){
+            return  array( 'code'=> 0, 'msg' => $LANG['update']['meiwenjian']);
+        }
+        
+        
+        */
 
 
         
@@ -192,6 +238,27 @@ function parse_raw_http_request($input, $CONTENT_TYPE )
   }        
 }
 
+
+function tiaozhuan($eangzhan = ""){
+    global $REQUEST;
+    if(isset($GLOBALS['isend']) && $GLOBALS['isend']){
+        return ;
+    }
+   
+    $GLOBALS['isend'] = true;
+    return new Response(
+        301,
+        [
+            "Access-Control-Allow-Origin"=>"*",
+            "Location"=>$eangzhan
+        ]
+        ,
+        ""
+    );
+}
+
+
+
 include "index.php";
 $GLOBALS['isend'] = false;
 function handler($request, $context): Response{
@@ -210,6 +277,11 @@ function handler($request, $context): Response{
     $POSTBODY = $body = $request->getBody()->getContents();
     $queries    = $request->getQueryParams();
     $headers    = $request->getHeaders();
+    $GLOBALS['header']=[];
+    foreach($headers as $k =>$v){
+        $GLOBALS['header'][ strtolower($k )] = $v;
+    }
+    
 
 
     if(strstr($ELiConfig['host'],'://'.$headers['host']) === false){
@@ -384,6 +456,12 @@ function handler($request, $context): Response{
             $hhh 
         );
     }else{
+
+        if($GLOBALS['isend']){
+        
+            return "";
+        }
+        
         return new Response(
             200,
             ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly","Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])

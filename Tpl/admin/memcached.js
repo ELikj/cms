@@ -128,7 +128,7 @@ ELi['admin/memcached'] = {
     get() {
         $("#LAY_app_body ." + $class).html('<style> .' + $class + ' .qfys0{color:#FF5722;} .' + $class + ' .qfys1{color:#009688;}.' + $class + ' .qfys2{color:green;}.' + $class + ' .qfys3{color:#1E9FFF;}</style><div class="layui-fluid"><div class="layui-card"><div class="layui-card-body" style="padding: 15px;">'
             +
-            '<div class="' + $class + 'saixuan" style="display:none;margin-bottom:8px;"><form name="form" class="layui-form"> <div class="layui-inline" style="width:188px;"><input class="layui-input so_var" name="so_name" placeholder="缓存名字" autocomplete="off"> </div> <input class="layui-input so_var"  value="shuaxin" name="so_shuaxin" type="hidden" autocomplete="off"> <button class="layui-btn" lay-event="sousuo" lay-submit lay-filter="tijiao' + $class + '">搜索</button></form> </div>'
+            '<div class="' + $class + 'saixuan" style="display:none;margin-bottom:8px;"><form name="form" class="layui-form"> <div class="layui-inline" style="width:188px;"><input class="layui-input so_var" name="so_name" placeholder="缓存名字" autocomplete="off"> </div> <input class="layui-input so_var"  value="shuaxin" name="so_shuaxin" type="hidden" autocomplete="off"> <button class="layui-btn" lay-event="sousuo" lay-submit lay-filter="tijiao' + $class + '">搜索</button>  <button class="layui-btn layui-btn-danger" lay-event="sousuo" lay-submit lay-filter="shanchu' + $class + '">批量删除</button></form> </div>'
             +
             '<table class="layui-hide" id="user' + $class + '" lay-filter="user' + $class + '"></table></div></div></div>');
         layui.table.render({
@@ -194,7 +194,40 @@ ELi['admin/memcached'] = {
                 ELi['admin/memcached'].edit(obj);
             }
         });
+        layui.form.on('submit(shanchu' + $class + ')', function (formdata) {
+            formdata = formdata.field;
+            var zuhesou = {};
+            $('.' + $class + 'saixuan .so_var').each(function (i, v) {
+                if ($(v).val() != "") {
+                    zuhesou[$(v).attr('name').replace('so_', '')] = $(v).val();
+                }
+            });
+            apptongxin(ELi['admin/memcached'].url + TOKEN + FENGE + 'del', zuhesou, function (data) {
+                if (data.token && data.token != "") {
+                    TOKEN = data.token;
+                }
+                if (data.code == 99) {
+                    layer.msg("请登陆", {
+                        offset: 'c',
+                        time: 2000
+                    }, function () {
+                        loadjs("home");
+                    });
+                } else if (data.code == 1) {
+                    ELi['admin/memcached'].init();
+                } else {
+                    layer.msg(data.msg, {
+                        zIndex: 99999,
+                        offset: 'c',
+                        time: 2000
+                    });
+                }
+            });
 
+
+            return false;
+        });
+        
         layui.form.on('submit(tijiao' + $class + ')', function (formdata) {
             formdata = formdata.field;
             var zuhesou = {};

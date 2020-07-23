@@ -108,7 +108,7 @@ ELi['admin/moneylog'] = {
                 }
                 
               });
-              console.log(zuhesou);
+              
             ELi['admin/moneylog'].hhhhda = $('[name="so_type"]').val();
             
           layui.table.reload('user'+$class, {

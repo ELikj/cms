@@ -559,6 +559,8 @@ function jsfrom(zifu){
         },outtime,name,css,TTT);
 
     }else if(type == 'moreupdateshow'){
+
+        
             html +='<div class="layui-input-inline"><textarea style="display:none;" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input">'+moren+'</textarea> <button type="button" style="padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button></div><div class="layui-clear"></div>';
             html +='<div class="layui-upload-list" id="'+TTTXUANCLASS+'ups_'+name+'">'
             var TTT = 0;
@@ -660,6 +662,35 @@ function jsfrom(zifu){
             $('#'+TTTXUANCLASS+'upshou_'+name).dblclick(hhht);
         },outtime,name,css);
 
+    }else if(type == 'update64'){
+        html +='<div class="layui-input-inline"><input type="text" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;display: inline-block;'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="float:left;padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button> </div><div class="layui-clear"></div>';
+
+        setTimeout(function(name){
+            layui.upload.render({
+                elem: '#'+TTTXUANCLASS+'upk_'+name //绑定元素
+                ,field:"all"
+                ,accept: 'file' //允许上传的文件类型
+                ,url: uploadurl() //上传接口
+                ,auto: false 
+                ,choose:function(obj){
+                    
+                    obj.preview(function(index, file, result){
+                        file = new File([result], file.name);
+                        obj.upload(index, file);
+                    });
+
+                },done: function(res){
+                    if(res.code == 1){
+                        $('#'+TTTXUANCLASS+'upv_'+name).val(res.data);
+                        layer.msg(res.msg,{offset: 'c',time: 1500});
+                    }else{
+                        layer.msg(res.msg,{offset: 'c'});
+                    }
+                }
+            });
+        },outtime,name);
+
+
     }else if(type == 'update'){
 
         html +='<div class="layui-input-inline"><input type="text" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;display: inline-block;'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="float:left;padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button> </div><div class="layui-clear"></div>';
@@ -670,6 +701,7 @@ function jsfrom(zifu){
                 ,field:"all"
                 ,accept: 'file' //允许上传的文件类型
                 ,url: uploadurl() //上传接口
+               
                 ,done: function(res){
                     if(res.code == 1){
                         $('#'+TTTXUANCLASS+'upv_'+name).val(res.data);

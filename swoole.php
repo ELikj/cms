@@ -36,6 +36,19 @@ function echoapptoken( $data = array() ,  $code = '0' , $msg = '' , $apptoken = 
     $GLOBALS['isend'] = true;
     return true;
 }
+
+function tiaozhuan($eangzhan = ""){
+    global $REQUEST;
+    if(isset($GLOBALS['isend']) && $GLOBALS['isend']){
+        return ;
+    }
+    $REQUEST-> redirect($eangzhan,301);
+    $GLOBALS['isend'] = true;
+    return true;
+}
+
+
+
 //swoole自助服务
 define("Residentmemory",true);
 define( 'WWW', dirname(__FILE__).'/');
@@ -65,7 +78,14 @@ $http->on("request", function ($request, $response) {
 
    
     $_SERVER["HTTP_USER_AGENT"] = $request->header['user-agent'];
-    
+   
+
+    $GLOBALS['header']=[];
+    foreach($request->header as $k =>$v){
+        $GLOBALS['header'][ strtolower($k )] = $v;
+    }
+  
+    //$_SERVER["header"] =  $request->header;
     if(strstr($ELiConfig['host'],'://'.$request->header['host']) === false  ){
         $response-> redirect($ELiConfig['host'],301);
         return "";
@@ -213,16 +233,23 @@ $http->on("request", function ($request, $response) {
         }
     }
     ELicall($Plus,$ClassFunc,$CANSHU,$features,false );
-    if($GLOBALS['isend']){
-        return "";
-    }
+    
     $hhh = ob_get_contents();
-    if($hhh){
+
+   
+    if($hhh && $hhh != ""){
         $response->end($hhh);
         ob_end_clean();
         return "";
     }
+
+    if($GLOBALS['isend']){
+        
+        return "";
+    }
+    
     $response->end("");
+    return "";
 });
 
 $http->start();

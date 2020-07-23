@@ -36,7 +36,10 @@ if($kongzhi == 'get'){
 
         $data[$id]['configure'] = json_decode($vvvv['configure']);
         $data[$id]['menuconfig'] = json_decode($vvvv['menuconfig']);
-        $yiinstall[ $vvvv['pluginid'] ] = $vvvv['pluginid'];
+        
+        if(is_file( ELikj.'Controller/'.$vvvv['pluginid'].".Class.php")){
+            $yiinstall[ $vvvv['pluginid'] ] = $vvvv['pluginid'];
+        }
     }
 
 

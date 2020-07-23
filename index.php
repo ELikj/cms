@@ -8,7 +8,8 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER",'9.0.6');
+define("ELikjVER",'9.1.3');
+
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -27,6 +28,7 @@ $SESSIONID= "";
 $URI = "";
 $Plus = "";
 $ClassFunc  = "";
+
 //Safe conversion
 function Safeconversion($data){
     if(!get_magic_quotes_gpc()) return addslashes($data);else return $data;
@@ -437,6 +439,7 @@ function ELimm( $var = 'ELikj'){
     $hash = md5('@中国@'.base64_encode($var.'知者不惑，').$var.'仁者不忧，'.sha1($var.'勇者不惧，').'@制造@');
     return substr( $hash ,1 , $varstr * 3 );
 }
+
 function uuid($hash = ""){
     if($hash == ""){
         $hash = strtoupper(hash('ripemd128',rand(1,9999999) .time() . md5(sha1( microtime()) )));
@@ -445,6 +448,13 @@ function uuid($hash = ""){
     }
     return substr($hash,  0,  8) . '-' .substr($hash,  8,  4) .'-' .substr($hash, 12,  4) . '-' . substr($hash, 16,  4) .'-' .substr($hash, 20, 12) ;
 }
+
+function orderid($biaoqian = "ELi"){
+   
+    usleep(1);
+    return $biaoqian.date('Ymd'.rand(10,99).'His').mt_rand(100000,999999);
+}
+
 function db($table="",$ELiDataBase_ = [] ){
     global $ELiDataBase;
     if( $ELiDataBase_ ){
@@ -809,8 +819,13 @@ class ELiDatabaseDriver{
             if( $huanc && $ELiConfig['operatingmode'] == "1"){
                 $this -> tablejg = $huanc;
             }else{
-                $qq = $this -> zhixing('scjg');
-                $gege['0'] = $chaxun = implode(',',array_flip( $qq ));
+                $qq = $this -> zhixing('scjg'); 
+                $zuhe = [];
+                $mmmx = array_flip($qq);
+                foreach($mmmx as $zz){
+                    $zuhe[] = '`'.ELisql($zz).'`';
+                }
+                $gege['0'] = $chaxun = implode(',',$zuhe);
                 $gege['1'] = $qq; 
                 $this->tablejg = $gege;            
                 $ELiMem->s( $HASH , $gege );              
@@ -1036,6 +1051,7 @@ class ELiPdo extends ELiDatabaseDriver{
             $sql = "SELECT count(*) as count FROM  `{$this->table}` {$this->where} {$this->paixu} {$this->lismt}"; 
             $this->where = $this->paixu = $this->lismt = null;
             $qq = $this->mysql->prepare($sql);
+           
             if($this->tiaoshi){
                 p($sql);
                 $this->tiaoshi = false;
@@ -1119,7 +1135,10 @@ class ELiPdo extends ELiDatabaseDriver{
 //request post
 function ELipost( $url,  $para,$Extension = array(), $cacert_url = ''){
     $curl = curl_init( $url );
+   
+
     if(strpos( $url , "s://") !== false ){
+      
         if( $cacert_url != ''){
             curl_setopt( $curl , CURLOPT_SSL_VERIFYPEER, 2);
             curl_setopt( $curl , CURLOPT_SSL_VERIFYHOST, true);
@@ -1129,6 +1148,7 @@ function ELipost( $url,  $para,$Extension = array(), $cacert_url = ''){
             curl_setopt( $curl , CURLOPT_SSL_VERIFYHOST, 0);
         }
     }
+
     curl_setopt( $curl , CURLOPT_TIMEOUT, 240 ); 
     curl_setopt( $curl , CURLOPT_HEADER, 0 ); 
     curl_setopt( $curl , CURLOPT_RETURNTRANSFER, 1);
@@ -1136,9 +1156,11 @@ function ELipost( $url,  $para,$Extension = array(), $cacert_url = ''){
     curl_setopt( $curl , CURLOPT_POSTFIELDS, $para);
     if($Extension ){
         foreach($Extension as $k => $v){
+        
             curl_setopt($curl , $k, $v);
         }
     }
+
     $responseText = curl_exec( $curl );
     curl_close( $curl );
     return $responseText;
@@ -1579,6 +1601,11 @@ if (!function_exists('upload')) {
             if( strpos( strtolower($tmpneirong), '<?php') !== false){
                 return  array( 'code'=> 0, 'msg' => $LANG['update']['meiwenjian']);
             }
+           
+            if( strpos( substr($tmpneirong,0,50), ';base64,') !== false   ){
+                $nnn = explode(';base64,',$tmpneirong);
+                file_put_contents($tmp_name,base64_decode($nnn['1']));
+            }
 
             $CDN = '';
             if ( move_uploaded_file( $tmp_name, $WJIAN.$Nfile ) === false) return array( 'code'=> '0', 'msg' => $LANG['update']['chuanshibai']);
@@ -1586,6 +1613,7 @@ if (!function_exists('upload')) {
             if(is_file($tmp_name)){
                 @unlink($tmp_name);
             }
+            
 
             if(!defined("Residentmemory")){
                 if( strpos( $_SERVER["HTTP_USER_AGENT"] , "MSIE")) header( 'Content-type:text/html; charset=UTF-8' );
@@ -1599,6 +1627,8 @@ if (!function_exists('upload')) {
 //nternal call
 function callELi( $Plus = "", $ClassFunc = "", $CANSHU = array(),$features = array(),$fanhui = true ){
     $className = 'ELikj_'.$Plus;
+
+
     if(!class_exists($className, false)){
         ELiLoad($Plus);
     }
@@ -1625,6 +1655,7 @@ function callELi( $Plus = "", $ClassFunc = "", $CANSHU = array(),$features = arr
     if( $fanhui ){
         return $class;
     }
+   
     return $fan;
 }
 //Execute plugin
@@ -1644,6 +1675,7 @@ function ELicall( $Plus = "", $ClassFunc = "", $CANSHU = array(),$features = arr
     }
     $class = new $className();
     $cls_methods = array_flip(get_class_methods($class));
+  
     if( !isset( $cls_methods[$ClassFunc]) ){
         //Default processing
         $ClassFunc_ = $ClassFunc;
@@ -1905,12 +1937,29 @@ function  jiaqian( $uid = 0 , $type = 0, $money = 0,$integral = 0,$currency = 0,
             'atime' => time()
         ));
     }
+
+  
+    if($sql == ""){
+        return false;
+    }
     $fan = $D -> qurey($sql ,'shiwu');
     if( $fan ){
         return uid($uid , 1 , $D );
     }else return false;
 }
 //Browser Information Judgement Platform
+function ELishouji($anget){
+    $anget = platform($anget);
+    if( strpos(   strtolower($anget)  , "android") !== false){
+        return 'Android';
+    }else if( strpos(   $anget  , "iOS") !== false){
+        return "iOS ";
+    }else if( strpos(  $anget , "ISAPP") !== false){
+        return "APP";
+    }
+    return false;
+
+}
 function platform($anget){
     $anget = trim($anget);
     if($anget == ""){
@@ -1929,17 +1978,17 @@ function platform($anget){
         $system = explode(';',$xotp['1']);
     }
     if( strpos(  $anget , "ISAPP") !== false){
-        $hj = " APP";
+        $hj = "APP";
     }
     if( strpos(   strtolower($anget)  , "android") !== false){
-        $xitong = "Android";
+        $xitong = "Android ";
     }else if( strpos(   $anget  , "iOS") !== false){
-        $xitong = "iOS";
+        $xitong = "iOS ";
     }else{
         if($system && count($system) > 1){
             $xitong = $system['1'];
         }else{
-            $xitong = "其他";
+            $xitong = "其他 ";
         }
     }
     $sj = "";
@@ -1948,6 +1997,7 @@ function platform($anget){
     }
     return  $xitong.$hj.$sj;
 }
+
 //uuid detection
 function uuidc($uuid ,$fan = true){
     $uuid = trim(str_replace(array("\r\n","\r","\n")  ,array('','',''),trim($uuid)));
@@ -1976,15 +2026,15 @@ function ELiCmd($wezi = ""){
     echo date("Y-m-d H:i:s : ").$wezi."\n";
     //usleep(rand(50000,1000000));
 }
+
 //Read template
 function ELitpl($plugin,$file,$THIS){
     $file = ELikj.'../Tpl/'. str_replace('..','',$plugin.'/'.$file).'.php';
     if(file_exists($file )){
         global $ELiConfig,$ELiMem,$CANSHU,$features,$SESSIONID,$LANG;
-        
-        include $file;
+        return  include $file;
     }else{
-        return echoapptoken([],-1,'/Tpl/'.$plugin.'/'.$file.' file does not exist');
+        return echoapptoken([],-1,$plugin.' file does not exist');
     }
 }
 //Verification post
@@ -2032,7 +2082,7 @@ function apptoken( $data = array() ,  $code = '0' , $msg = '' , $apptoken = '',$
             $zhuju[$k] = $v;
         }
     }
-    return json_encode($zhuju);
+    return json_encode($zhuju,JSON_UNESCAPED_UNICODE);
 }
 
 if( !function_exists( "tiaozhuan")) {
@@ -2061,7 +2111,13 @@ if( !function_exists( "echoapptoken")) {
             header( "Content-Type:application/json;charset=utf-8");
         }
 
+    
+        if(isset($GLOBALS['Plugincall']) && $GLOBALS['Plugincall'] == "YES"){
+            $GLOBALS['Plugincall'] = "NO";
+            return apptoken($data  ,  $code , $msg  , $apptoken,$kuozan);
+        }
         echo apptoken($data  ,  $code , $msg  , $apptoken,$kuozan);
+
         $GLOBALS['isend'] = true;
         return true;
     }
@@ -2123,6 +2179,29 @@ function pichttp($pic){
     }
 }
 
+//sha256WithRSA 签名
+function SHA256_sign($content, $privateKey,$iimm = "SHA256"){
+    $privateKey = "-----BEGIN RSA PRIVATE KEY-----\n" .
+        wordwrap($privateKey, 64, "\n", true) .
+        "\n-----END RSA PRIVATE KEY-----";
+    $key = openssl_get_privatekey($privateKey);
+    openssl_sign($content, $signature, $key, $iimm );
+    openssl_free_key($key);
+    $sign = base64_encode($signature);
+    return $sign;
+}
+
+//验证 sha256WithRSA 签名
+function SHA256_verify($content, $sign, $publicKey,$iimm = "SHA256"){
+    $publicKey = "-----BEGIN PUBLIC KEY-----\n" .
+    wordwrap($publicKey, 64, "\n", true) .
+    "\n-----END PUBLIC KEY-----";
+    $key = openssl_get_publickey($publicKey);
+    $ok = openssl_verify($content,base64_decode($sign), $key,$iimm);
+    openssl_free_key($key);
+    return $ok;
+}
+
 //end funciton Extension
 #######################end funciton Extension####################################
 
@@ -2149,7 +2228,7 @@ $ELiConfig = array(
     'Plus'=> '@',//强行读取插件标示
     'urlpath'=>'0', // url 模式
     'Composer'=>0,//Composer 启用
-    'whitelist'=>'admin',//白名单不用判断插件开关
+    'whitelist'=>'admin|ewm|lotteryprediction|',//白名单不用判断插件开关
     'iscms'=>0,//只使用cms
     'object'=>'cms',//默认控制器
     'behavior'=> 'index',//默认行为
@@ -2235,13 +2314,23 @@ $ELiMem = $ELiMemsession =  new Textcache;
 
 //Get route
 ######################################################################
-
 if(!defined("Residentmemory")){
 
     if(isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'],'://'.$_SERVER['HTTP_HOST']) === false){
+    
         header('HTTP/1.1 301 Moved Permanently');
         header("Location: ".$ELiConfig['host']); 
         return ;
+    }
+
+    $GLOBALS['header']=[];
+    foreach($_SERVER as $k =>$v){
+        $k =  strtolower($k );
+        if(strstr( $k,'http_')!== false){
+            $GLOBALS['header'][  str_replace('http_','',$k)] = $v;
+        }
+      
+        
     }
 
     $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? file_get_contents('php://input');

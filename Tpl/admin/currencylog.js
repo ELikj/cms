@@ -108,7 +108,7 @@ ELi['admin/currencylog'] = {
                 }
                 
               });
-              console.log(zuhesou);
+
             ELi['admin/currencylog'].hhhhda = $('[name="so_type"]').val();
             
           layui.table.reload('user'+$class, {

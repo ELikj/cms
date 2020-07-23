@@ -108,7 +108,7 @@ ELi['admin/integrallog'] = {
                 }
                 
               });
-              console.log(zuhesou);
+              
             ELi['admin/integrallog'].hhhhda = $('[name="so_type"]').val();
             
           layui.table.reload('user'+$class, {

@@ -92,7 +92,7 @@ if($kongzhi == 'get'){
     $fan = $db ->where(['id' => $id])->update($_POST);
     if($fan){
     
-        Ailog('adminlog',$_SESSION['adminid'],3,[ 'yuan'=>$data,'data'=> $_POST],$plusfunction);
+        ELilog('adminlog',$_SESSION['adminid'],3,[ 'yuan'=>$data,'data'=> $_POST],$plusfunction);
         return echoapptoken($_POST,1,'修改成功',$SESSIONtoken);
     }else{
         return echoapptoken([],-1,'修改失败',$SESSIONtoken);
@@ -109,7 +109,7 @@ if($kongzhi == 'get'){
     $fan = $db ->insert($_POST);
     if($fan){
 
-        Ailog('adminlog',$_SESSION['adminid'],4,$_POST,$plusfunction);
+        ELilog('adminlog',$_SESSION['adminid'],4,$_POST,$plusfunction);
         return echoapptoken([],1,'新增成功',$SESSIONtoken);
     }else{
         return echoapptoken([],-1,'新增失败',$SESSIONtoken);
@@ -128,7 +128,7 @@ if($kongzhi == 'get'){
     $fan = $db ->where(['id' => $id])->delete();
     if($fan){
         
-        Ailog('adminlog',$_SESSION['adminid'],5,$data,$plusfunction);
+        ELilog('adminlog',$_SESSION['adminid'],5,$data,$plusfunction);
         return echoapptoken([],1,'删除成功',$SESSIONtoken);
     }else{
         return echoapptoken([],-1,'删除失败',$SESSIONtoken);

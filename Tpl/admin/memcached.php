@@ -1,6 +1,6 @@
 <?php if( !defined( 'ELikj')){ exit( 'Error ELikj'); }
 $shiba = false;
-$plusfunction = 'plist';
+$plusfunction = 'memcached';
 $hash = 'safetoken/'.$_SESSION['adminid'];
 $SESSIONtokenx = $SESSIONtoken = $ELiMem ->g($hash);
 if( trim($CANSHU['0']) != $SESSIONtokenx){
@@ -93,6 +93,27 @@ if($kongzhi == 'get'){
 
 
 }else if($kongzhi == 'del'){
+
+
+    if(isset($_POST['shuaxin']) && $_POST['shuaxin'] == $_POST['shuaxin']){
+
+        if(isset($_POST['name']) && $_POST['name'] != ""){
+
+            $name = ELixss($_POST['name']);
+            $fan = $db ->where(['name LIKE' => '%'.$name.'%'])->delete();
+            if($fan){
+        
+                ELilog('adminlog',$_SESSION['adminid'],5,$name,$plusfunction);
+                return echoapptoken([],1,'删除成功',$SESSIONtoken);
+            }
+
+        }
+
+
+
+        return echoapptoken([],1,'',$SESSIONtoken);
+        
+    }
 
     $id = (int)(isset($_POST['id'])?$_POST['id']:0);
     $data = $db ->where(['id' => $id])->find();
