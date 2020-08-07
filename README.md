@@ -7,7 +7,10 @@
 * ******************************************
 * 云框架 快速开发 框架  集合大家的插件快速开发
 */
+ELikjVER 9.1.2{
 
+
+}
 ELikjVER 9.0.0{
       增加数据库缓存类 kv 缓存
       用于不适合文本缓存的地方使用 阿里云函数计算
@@ -203,7 +206,7 @@ class ELiPdo extends ELiDatabaseDriver{ //ELiPdo 数据库pdo驱动
             }
 }
 function ELipost( $url,  $para,$Extension = array(), $cacert_url = '') post请求(网址,参数,curl扩展参数,指定证书);
-function ELiget( $url,  $para,$Extension = array(), $cacert_url = '')  get请求(网址,参数,curl扩展参数,指定证书);
+function ELiget( $url  ,  $para,$Extension = array(), $cacert_url = '')  get请求(网址,参数,curl扩展参数,指定证书);
 
 function ELivcode($sizes='1',$code="0123456789",$shu =4,$width=100,$height=50,$zadian=100,$xiaos = 6) 徒刑验证码(字体,随机字符,数字个数,宽,高,杂点数量,间距)
 function pagec( $xsuu , $page_size = 10 , $nums , $sub_pages = 5 , $page , $qianzui , $houzui = '') html 生成分页(语言数组，,每页数量,总数量,显示分页按钮数量,当前页数,分页号前面补足,分页号后面补足 )

@@ -20,14 +20,14 @@ use OSS\OssClient;
     Residentmemory 启用 常驻内存服务
 */
 //阿里云函数计算 需要改造接受数据
-define("Residentmemory",true);
+define("Residentmemory","aliyun");
 define("ELiTempPath","/tmp/");
 define( 'WWW', dirname(__FILE__).'/');
 
 function aliyundel($xxx){
     $ossClient = new OssClient('idd','密码', 'oss-cn-hangzhou.aliyuncs.com');
     try {
-        $ossClient->deleteObject('xianliaogame', ltrim($xxx,"/")  );
+        $ossClient->deleteObject('xianliaogame', ltrimE($xxx,"/")  );
     } catch (OssException $e) {
 
         //print($e->getMessage());
@@ -95,7 +95,7 @@ function upload(){
         if ( $file_size > $max_size ) return array( 'code'=> '0', 'msg' => $LANG['update']['maxsizeda'] ); 
         $temp_arr = explode( "." , $file_name);
         $file_ext = array_pop( $temp_arr);
-        $file_ext = trim( $file_ext);
+        $file_ext = trimE( $file_ext);
         $file_ext = strtolower( $file_ext);
         $expa = array_flip($ext_arr[ $LX]);
         if(! isset($expa[ $file_ext ])){
@@ -131,7 +131,7 @@ function upload(){
             $cmd5."\n" .
             "application/octet-stream\n" .
             $shijia."\n" .
-            "/".trim( $duankou ,'/').'/'.trim($LUJIN,'/');
+            "/".trimE( $duankou ,'/').'/'.trimE($LUJIN,'/');
         $qianm = base64_encode(hash_hmac('sha1', $string_to_sign,  $APKY, true));
         $temp_headers = array( 
             'Content-MD5: '.$cmd5,
@@ -160,7 +160,7 @@ function upload(){
         $ossClient = new OssClient('idd','密码', 'oss-cn-hangzhou.aliyuncs.com');
        
         try {
-            $ossClient->putObject('xianliaogame', ltrim($returnfile,"/") ,$tmpneirong );
+            $ossClient->putObject('xianliaogame', ltrimE($returnfile,"/") ,$tmpneirong );
         } catch (OssException $e) {
             //print($e->getMessage());
         }
@@ -206,14 +206,14 @@ function parse_raw_http_request($input, $CONTENT_TYPE )
         $bodyzi = explode("\r\n",$block);
         $name_ = explode('=',$bodyzi['1']); 
         $filex_ = explode('"',$name_['1']);
-        $file = trim($filex_['1']);
-        $name = trim(trim($name_['2']),'"');
+        $file = trimE($filex_['1']);
+        $name = trimE(trimE($name_['2']),'"');
         $type_ =  explode('Content-Type:',$bodyzi['2']);
         if(!isset($type_['1'])){
             continue ;
         }
         
-        $type = trim($type_['1']);
+        $type = trimE($type_['1']);
         unset($bodyzi['0']);
         unset($bodyzi['1']);
         unset($bodyzi['2']);
@@ -299,7 +299,7 @@ function handler($request, $context): Response{
 
     $path       = $request->getAttribute('path');
     $GLOBALS['ip'] = $request->getAttribute("clientIP");
-    $ELiHttp = ltrim( rawurldecode( trim( $path )),'/');
+    $ELiHttp = ltrimE( rawurldecode( trimE( $path )),'/');
     $_SERVER['HTTP_USER_AGENT'] = reset( $headers['User-Agent']);
     $GLOBALS['isend'] = false;
    
@@ -313,8 +313,8 @@ function handler($request, $context): Response{
     if( isset($headers['Cookie'])){
         foreach($headers['Cookie'] as $shuju ){
             if( $shuju != "" ){
-                list($k,$v)= explode("=",trim($shuju) );
-                $_COOKIE[trim($k)] = trim($v);
+                list($k,$v)= explode("=",trimE($shuju) );
+                $_COOKIE[trimE($k)] = trimE($v);
             }
         }
     }
@@ -368,9 +368,9 @@ function handler($request, $context): Response{
     }else{
         $URI = $ELiHttp;
     }
-    $URI  = ltrim( str_replace( array( '//' , trim( $_SERVER['SCRIPT_NAME'] , '/' ) ), array( '/' , '' ) , $URI ) , $ELiConfig['dir'] );
-    $TURI = explode( '?' , ltrim( $URI ,'?'));
-    $URI  = trim( $TURI['0'] , '/');
+    $URI  = ltrimE( str_replace( array( '//' , trimE( $_SERVER['SCRIPT_NAME'] , '/' ) ), array( '/' , '' ) , $URI ) , $ELiConfig['dir'] );
+    $TURI = explode( '?' , ltrimE( $URI ,'?'));
+    $URI  = trimE( $TURI['0'] , '/');
     $URI = str_replace( array($ELiConfig['houzui'],'..') , array('',''), $URI);
     if( $URI == '' && $ELiConfig['iscms'] != 1 ){
         $URI = $ELiConfig['object'];
