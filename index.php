@@ -61,11 +61,13 @@ function rtrimE($nn ,$wenzi=""){
         return $nn;
     }
 }
+
 function trimE($nn ,$wenzi=""){
     if($wenzi == ""){
         return trim($nn );
     }
-    return $nn;
+
+    return rtrimE(ltrimE($nn,$wenzi),$wenzi);
 }
 
 //Safe conversion
