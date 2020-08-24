@@ -46,6 +46,8 @@ class ELikj_admin{
                         $hhbv[] = $hh[$k];
                         $jxi = explode("_",$v);
                         $jsson[$k] =end($jxi );
+                    }else{
+                        $jsson[$k] =0;
                     }
                     
                 }

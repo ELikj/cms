@@ -27,7 +27,7 @@ $SESSIONID = "";
 $URI = "";
 $Plus = "";
 $ClassFunc  = "";
-
+$GLOBALS['ELiys'] = [];
 
 function ltrimE($nn ,$wenzi =""){
 
@@ -1043,6 +1043,7 @@ class ELiPdo extends ELiDatabaseDriver
             }
             $wheresd = array();
             $i = 0;
+
             foreach ($this->JOINwhere as $k => $shuju) {
                 $tashiz = explode(',', $k);
                 $wheresd[$i] =  $diyitable . '.' . $tashiz['0'] . ' ' . $shuju . ' @@.' . $tashiz['1'];
@@ -1064,6 +1065,12 @@ class ELiPdo extends ELiDatabaseDriver
                 $this->shezhi($shujude);
                 $shujude = $this->biao();
                 $baiojiegou = $this->tablejg[0];
+                if(isset($wheresd[$i])){
+                    $wheresd[$i] = str_replace(" ","",$wheresd[$i]);
+                }else{
+                    $wheresd[$i] =  "";
+                }
+                
                 if ($i < 1) {
                     $onhouxu .=  $shujude . " ON " . str_replace('@@', $shujude, $wheresd[$i]);
                 } else {
@@ -1984,15 +1991,15 @@ function ELiLink($plush)
 //Safety statement
 function ELis($name = 'ELiSafety')
 {
-    if (!defined($name)) {
-        define($name, true);
-    }
+    $GLOBALS['ELiys'][$name] = $name;
 }
 //Security Indication Verification
 function ELiy($name = 'ELiSafety')
 {
-    if (!defined($name)) {
-        return echoapptoken([], -1, 'cross-object access ' . $name);
+    if(!isset($GLOBALS['ELiys'][$name] )){
+        return true;
+    }else{
+        return false;
     }
 }
 //Read user id
@@ -2396,7 +2403,7 @@ $ELiDataBase = array(
     "write" => array(
         'numbering' => '第一个数据',
         'hostname' => "192.168.0.13",
-        'database' => "ceshi",
+        'database' => "ELikj",
         'username' => "root",
         'password' => "qqqqaaaa",
         'hostport' => 3306,

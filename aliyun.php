@@ -1,6 +1,8 @@
 <?php
 use RingCentral\Psr7\Response;
 use OSS\OssClient;
+
+
 /* ******************************************
  * 系统名称：以厘建站系统
  * 版权所有：成都市以厘科技有限公司 www.eLikj.com
@@ -270,7 +272,7 @@ function handler($request, $context): Response{
     $_GET = [];
     $_FILES = [];
     $_COOKIE = [];
-
+    $GLOBALS['ELiys'] = [];
 
 
 
@@ -279,12 +281,12 @@ function handler($request, $context): Response{
     $headers    = $request->getHeaders();
     $GLOBALS['header']=[];
     foreach($headers as $k =>$v){
-        $GLOBALS['header'][ strtolower($k )] = $v;
+        $GLOBALS['header'][ strtolower($k )] = reset($v);
     }
     
 
 
-    if(strstr($ELiConfig['host'],'://'.$headers['host']) === false){
+    if(strstr($ELiConfig['host'],'://'.$GLOBALS['header']['host']) === false){
 
         return new Response(
             301,
@@ -300,18 +302,18 @@ function handler($request, $context): Response{
     $path       = $request->getAttribute('path');
     $GLOBALS['ip'] = $request->getAttribute("clientIP");
     $ELiHttp = ltrimE( rawurldecode( trimE( $path )),'/');
-    $_SERVER['HTTP_USER_AGENT'] = reset( $headers['User-Agent']);
+    $_SERVER['HTTP_USER_AGENT'] = ( $GLOBALS['header']['user-agent']);
     $GLOBALS['isend'] = false;
    
     if($body != ""){
-       parse_raw_http_request($body,reset($headers ['Content-Type']));
+       parse_raw_http_request($body,($GLOBALS['header']['content-type']));
     }
     
     if($queries){
         $_GET = $queries;
     }
-    if( isset($headers['Cookie'])){
-        foreach($headers['Cookie'] as $shuju ){
+    if( isset($GLOBALS['header']['cookie'])){
+        foreach($GLOBALS['header']['cookie'] as $shuju ){
             if( $shuju != "" ){
                 list($k,$v)= explode("=",trimE($shuju) );
                 $_COOKIE[trimE($k)] = trimE($v);

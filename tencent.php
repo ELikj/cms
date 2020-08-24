@@ -246,15 +246,16 @@ function main_handler($request, $context)
     $path       = ltrimE($request->path ?? "", $request->requestContext->path ?? "");
     $GLOBALS['ip'] = $request->requestContext->sourceIp ?? "";
     $ELiHttp = ltrimE(rawurldecode(trimE($path)), '/');
-    $_SERVER['HTTP_USER_AGENT'] =  $headers['user-agent'];
+    
     $GLOBALS['header'] = [];
     foreach ($headers as $k => $v) {
         $GLOBALS['header'][strtolower($k)] = $v;
     }
-
+    $_SERVER['HTTP_USER_AGENT'] =  $GLOBALS['header']['user-agent'];
+    $GLOBALS['ELiys'] = [];
     $GLOBALS['isend'] = false;
     if ($body != "") {
-        parse_raw_http_request($body, $headers['content-type']);
+        parse_raw_http_request($body, $GLOBALS['header']['content-type']);
     }
     if ($queries) {
         $_GET = $queries;

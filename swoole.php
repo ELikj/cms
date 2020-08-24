@@ -73,6 +73,7 @@ $http->on("request", function ($request, $response) {
         $LANG, $CANSHU, $features, $URI, $Composer, $HTTP, $YHTTP, $Plus, $ClassFunc, $REQUEST, $SESSIONIDMK, $POSTBODY;
     $REQUEST =  $response;
     $GLOBALS['isend'] = false;
+    $GLOBALS['ELiys'] = [];
     if ($request->server['path_info'] == '/favicon.ico' || $request->server['request_uri'] == '/favicon.ico') {
         $response->end();
         return;
