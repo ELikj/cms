@@ -188,7 +188,8 @@ function loadurl(url,name){
     $class = "ELi"+hex_md5(url);
     TTTXUANCLASS = $class;
     ELi.TABLE[$class] = url;
-    addhtml( $class ,url,name,'<div class="layui-tab-item '+$class+'"><iframe src="'+url+'" frameborder="0" class="layadmin-iframe"></iframe></div>');
+    addhtml( $class ,url,name,'<div class="layui-tab-item '+$class+'"><iframe frameborder="0" class="layadmin-iframe onciframe"></iframe></div>');
+    $("."+$class+' iframe.onciframe').attr({src:url});
     layui.element.render();
 }
 function cilicktabel(tlbale){
