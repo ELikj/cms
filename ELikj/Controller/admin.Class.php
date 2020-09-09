@@ -183,6 +183,8 @@ class ELikj_admin{
                 }
             }
         }
+
+        ELihhSet("ELikj",time());
         //可控操作检测
         return false;
     }

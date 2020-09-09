@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '9.1.3');
+define("ELikjVER", '9.1.5');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -1960,7 +1960,7 @@ function ELiplus($name, $qx = 0, $db = null)
     return false;
 }
 //url link
-function ELiLink($plush)
+function ELiLink($plush,$PAGE = 1)
 {
     global $ELiConfig;
     $urlpath = "";
@@ -1983,9 +1983,18 @@ function ELiLink($plush)
     if (!$plush) {
         return WZHOST . $urlpath;
     }
+
     if ($ELiConfig['iscms'] == '1' && $plush['0'] == $ELiConfig['object']) {
         unset($plush['0']);
     }
+
+ 
+    if($PAGE >  1){
+        $plush[]="";
+        $houzui = "";
+    }
+
+
     return WZHOST . $urlpath . implode($ELiConfig['fenge'], $plush) . $houzui;
 }
 //Safety statement
@@ -2376,7 +2385,7 @@ $ELiConfig = array(
     'doku' => '0', //多库读取
     'dbselect' => 'write', //选择默认读取数据库
     'operatingmode' => '1', //0 开发模式 1 正式模式
-    'sessiontime' => '3600', //session缓存时间
+    'sessiontime' => '36000', //session缓存时间
     'sessionpath' => 'mysqseeion/', //session存放z自定义位置
     'sessionSafety' => true, //关闭过期安全true  false 刷新就过期; 
     'vcode' => 'e,L,i,k,j', //默认图形验证阿么
@@ -2546,7 +2555,10 @@ if (!defined("Residentmemory")) {
     $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/')), array('/', ''), $URI), $ELiConfig['dir']);
     $TURI = explode('?', ltrimE($URI, '?'));
     $URI  = trimE($TURI['0'], '/');
-    $URI = str_replace(array($ELiConfig['houzui'], '..'), array('', ''), $URI);
+
+    $URI = str_replace( '..','', $URI);
+    $URI = rtrimE($URI,$ELiConfig['houzui']);
+
     if ($URI == '' && $ELiConfig['iscms'] != 1) {
         $URI = $ELiConfig['object'];
     }

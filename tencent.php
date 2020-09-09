@@ -317,7 +317,8 @@ function main_handler($request, $context)
     $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/')), array('/', ''), $URI), $ELiConfig['dir']);
     $TURI = explode('?', ltrimE($URI, '?'));
     $URI  = trimE($TURI['0'], '/');
-    $URI = str_replace(array($ELiConfig['houzui'], '..'), array('', ''), $URI);
+    $URI = str_replace( '..','', $URI);
+    $URI = rtrimE($URI,$ELiConfig['houzui']);
     if ($URI == '' && $ELiConfig['iscms'] != 1) {
         $URI = $ELiConfig['object'];
     }
