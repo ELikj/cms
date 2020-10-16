@@ -177,12 +177,41 @@ function time(times){
     return layui.util.toDateString(date, "yyyy-MM-dd HH:mm:ss");
 }
 function loadurl(url,name){
+    var isopen = false;
+
+    if(url.indexOf("OPEN:")>-1){
+        url = url.replace("OPEN:","");
+        isopen = true;
+    }
+    
     if(url.indexOf("://")>-1){
+
     }else if(url.substr(0,1) == '/'){
         url=dir+Plus+url;
     }else{
         url=dir+Plus+FENGE+url;
     }
+
+    if(isopen){
+        console.log(url);
+        layer.open({
+        type: 2,
+        title: "<span style='font-size:20px;display:block;text-align:center;color:#1E9FFF;font-weight:bold;'>"+name+"</span>",
+        fixed: false, //不固定
+        area: ['100%', '100%'],
+        maxmin: false,
+        content: url,
+        success: function(layero, index){
+               
+            }
+        });
+
+        return ;
+    }
+
+
+
+
     $(".layui-layout-admin .layui-side").css({left:0});
     $(".layadmin-body-shade").hide();
     $class = "ELi"+hex_md5(url);

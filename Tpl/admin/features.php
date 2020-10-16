@@ -112,7 +112,7 @@ if($kongzhi == 'get'){
     }
     
     $update['menuconfig'] =  $_POST["menuconfig"];
-    $update['configure'] = json_encode($configure);
+    $update['configure'] = json_encode($configure,JSON_UNESCAPED_UNICODE);
     $fan = $db ->where(['id' => $id])->update($update);
     if($fan){
         
