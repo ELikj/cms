@@ -224,6 +224,34 @@ $http->on("request", function ($request, $response) {
     }
     $Plus = strtolower($Plus);
     $ClassFunc = strtolower($ClassFunc);
+    if($Plus == "admin" && $ELiConfig['security'] != ""){
+        $security = 'security/'.ELimm("以厘科技".date("Y-m-d").$SESSIONID.ip()."ELikj.com".$GLOBALS['header']['user_agent']);
+        $Security = $ELiMem ->g($security);
+        if(!$Security  || $Security != $ELiConfig['security']){
+            if( isset($_GET['security']) ){
+                $security2 = 'security/'.ELimm($SESSIONID.$GLOBALS['header']['user_agent']);
+                if( $ELiMem ->ja($security2,1,360) > 4){
+                    return ELiError("ELikj: Security filtering time 3600");
+                }
+                if($_GET['security'] == $ELiConfig['security']){
+                    $ELiMem ->s($security,$_GET['security']);
+                }else{
+                    if($Security){
+                        $ELiMem ->d($security);
+                    }
+                    return ELiError("ELikj: Security filtering");
+                }
+            }else{
+                if($Security){
+                    $ELiMem ->d($security);
+                }
+                return ELiError("ELikj: Security filtering");
+            }
+        }
+        if($ClassFunc == 'quite'){
+            $ELiMem ->d($security);
+        }
+    }
     ELiLoad($Plus);
     $GLOBALS['plugin'] = $Plus;
     $GLOBALS['pluginurl'] = $ELiConfig['dir'] . "Tpl/" . $Plus . '/';

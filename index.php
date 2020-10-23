@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '9.1.6');
+define("ELikjVER", '9.9.9');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -35,13 +35,10 @@ function ltrimE($nn ,$wenzi =""){
         return ltrim($nn,$wenzi);
     }
     $quanbu = substr($nn, 0, strlen($wenzi));
-  
-    if($quanbu==$wenzi){
-       
+    if($quanbu== $wenzi){
         $canxx = explode($wenzi,$nn );
         unset($canxx['0']);
         return implode($wenzi,$canxx );
-
     }else{
         return $nn;
     }
@@ -66,7 +63,6 @@ function trimE($nn ,$wenzi=""){
     if($wenzi == ""){
         return trim($nn );
     }
-
     return rtrimE(ltrimE($nn,$wenzi),$wenzi);
 }
 
@@ -482,8 +478,6 @@ if (!function_exists('ip')) {
         $ip2 = getenv("HTTP_X_FORWARDED_FOR") ? getenv("HTTP_X_FORWARDED_FOR") : "none";
         $ip3 = getenv("REMOTE_ADDR") ? getenv("REMOTE_ADDR") : "none";
         $ip4 = $_SERVER['REMOTE_ADDR'] ? $_SERVER['REMOTE_ADDR'] : "none";
-
-
         if (isset($ip3) && $ip3 != "none" && $ip3 != "unknown") $ip = $ip3;
         else if (isset($ip4) && $ip4 != "none" && $ip4 != "unknown") $ip = $ip4;
         else if (isset($ip2) && $ip2 != "none" && $ip2 != "unknown") $ip = $ip2;
@@ -536,6 +530,7 @@ function db($table = "", $ELiDataBase_ = [])
     $ELiDatabaseDriver = new ELiPdo($ELiDataBase);
     return $ELiDatabaseDriver->shezhi($table);
 }
+
 class ELiDatabaseDriver
 {
     var $DB = null;
@@ -1755,7 +1750,7 @@ if (!function_exists('upload')) {
 
 
             if (!defined("Residentmemory")) {
-                if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE")) header('Content-type:text/html; charset=UTF-8');
+                if (strpos($_SERVER["HTTP_USER_AGENT"]??"", "MSIE")) header('Content-type:text/html; charset=UTF-8');
                 else  header('Content-type:application/json ;charset=UTF-8');
             }
 
@@ -2394,20 +2389,21 @@ $ELiConfig = array(
     'pagetrimE' => 1, //开启替换
     'maxsize' => '100000000', //上传尺寸
     'dir' => '/', //二级目录
-    'houzui' => '', //后缀
+    'houzui' => '/', //后缀
     'host' => 'http://192.168.0.13', //开启https
     'cdnhost' => 'http://192.168.0.13/', //图片资源cdn 资源
     'lang' => 'cn', //语言包
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
+    'security'=> 'securitysecurity',//管理后台安全验证 ?security=
     'whitelist' => 'admin|ewm|lotteryprediction|', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
     'behavior' => 'index', //默认行为
     'superior' => '2',
 );
-//Load the database
+//Load the database qqqqaaaa A123Ff3589!~
 $ELiDataBase = array(
     "write" => array(
         'numbering' => '第一个数据',
@@ -2612,6 +2608,36 @@ if (!defined("Residentmemory")) {
     }
     $Plus = strtolower($Plus);
     $ClassFunc = strtolower($ClassFunc);
+    
+    if($Plus == "admin" && $ELiConfig['security'] != ""){
+        $security = 'security/'.ELimm("以厘科技".date("Y-m-d").$SESSIONID.ip()."ELikj.com".$GLOBALS['header']['user_agent']);
+        $Security = $ELiMem ->g($security);
+        if(!$Security  || $Security != $ELiConfig['security']){
+            if( isset($_GET['security']) ){
+                $security2 = 'security/'.ELimm($SESSIONID.$GLOBALS['header']['user_agent']);
+                if( $ELiMem ->ja($security2,1,360) > 4){
+                    return ELiError("ELikj: Security filtering time 3600");
+                }
+                if($_GET['security'] == $ELiConfig['security']){
+                    $ELiMem ->s($security,$_GET['security']);
+                }else{
+                    if($Security){
+                        $ELiMem ->d($security);
+                    }
+                    return ELiError("ELikj: Security filtering");
+                }
+            }else{
+                if($Security){
+                    $ELiMem ->d($security);
+                }
+                return ELiError("ELikj: Security filtering");
+            }
+        }
+        if($ClassFunc == 'quite'){
+            $ELiMem ->d($security);
+        }
+    }
+    
     ELiLoad($Plus);
     $GLOBALS['plugin'] = $Plus;
     $GLOBALS['pluginurl'] = $ELiConfig['dir'] . "Tpl/" . $Plus . '/';
