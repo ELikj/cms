@@ -379,7 +379,7 @@ function main_handler($request, $context)
         $Security = $ELiMem ->g($security);
         if(!$Security  || $Security != $ELiConfig['security']){
             if( isset($_GET['security']) ){
-                $security2 = 'security/'.ELimm($SESSIONID.$GLOBALS['header']['user_agent']);
+                $security2 = 'security/'.ELimm($SESSIONID);
                 if( $ELiMem ->ja($security2,1,360) > 4){
                     return ELiError("ELikj: Security filtering time 3600");
                 }
