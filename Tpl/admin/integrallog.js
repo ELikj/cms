@@ -19,6 +19,7 @@ ELi['admin/integrallog'] = {
           ,{field:'num', title: '数量'}
           ,{field:'pluginid', title: '插件名字'}
           ,{field:'typename', title: '类型'}
+          ,{field:'off', title: '标识'}
           ,{field:'atime', title: '时间', templet  :function(d){
             return time(d.atime)
           }}
@@ -145,7 +146,9 @@ ELi['admin/integrallog'] = {
           D.data
         ]
         //,'data($$)详细数据($$)textarea($$)($$)详细数据($$)'+D.data
+        ,'off($$)标识($$)textshow($$)($$)标识($$)'+D.off
         ,'ip($$)ip($$)textshow($$)($$)ip($$)'+D.ip
+       
         ,'atime($$)时间($$)time($$)($$)time($$)'+D.atime
       
         

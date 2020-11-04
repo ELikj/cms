@@ -2396,7 +2396,7 @@ $ELiConfig = array(
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
-    'security'=> 'securitysecurity',//管理后台安全验证 ?security=
+    'security'=> '',//管理后台安全验证 ?security=
     'whitelist' => 'admin|ewm|lotteryprediction|', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
@@ -2608,36 +2608,6 @@ if (!defined("Residentmemory")) {
     }
     $Plus = strtolower($Plus);
     $ClassFunc = strtolower($ClassFunc);
-    
-    if($Plus == "admin" && $ELiConfig['security'] != ""){
-        $security = 'security/'.ELimm("以厘科技".date("Y-m-d").$SESSIONID.ip()."ELikj.com".$GLOBALS['header']['user_agent']);
-        $Security = $ELiMem ->g($security);
-        if(!$Security  || $Security != $ELiConfig['security']){
-            if( isset($_GET['security']) ){
-                $security2 = 'security/'.ELimm($SESSIONID);
-                if( $ELiMem ->ja($security2,1,360) > 4){
-                    return ELiError("ELikj: Security filtering time 3600");
-                }
-                if($_GET['security'] == $ELiConfig['security']){
-                    $ELiMem ->s($security,$_GET['security']);
-                }else{
-                    if($Security){
-                        $ELiMem ->d($security);
-                    }
-                    return ELiError("ELikj: Security filtering");
-                }
-            }else{
-                if($Security){
-                    $ELiMem ->d($security);
-                }
-                return ELiError("ELikj: Security filtering");
-            }
-        }
-        if($ClassFunc == 'quite'){
-            $ELiMem ->d($security);
-        }
-    }
-    
     ELiLoad($Plus);
     $GLOBALS['plugin'] = $Plus;
     $GLOBALS['pluginurl'] = $ELiConfig['dir'] . "Tpl/" . $Plus . '/';

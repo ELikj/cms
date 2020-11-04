@@ -64,6 +64,9 @@ class ELikj_admin{
 
     function quite($CANSHU,$features){
         ELilog('adminlog',ELihhGet('adminid'),1,"",'quite');
+        global $SESSIONID,$ELiMem;
+        $ELiMem ->d('security/'.ELimm(date("Y-m-d")."以厘科技".$SESSIONID."ELikj.com"));
+
         ELihhDel();
         return echoapptoken([],1,"","");
     }
@@ -336,6 +339,55 @@ class ELikj_admin{
         $_SESSION['adminid'] = (int)ELihhGet('adminid');
         $ClassFunc = $CANSHU['-1'];
         unset($CANSHU['-1']);
+        global $ELiConfig,$ELiMem,$SESSIONID;
+        if( $ELiConfig['security'] != "" ){
+            $security = 'security/'.ELimm(date("Y-m-d")."以厘科技".$SESSIONID."ELikj.com");
+            $Security = $ELiMem ->g($security);
+            if($Security){
+                if($Security['num'] > 3){
+                    return ELiError("ELikj: Security filtering !!!!");
+                }
+            }
+            if( !$Security || $Security['security'] != $ELiConfig['security'] ){
+                if(isset($_GET['security']) && $_GET['security'] == $ELiConfig['security']){
+                    $Security = [
+                        'security' => $_GET['security'],
+                        'user_agent'=> $GLOBALS['header']['user_agent'],
+                        'ip'=>ip(),
+                        'num' => 0
+                    ];
+                    $ELiMem ->s($security,$Security);
+                }else{
+                    if( isset($_GET['security']) ){
+                        if(!$Security){
+                            $Security =[
+                                'security' => "",
+                                'user_agent'=> "",
+                                'ip'=>"",
+                                'num' => 0
+                            ];
+                        }
+                        $Security['num']++;
+                        $ELiMem ->s($security,$Security,360);
+                    }
+                    return ELiError("ELikj: Security filtering !");
+                }
+            }
+
+            if($GLOBALS['header']['user_agent'] != $Security['user_agent']){
+                return ELiError("ELikj: Security filtering !!");
+            }
+
+            $ADMIN = adminid($_SESSION['adminid']);
+            if($ADMIN){
+                if( $ADMIN['verifyip'] == '1'){
+                    if($Security['ip'] != ip()){
+                        return ELiError("ELikj: Security filtering !!!");
+                    }
+                }
+            }
+        }
+
         try {
            
             $weideng = ['code'=>'','home'=>'','login'=>'','index'=>''];
