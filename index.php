@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '9.9.9');
+define("ELikjVER", '10.0.0');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -2396,7 +2396,7 @@ $ELiConfig = array(
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
-    'security'=> 'security',//管理后台安全验证 ?security=
+    'security'=> '',//管理后台安全验证 ?security=
     'whitelist' => 'admin|ewm|lotteryprediction|', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
@@ -2500,7 +2500,7 @@ if (!defined("Residentmemory")) {
         }
     }
 
-    $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? file_get_contents('php://input');
+    $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? (file_get_contents('php://input')??"");
     //Header encoding
     header("Access-Control-Allow-Origin: * ");
     header("Access-Control-Allow-Methods: * ");
