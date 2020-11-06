@@ -1,8 +1,6 @@
 <?php
 use RingCentral\Psr7\Response;
 use OSS\OssClient;
-
-
 /* ******************************************
  * 系统名称：以厘建站系统
  * 版权所有：成都市以厘科技有限公司 www.eLikj.com
@@ -25,16 +23,15 @@ use OSS\OssClient;
 define("Residentmemory","aliyun");
 define("ELiTempPath","/tmp/");
 define( 'WWW', dirname(__FILE__).'/');
-
 function aliyundel($xxx){
     $ossClient = new OssClient('idd','密码', 'oss-cn-hangzhou.aliyuncs.com');
     try {
         $ossClient->deleteObject('xianliaogame', ltrimE($xxx,"/")  );
     } catch (OssException $e) {
-
         //print($e->getMessage());
     }
 }
+
 function upload(){
    // ob_clean();
     $ext_arr = array( 
@@ -113,58 +110,12 @@ function upload(){
             $nnn = explode(';base64,',$tmpneirong);
             $tmpneirong = base64_decode($nnn['1']);
         }
-
         $CDN = '';
-
-        /*
-
-        $CDN = '';
-        $APID = "idd";
-        $APKY = "密码";
-
-        $NEIRONG = $tmpneirong ;
-        $duankou = "chongchongzhengba";
-        $cmd5 = base64_encode(md5($NEIRONG, true));
-        $shijia = gmdate('D, d M Y H:i:s \G\M\T',time());
-        $REST   = 'PUT';
-        $LUJIN = $returnfile;
-        $request_url = "http://chongchongzhengba.oss-cn-hangzhou.aliyuncs.com";
-        $string_to_sign =  $REST."\n".
-            $cmd5."\n" .
-            "application/octet-stream\n" .
-            $shijia."\n" .
-            "/".trimE( $duankou ,'/').'/'.trimE($LUJIN,'/');
-        $qianm = base64_encode(hash_hmac('sha1', $string_to_sign,  $APKY, true));
-        $temp_headers = array( 
-            'Content-MD5: '.$cmd5,
-            'Content-Type: application/octet-stream',
-            'Authorization: OSS '.$APID.':'.($qianm),
-            'Date: '.$shijia,
-            'Host: chongchongzhengba.oss-cn-hangzhou.aliyuncs.com',
-            'Content-Length: '.strlen($NEIRONG)
-        );
-        $fan = ELipost($request_url.$LUJIN,$NEIRONG,[
-            CURLOPT_HTTPHEADER =>$temp_headers,
-            CURLOPT_USERAGENT=>"RequestCore/1.4.3",
-            CURLOPT_CUSTOMREQUEST=>"PUT"
-        ]);
-
-
-        if($fan != ""){
-            return  array( 'code'=> 0, 'msg' => $LANG['update']['meiwenjian']);
-        }
-        
-        
-        */
-
-
-        
         $ossClient = new OssClient('idd','密码', 'oss-cn-hangzhou.aliyuncs.com');
-       
         try {
             $ossClient->putObject('xianliaogame', ltrimE($returnfile,"/") ,$tmpneirong );
         } catch (OssException $e) {
-            //print($e->getMessage());
+           
         }
 
         if(is_file($tmp_name)){
@@ -197,7 +148,6 @@ function parse_raw_http_request($input, $CONTENT_TYPE )
   
   $a_blocks = preg_split("/-+$boundary/", $input);
   array_pop($a_blocks);
-
   // loop data blocks
   foreach ($a_blocks as $id => $block)
   {
@@ -249,7 +199,7 @@ function tiaozhuan($eangzhan = ""){
    
     $GLOBALS['isend'] = true;
     return new Response(
-        301,
+        302,
         [
             "Access-Control-Allow-Origin"=>"*",
             "Location"=>$eangzhan
@@ -258,8 +208,6 @@ function tiaozhuan($eangzhan = ""){
         ""
     );
 }
-
-
 
 include "index.php";
 $GLOBALS['isend'] = false;
@@ -273,9 +221,6 @@ function handler($request, $context): Response{
     $_FILES = [];
     $_COOKIE = [];
     $GLOBALS['ELiys'] = [];
-
-
-
     $POSTBODY = $body = $request->getBody()->getContents();
     $queries    = $request->getQueryParams();
     $headers    = $request->getHeaders();
@@ -284,12 +229,10 @@ function handler($request, $context): Response{
         $GLOBALS['header'][ strtolower($k )] = reset($v);
     }
     
-
-
     if(strstr($ELiConfig['host'],'://'.$GLOBALS['header']['host']) === false){
 
         return new Response(
-            301,
+            302,
             ["Access-Control-Allow-Origin"=>"*",
             "Location"=>$ELiConfig['host']
             ]
@@ -320,12 +263,7 @@ function handler($request, $context): Response{
             }
         }
     }
-
-
-
-    
     if(strstr($ELiHttp,'Tpl/') !== false  && strstr($ELiHttp,'.php') === false ){
-
         return new Response(
             200,
             ["Access-Control-Allow-Origin"=>"*"]
@@ -333,7 +271,6 @@ function handler($request, $context): Response{
             file_get_contents('./'.$ELiHttp)
         );
     }
-
     //POST Security filtering
     if( $_POST ){
         if( strstr( strtolower( json_encode( $_POST)), DBprefix ) !== false ){
@@ -354,24 +291,24 @@ function handler($request, $context): Response{
     $SESSIONIDMK = false;
     if(isset($_GET['apptoken']) && strlen($_GET['apptoken'] ) > 63){
         $SESSIONID = $_GET['apptoken'];
+       
     }else if(isset($_POST['apptoken']) && strlen($_POST['apptoken'] ) > 63){
         $SESSIONID = $_POST['apptoken'];
+        
     }else if(isset( $_COOKIE['apptoken']) && strlen($_COOKIE['apptoken'] ) > 63){
         $SESSIONID = $_COOKIE['apptoken'];
+        $SESSIONIDMK = true;
+     
     }else{
         $SESSIONIDMK = true;
         $SESSIONID = md5(rand(1,9999999).microtime()).md5( rand(1,9999999).sha1( microtime()));
     }
 
-    //p($_POST,$_GET,$_COOKIE,$_FILES);
-
     if( strstr( $ELiHttp , $ELiConfig['houzui'].'&') !== false ){
-       
         $URI = str_replace( $ELiConfig['houzui'].'&' , $ELiConfig['houzui'].'?', $ELiHttp);
     }else{
         $URI = $ELiHttp;
     }
-
 
     $URI  = ltrimE( str_replace( array( '//' , trimE( $_SERVER['SCRIPT_NAME'] , '/' ) ), array( '/' , '' ) , $URI ) , $ELiConfig['dir'] );
     $TURI = explode( '?' , ltrimE( $URI ,'?'));
@@ -382,7 +319,6 @@ function handler($request, $context): Response{
         $URI = $ELiConfig['object'];
     }
     $URI = str_replace( '&' ,'?', $URI);
-   
     if(!$URI){
         $URI = "";
     }
@@ -437,10 +373,7 @@ function handler($request, $context): Response{
     ELiLoad($Plus);
     $GLOBALS['plugin'] = $Plus;
     $GLOBALS['pluginurl'] = $ELiConfig['dir']."Tpl/".$Plus.'/';
-    //define("plugin", $Plus);
-    //define("pluginurl", $ELiConfig['dir']."Tpl/".$Plus.'/');
     $features = [];
-    //Function whitelist
     try{
         $features = ELiplus($Plus);
     }catch(Exception $e) {
@@ -457,7 +390,7 @@ function handler($request, $context): Response{
     if($hhh && $hhh != ""){
         return new Response(
             200,
-            ($SESSIONIDMK && $ELiConfig['sessionSafety'] ?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly","Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            ($SESSIONIDMK && $ELiConfig['sessionSafety'] ?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']),"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
             ,
             $hhh 
         );
@@ -470,10 +403,8 @@ function handler($request, $context): Response{
         
         return new Response(
             200,
-            ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly","Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']),"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
             ,
-
-            
             '{"code":-1,"data":[],"msg":"no center"}'
         );
     }

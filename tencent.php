@@ -23,8 +23,7 @@ define("ELiTempPath", "/tmp/");
 define('WWW', dirname(__FILE__) . '/');
 function upload()
 {
-
-    $ext_arr = array(
+        $ext_arr = array(
         'friend' => array('gif', 'jpg', 'jpeg', 'png', 'bmp', 'mp4'),
         'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
         'flash' => array('swf', 'flv'),
@@ -70,15 +69,11 @@ function upload()
     }
     $qianzui = 'attachment/' . $LX . '/' . date('Ym') . '/';
     $files =  $ELiConfig['dir'] . $qianzui;
-
     if (empty($_FILES) === false) {
         $file_name = $_FILES[$LX]['name'];
         $tmp_name  = $_FILES[$LX]['tmp_name'];
         $file_size = $_FILES[$LX]['size'];
         if (!$file_name) return  array('code' => '0', 'msg' => $LANG['update']['meiwenjian']);
-        //if ( @is_dir( $WJIAN ) === false) return array( 'code'=> '0', 'msg' => $LANG['update']['meimulu'] );
-        //if ( @is_writable( $WJIAN ) === false) return array( 'code'=> '0', 'msg' => $LANG['update']['meixieru']); 
-        //if ( @is_uploaded_file( $tmp_name) === false) return array( 'code'=> '0', 'msg' => $LANG['update']['chuanshibai']);
         if ($file_size > $max_size) return array('code' => '0', 'msg' => $LANG['update']['maxsizeda']);
         $temp_arr = explode(".", $file_name);
         $file_ext = array_pop($temp_arr);
@@ -99,11 +94,9 @@ function upload()
             $tmpneirong = base64_decode($nnn['1']);
         }
 
-
         $request_url = "腾讯上传网址";
         $APID = "SecretId";
         $APKY = "SecretKey";
-
         $LUJIN = $returnfile;
         $NEIRONG = $tmpneirong;
         $shijia = gmdate('D, d M Y H:i:s \G\M\T', time());
@@ -115,12 +108,11 @@ function upload()
             "q-ak=" . $APID,
             "q-sign-time=" . $KeyTime,
             "&q-key-time=" . $KeyTime,
-            "q-header-list=",
+            "q-header-list=host",
             "q-url-param-list="
         ];
-
         $SignKey = hash_hmac('sha1', $KeyTime, $APKY);
-        $HttpString = "put\n/" . trimE($LUJIN, '/') . "\n\n\n";
+        $HttpString = "put\n/" . trimE($LUJIN, '/') . "\n\nhost=" . $request_url."\n";
         $jjj = "sha1\n" . $KeyTime . "\n" . sha1($HttpString) . "\n";
         $Authorization[] = "q-signature=" . hash_hmac('sha1', $jjj, $SignKey);
         $temp_headers = array(
@@ -130,13 +122,11 @@ function upload()
             'Host: ' . $request_url,
             'Content-Length: ' . strlen($NEIRONG)
         );
-
-        $fan = ELipost($request_url . $LUJIN, $NEIRONG, [
+        $fan = ELipost("https://".$request_url . $LUJIN, $NEIRONG, [
             CURLOPT_HTTPHEADER => $temp_headers,
             CURLOPT_USERAGENT => "RequestCore/1.4.3",
             CURLOPT_CUSTOMREQUEST => "PUT"
         ]);
-
 
         if (trimE($fan) != "") {
             return  array('code' => 0, 'msg' => $LANG['update']['meiwenjian']);
@@ -154,12 +144,6 @@ function upload()
     }
 }
 
-
-
-
-
-
-
 function parse_raw_http_request($input, $CONTENT_TYPE)
 {
     preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
@@ -174,11 +158,8 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
         return;
     }
     $boundary = $matches[1];
-
     $a_blocks = preg_split("/-+$boundary/", $input);
     array_pop($a_blocks);
-
-    // loop data blocks
     foreach ($a_blocks as $id => $block) {
         if (empty($block))
             continue;
@@ -192,14 +173,12 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
             if (!isset($type_['1'])) {
                 continue;
             }
-
             $type = trimE($type_['1']);
             unset($bodyzi['0']);
             unset($bodyzi['1']);
             unset($bodyzi['2']);
             unset($bodyzi['3']);
             $neirong = implode("\r\n", $bodyzi);
-
             $linshitmep = ELiTempPath . md5($name . uuid()) . '.temp';
             file_put_contents($linshitmep, $neirong);
             $_FILES[$file] = [
@@ -215,6 +194,7 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
         }
     }
 }
+
 function tiaozhuan($eangzhan = "")
 {
     global $REQUEST;
@@ -225,7 +205,6 @@ function tiaozhuan($eangzhan = "")
     $GLOBALS['isend'] = true;
     return true;
 }
-
 
 include "index.php";
 $GLOBALS['isend'] = false;
@@ -246,7 +225,6 @@ function main_handler($request, $context)
     $path       = ltrimE($request->path ?? "", $request->requestContext->path ?? "");
     $GLOBALS['ip'] = $request->requestContext->sourceIp ?? "";
     $ELiHttp = ltrimE(rawurldecode(trimE($path)), '/');
-    
     $GLOBALS['header'] = [];
     foreach ($headers as $k => $v) {
         $GLOBALS['header'][strtolower($k)] = $v;
@@ -261,16 +239,16 @@ function main_handler($request, $context)
         $_GET = $queries;
     }
     if (isset($headers['cookie'])) {
-        $headerscookie = toget($headers['cookie']);
+        $headerscookie = toget(  str_replace(';','&',$headers['cookie']) );
 
         foreach ($headerscookie as $k => $v) {
             $_COOKIE[trimE($k)] = trimE($v);
         }
     }
 
-
-    if (strstr($ELiHttp, 'Tpl/') !== false  && strstr($ELiHttp, '.php') === false) {
-
+    $HUOMIAN = explode(".",$ELiHttp);
+    $EXT = end($HUOMIAN);
+    if ( (strstr($ELiHttp, 'Tpl/') !== false  && $EXT != "php") ||  $EXT == "txt" ) {
         return [
             "isBase64Encoded" => true,
             "statusCode" => 200,
@@ -279,14 +257,11 @@ function main_handler($request, $context)
         ];
     }
 
-
-    //POST Security filtering
     if ($_POST) {
         if (strstr(strtolower(json_encode($_POST)), DBprefix) !== false) {
             return ELiError("ELikj: Security filtering");
         }
     }
-    //GET Security filtering
     if (php_sapi_name() != "cli") {
         $Filter = array('<', '>', '..', '(', ')', '"', "'", "*", '[', ']', DBprefix, '{', '}', '$');
         foreach ($Filter  as $Filter_) {
@@ -297,12 +272,16 @@ function main_handler($request, $context)
     } else {
         ELis('Bat_Cli');
     }
+
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
+       
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
+        
     } else if (isset($_COOKIE['apptoken']) && strlen($_COOKIE['apptoken']) > 63) {
+        $SESSIONIDMK = true;
         $SESSIONID = $_COOKIE['apptoken'];
     } else {
         $SESSIONIDMK = true;
@@ -390,22 +369,27 @@ function main_handler($request, $context)
     }
     ELicall($Plus, $ClassFunc, $CANSHU, $features, false);
     $hhh = ob_get_contents();
+    $Content = "text/html; charset=UTF-8;";
     if ($GLOBALS['head'] == "html") {
         $Content = "text/html; charset=UTF-8;";
     } else if ($GLOBALS['head'] == "png") {
         $Content = "image/png";
     } else {
-        
-        if (strstr($GLOBALS['head'], "/") !== false) {
 
+        if (strstr($GLOBALS['head'], "/") !== false) {
+            $Content = "text/html; charset=UTF-8;";
             $url = $GLOBALS['head'];
             if ($GLOBALS['head']) {
                 unset($GLOBALS['head']);
             }
+            $SHUJUXX = ["Content-Type" => $Content, "Access-Control-Allow-Origin" => "*", 'Location' => $url];
+            if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
+                $SHUJUXX["Set-Cookie"] = "apptoken=" . $SESSIONID . ";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']);
+            }
             return  [
                 "isBase64Encoded" => true,
-                "statusCode" => 301,
-                "headers" => ["Content-Type" => $Content, "Access-Control-Allow-Origin" => "*", 'Location' => $url],
+                "statusCode" => 302,
+                "headers" => $SHUJUXX ,
                 "body" => base64_encode("")
             ];
 
@@ -422,7 +406,7 @@ function main_handler($request, $context)
     ];
 
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
-        $SHUJUXX["headers"]["Set-Cookie"] = "apptoken=" . $SESSIONID . ";HttpOnly";
+        $SHUJUXX["headers"]["Set-Cookie"] = "apptoken=" . $SESSIONID . ";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']);
     }
 
     if ($GLOBALS['head']) {

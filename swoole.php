@@ -44,7 +44,7 @@ function tiaozhuan($eangzhan = "")
     if (isset($GLOBALS['isend']) && $GLOBALS['isend']) {
         return;
     }
-    $REQUEST->redirect($eangzhan, 301);
+    $REQUEST->redirect($eangzhan, 302);
     $GLOBALS['isend'] = true;
     return true;
 }
@@ -90,7 +90,7 @@ $http->on("request", function ($request, $response) {
 
     //$_SERVER["header"] =  $request->header;
     if (strstr($ELiConfig['host'], '://' . $request->header['host']) === false) {
-        $response->redirect($ELiConfig['host'], 301);
+        $response->redirect($ELiConfig['host'], 302);
         return "";
     }
 
@@ -147,15 +147,20 @@ $http->on("request", function ($request, $response) {
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
+     
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
+       
     } else if (isset($_COOKIE['apptoken']) && strlen($_COOKIE['apptoken']) > 63) {
         $SESSIONID = $_COOKIE['apptoken'];
         $SESSIONIDMK = true;
+       
     } else {
         $SESSIONIDMK = true;
         $SESSIONID = md5(rand(1, 9999999) . microtime()) . md5(rand(1, 9999999) . sha1(microtime()));
     }
+    
+    
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
         $response->cookie('apptoken', $SESSIONID,  time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);
     }

@@ -65,7 +65,11 @@ if($kongzhi == 'get'){
                         if(isset( $yiinstall[$hhh] )){
                             unset( $yiinstall[$hhh] );
                         }else{
-                            $yiinstall[$hhh]  = $hhh;
+                            $neirong = file_get_contents($dir . $ds . $file);
+                            $cc = explode("INSTALL(",$neirong);
+                            if(count($cc) > 1){
+                                $yiinstall[$hhh]  = $hhh;
+                            }
                         }
                     }
                 }

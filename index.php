@@ -1260,7 +1260,7 @@ function ELipost($url,  $para, $Extension = array(), $cacert_url = '')
     }
 
     curl_setopt($curl, CURLOPT_TIMEOUT, 240);
-    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $para);
@@ -2254,7 +2254,7 @@ if (!function_exists("tiaozhuan")) {
         }
         if (!defined("Residentmemory")) {
 
-            header('HTTP/1.1 301 Moved Permanently');
+            header('HTTP/1.1 302 Moved Permanently');
             header("Location: " . $eangzhan);
             exit();
         }
@@ -2396,7 +2396,7 @@ $ELiConfig = array(
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
-    'security'=> '',//管理后台安全验证 ?security=
+    'security'=> 'security',//管理后台安全验证 ?security=
     'whitelist' => 'admin|ewm|lotteryprediction|', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
@@ -2487,7 +2487,7 @@ if (!defined("Residentmemory")) {
 
     if (isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
 
-        header('HTTP/1.1 301 Moved Permanently');
+        header('HTTP/1.1 302 Moved Permanently');
         header("Location: " . $ELiConfig['host']);
         return;
     }
@@ -2502,8 +2502,9 @@ if (!defined("Residentmemory")) {
 
     $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? file_get_contents('php://input');
     //Header encoding
-    header("Access-Control-Allow-Origin:*");
-
+    header("Access-Control-Allow-Origin: * ");
+    header("Access-Control-Allow-Methods: * ");
+     
     ELiUri();
     $ELiHttp = ltrimE(rawurldecode(trimE($_SERVER["REQUEST_URI"])), '/');
     //POST Security filtering
@@ -2529,15 +2530,19 @@ if (!defined("Residentmemory")) {
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
+        
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
+       
     } else if (isset($_COOKIE['apptoken']) && strlen($_COOKIE['apptoken']) > 63) {
         $SESSIONID = $_COOKIE['apptoken'];
         $SESSIONIDMK = true;
+        
     } else {
         $SESSIONIDMK = true;
         $SESSIONID = md5(rand(1, 9999999) . microtime()) . md5(rand(1, 9999999) . sha1(microtime()));
     }
+
 
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
         setcookie('apptoken', $SESSIONID, time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);

@@ -114,6 +114,7 @@ CREATE TABLE `ELi_currencylog` (
   KEY `off` (`off`),
   KEY `data` (`data`),
   KEY `num` (`num`),
+  KEY `pluginid_type` (`pluginid`,`type`),
   KEY `uid_type` (`uid`,`type`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='货币日志';
 
@@ -177,6 +178,7 @@ CREATE TABLE `ELi_integrallog` (
   KEY `ip` (`ip`),
   KEY `data` (`data`),
   KEY `num` (`num`),
+  KEY `pluginid_type` (`pluginid`,`type`),
   KEY `uid_type` (`uid`,`type`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='积分日志';
 
@@ -216,6 +218,7 @@ CREATE TABLE `ELi_moneylog` (
   KEY `ip` (`ip`),
   KEY `data` (`data`),
   KEY `num` (`num`),
+  KEY `pluginid_type` (`pluginid`,`type`),
   KEY `uid_type` (`uid`,`type`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='金额日志';
 
