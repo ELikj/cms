@@ -4,7 +4,7 @@
 global $ELiMem,$ELiDataBase,$ELiConfig;
 
 $admin = db('admin');
-$DATA = $admin ->qurey("select TABLE_NAME,TABLE_COMMENT,TABLE_ROWS,AUTO_INCREMENT from information_schema.tables where table_schema='".ELiSecurity($ELiDataBase[$ELiConfig['dbselect']]['database'])."';","erwei");
+$DATA = $admin ->qurey("select TABLE_NAME,TABLE_COMMENT,TABLE_ROWS,AUTO_INCREMENT from information_schema.tables where table_schema='".ELixss($ELiDataBase[$ELiConfig['dbselect']]['database'])."';","erwei");
 //TABLE_NAME  TABLE_COMMENT  TABLE_ROWS
 
 $kuozhan  = [];

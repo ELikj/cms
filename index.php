@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '10.0.0');
+define("ELikjVER", '10.0.1');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -551,6 +551,9 @@ class ELiDatabaseDriver
     var $JOINwhere = null;
     var $yuanwhere = null;
     var $tiaoshi = false;
+    var $PAICHU = null;
+    var $ZHICHA = null;
+
     public function __construct($data = '')
     {
         $this->DB = $data;
@@ -781,7 +784,8 @@ class ELiDatabaseDriver
             foreach ($hhx as $zifu) {
                 $zuhe[] = '`' . ELiSql($zifu) . '`';
             }
-            $this->tablejg['0'] = implode(',', $zuhe);
+            
+            $this->ZHICHA = implode(',', $zuhe);
         }
         return $this;
     }
@@ -795,8 +799,9 @@ class ELiDatabaseDriver
                     $zuhe[] = '`' . ELiSql($k) . '`';
                 }
             }
-            $this->tablejg['0'] = implode(',', $zuhe);
+            $this->PAICHU = implode(',', $zuhe);
         }
+
         return $this;
     }
     function total($data = '')
@@ -1006,9 +1011,17 @@ class ELiPdo extends ELiDatabaseDriver
             }
             return  $DATA;
         } else if ($moth == 'find') {
-            $chaxun = $this->tablejg[0];
+            if($this-> ZHICHA ){
+                $chaxun =$this-> ZHICHA;
+            }else if($this-> PAICHU ){
+                $chaxun =$this-> PAICHU;
+            }else{
+                $chaxun = $this->tablejg[0];
+            }
+            
+
             $sql = "SELECT $chaxun FROM  `{$this->table}` {$this->where} {$this->paixu} LIMIT 0 , 1";
-            $this->where = $this->paixu = null;
+            $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = null;
             if ($this->tiaoshi) {
                 p($sql);
                 $this->tiaoshi = false;
@@ -1027,7 +1040,16 @@ class ELiPdo extends ELiDatabaseDriver
             $this->shezhi($diyitable);
             $diyitable = $this->biao();
             $xingdian = "*";
-            $baiojiegou = $this->tablejg[0];
+            if($this-> ZHICHA ){
+                $baiojiegou =$this-> ZHICHA;
+            }else if($this-> PAICHU ){
+                $baiojiegou =$this-> PAICHU;
+            }else{
+                $baiojiegou = $this->tablejg[0];
+            }
+
+      
+
             if ($baiojiegou != "") {
                 $biaogou = explode(",", $baiojiegou);
                 $zuhede = array();
@@ -1059,7 +1081,18 @@ class ELiPdo extends ELiDatabaseDriver
                 $shujude = $this->Safeconversion($shujude);
                 $this->shezhi($shujude);
                 $shujude = $this->biao();
-                $baiojiegou = $this->tablejg[0];
+
+
+                if($this-> ZHICHA ){
+                    $baiojiegou =$this-> ZHICHA;
+                }else if($this-> PAICHU ){
+                    $baiojiegou =$this-> PAICHU;
+                }else{
+                    $baiojiegou = $this->tablejg[0];
+                }
+               
+
+
                 if(isset($wheresd[$i])){
                     $wheresd[$i] = str_replace(" ","",$wheresd[$i]);
                 }else{
@@ -1089,7 +1122,7 @@ class ELiPdo extends ELiDatabaseDriver
             }
             $onhouxu = ltrimE($onhouxu, $jsondate);
             $sql = "SELECT $xingdian FROM $diyitable $jsondate $onhouxu {$this->where} {$this->paixu} {$this->lismt}";
-            $this->yuanwhere = $this->JOINwhere = $this->JOIN = $this->JOINtable = $this->where = $this->paixu = $this->lismt = null;
+            $this-> PAICHU = $this-> ZHICHA = $this->yuanwhere = $this->JOINwhere = $this->JOIN = $this->JOINtable = $this->where = $this->paixu = $this->lismt = null;
             if ($this->tiaoshi) {
                 p($sql);
                 $this->tiaoshi = false;
@@ -1100,9 +1133,19 @@ class ELiPdo extends ELiDatabaseDriver
             if (!$row) return false;
             else return $row;
         } else if ($moth == 'select') {
-            $chaxun = $this->tablejg[0];
+
+
+            if($this-> ZHICHA ){
+                $chaxun =$this-> ZHICHA;
+            }else if($this-> PAICHU ){
+                $chaxun =$this-> PAICHU;
+            }else{
+                $chaxun = $this->tablejg[0];
+            }
+
+
             $sql = "SELECT $chaxun FROM  `{$this->table}` {$this->where} {$this->paixu} {$this->lismt}";
-            $this->where = $this->paixu = $this->lismt = null;
+            $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = $this->lismt = null;
             $qq = $this->mysql->prepare($sql);
             if ($this->tiaoshi) {
                 p($sql);
@@ -1143,7 +1186,7 @@ class ELiPdo extends ELiDatabaseDriver
             else return false;
         } else if ($moth == 'xiugai') {
             $sql = "UPDATE   `{$this->table}` SET {$this->update}  {$this->where}  {$this->lismt}";
-            $this->where = $this->update = $this->lismt = null;
+            $this-> PAICHU = $this-> ZHICHA = $this->where = $this->update = $this->lismt = null;
             if ($this->SHIWU == 1) return $sql . ';@;';
             if ($ELiConfig['doku'] == '1' && $this->bqdoq !=  $this->dqqz)
                 $this->lianjie($this->DB[$this->bqdoq]);
@@ -1158,7 +1201,7 @@ class ELiPdo extends ELiDatabaseDriver
         } else if ($moth == 'zongshu') {
             $chaxun = $this->tablejg[0];
             $sql = "SELECT count(*) as count FROM  `{$this->table}` {$this->where} {$this->paixu} {$this->lismt}";
-            $this->where = $this->paixu = $this->lismt = null;
+            $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = $this->lismt = null;
             $qq = $this->mysql->prepare($sql);
 
             if ($this->tiaoshi) {
@@ -1787,11 +1830,15 @@ function callELi($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = arr
         $CANSHU['-1'] = $ClassFunc_;
     }
     $fan = $class->$ClassFunc($CANSHU, $features);
-    if ($fanhui) {
+    if ($fanhui === true) {
         return $class;
     }
-
-    return $fan;
+    if ($fanhui === false) {
+        return $fan;
+    }
+    ob_clean();
+    $GLOBALS['isend'] = false;
+    return ;
 }
 //Execute plugin
 function ELibug($shuju)
@@ -2390,14 +2437,14 @@ $ELiConfig = array(
     'maxsize' => '100000000', //上传尺寸
     'dir' => '/', //二级目录
     'houzui' => '/', //后缀
-    'host' => 'http://192.168.0.13', //开启https
-    'cdnhost' => 'http://192.168.0.13/', //图片资源cdn 资源
+    'host' => 'http://127.0.0.1', //开启https
+    'cdnhost' => 'http://127.0.0.1/', //图片资源cdn 资源
     'lang' => 'cn', //语言包
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
     'security'=> '',//管理后台安全验证 ?security=
-    'whitelist' => 'admin|ewm|lotteryprediction|', //白名单不用判断插件开关
+    'whitelist' => 'admin', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
     'behavior' => 'index', //默认行为

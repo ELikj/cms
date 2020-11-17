@@ -1,45 +1,27 @@
 ```
 /* phpFrame  Application
 * ******************************************
-* home: www.elikj.com
+* home: www.elikj.cn
 * Copyright  ELikj
 * Trademark  ELikj
 * ******************************************
-* 云框架 快速开发 框架  集合大家的插件快速开发
+* 云框架,快速开发框架,集合大家的插件快速开发!
 */
-ELikjVER 9.1.2{
+前段以 layui , jquery 为基础 kindeditor 富文本编辑器,新增 echarts 图表绘制!
+原创开发的前段快速表单函数,jsfrom 快速生成表单修改新增数据!
+极简路由,根据url访问对应的类调用对应的函数!
+每个插件都是相互独立,又能相互关联,强大又灵活!
+特有的插件函数 Construct 没有找到的类函数全部会调用这里,方便开发多功能系统!
+特有的url访问只能直接访问小写函数,只要函数包含大写,只能通过内部调用!
+万用php基础框架,为开发人员,提供基础系统框架!
+快速脚手架让开发人员快速开发出自己的应用插件,
+独有的支持,云函数运算环境,swoole环境和常见的普通php环境!
+强大的基础管理后台,方便开发人员自主扩展应用插件!
+框架详细讲解部分:
+第一部分 https://mp.weixin.qq.com/s/UrpW5nEMD3op4X9MDKy4ZQ
+第二部分 https://mp.weixin.qq.com/s/o3kaZDUdyZfJyhHyQbp-3Q
 
 
-}
-ELikjVER 9.0.0{
-      增加数据库缓存类 kv 缓存
-      用于不适合文本缓存的地方使用 阿里云函数计算
-      修复阿里云函数计算 post 获取方式
-      修复swoole 一些问题
-      修改界面加载方式 强制返回数据 json  用于一些地方 不能强制head头问题
-      修改 加载通信请求方式 每个信息强制带 apptoken 同一登陆token
-      优化后台移除功能 插件显示 子菜单 （吧 某一个插件的 菜单后台设置成一级菜单 ）
-      initialize.js    基础样式演示
-      initialize.php   基础操作演示
-}
-
-ELikjVER 4.0.1{
-      文档更新说明 
-      调整代码 
-      支持 阿里云  函数计算  aliyun.php 常驻内存
-      支持 swoole 模式运行  swoole.php 常驻内存
-      「    常驻内存可控制 参考aliyun  和 swoole文件
-            可以改造函数 
-                  echoapptoken  输出函数
-                  upload  上传函数
-                  ip  获取ip
-            可以配置常量
-                  ELikj  核心文件存放位置
-                  ELiTempPath 缓存的目录
-                  Residentmemory 启用 常驻内存服务
-      」
-      根据 $SESSIONID 处理session  函数增加 ELihhGet 读取session  ELihhSet 设置session ELihhDel清空火删除指定的
-}
 
 $D = db('center'); 
 $D    -> setshiwu(1)  //设置等于1 开启事务    

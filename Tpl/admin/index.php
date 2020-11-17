@@ -85,6 +85,7 @@ var BIAO = Array(
 </html>
 <script src="<?php echo WZHOST.'Tpl/';?>jquery.js"></script>
 <script src="<?php echo WZHOST.'Tpl/';?>layui/layui.all.js"></script>
+<script src="<?php echo WZHOST.'Tpl/';?>layui/echarts.min.js"></script>
 <script src="<?php echo WZHOST.'Tpl/';?>layui/kindeditor-all-min.js"></script>
 <script>
 window.VER = '<?php echo ELikjVER;?>';
