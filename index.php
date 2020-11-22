@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '10.0.1');
+define("ELikjVER", '10.0.0');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -30,7 +30,6 @@ $ClassFunc  = "";
 $GLOBALS['ELiys'] = [];
 
 function ltrimE($nn ,$wenzi =""){
-
     if($wenzi == ""){
         return ltrim($nn,$wenzi);
     }
@@ -42,7 +41,6 @@ function ltrimE($nn ,$wenzi =""){
     }else{
         return $nn;
     }
-    
 }
 
 function rtrimE($nn ,$wenzi=""){
@@ -65,14 +63,12 @@ function trimE($nn ,$wenzi=""){
     }
     return rtrimE(ltrimE($nn,$wenzi),$wenzi);
 }
-
 //Safe conversion
 function Safeconversion($data)
 {
     if (!get_magic_quotes_gpc()) return addslashes($data);
     else return $data;
 }
-
 //xss defense
 function ELixss($data)
 {
@@ -88,7 +84,6 @@ function ELiSql($data)
     $guoHO = array('&#60;&#63;&#112;&#104;&#112;', 'crteea', 'secelt', 'upteda', 'detele', 'datbase', 'DBprefix', 'showw tbales', 'dorp', 'inesrt', 'atler', '');
     return str_ireplace($guolv, $guoHO, $data);
 }
-
 //Memcache
 class ELicache
 {
@@ -310,8 +305,7 @@ function Limit($page_size = 10, $page = 5)
 }
 //Group URL
 function getarray($para)
-{
-    $arg  = "";
+{   $arg  = "";
     $zuhe = array();
     foreach ($para as $k => $v) {
         $zuhe[] = "$k=$v";
@@ -343,21 +337,17 @@ function toget($string)
     }
     foreach ($canshu as $k => $v) {
         if (strstr($k, '[') !== false  && strstr($k, ']') !== false) {
-
             $kx = str_replace(array('[', ']'), array('$@$', ''), $k);
             $kx_ = explode('$@$', $kx);
             unset($canshu[$k]);
-
             $linshi = [];
             $zuhe = [];
-
             $zongshu = count($kx_);
             if ($zongshu > 0) {
                 if (!isset($canshu[$kx_[0]])) {
                     $canshu[$kx_[0]] = [];
                 }
             }
-
             if ($zongshu > 1) {
                 if ($zongshu == 2) {
                     if (!is_array($canshu[$kx_[0]])) {
@@ -368,10 +358,8 @@ function toget($string)
                     $canshu[$kx_[0]][$kx_[1]] = [];
                 }
             }
-
             if ($zongshu > 2) {
                 if ($zongshu == 3) {
-
                     if (!is_array($canshu[$kx_[0]][$kx_[1]])) {
                         $canshu[$kx_[0]][$kx_[1]] = [];
                     }
@@ -380,8 +368,6 @@ function toget($string)
                     $canshu[$kx_[0]][$kx_[1]][$kx_[2]] = [];
                 }
             }
-
-
             if ($zongshu > 3) {
                 if ($zongshu == 4) {
                     if (!is_array($canshu[$kx_[0]][$kx_[1]][$kx_[2]])) {
@@ -394,7 +380,6 @@ function toget($string)
             }
 
             if ($zongshu > 4) {
-
                 if ($zongshu == 5) {
                     if (!is_array($canshu[$kx_[0]][$kx_[1]][$kx_[2]][$kx_[3]])) {
                         $canshu[$kx_[0]][$kx_[1]][$kx_[2]][$kx_[3]] = [];
@@ -417,7 +402,6 @@ function toget($string)
             }
         }
     }
-
     return $canshu;
 }
 //Safe replacement
@@ -469,9 +453,7 @@ function ELiRmdir($dir, $virtual = false)
 //Get ip address
 if (!function_exists('ip')) {
     function ip()
-    {
-
-        if (isset($GLOBALS['ip'])) {
+    {   if (isset($GLOBALS['ip'])) {
             return $GLOBALS['ip'];
         }
         $ip1 = getenv("HTTP_CLIENT_IP") ? getenv("HTTP_CLIENT_IP") : "none";
@@ -516,7 +498,6 @@ function uuid($hash = "")
 
 function orderid($biaoqian = "ELi")
 {
-
     usleep(1);
     return $biaoqian . date('Ymd' . rand(10, 99) . 'His') . mt_rand(100000, 999999);
 }
@@ -553,7 +534,6 @@ class ELiDatabaseDriver
     var $tiaoshi = false;
     var $PAICHU = null;
     var $ZHICHA = null;
-
     public function __construct($data = '')
     {
         $this->DB = $data;
@@ -1018,8 +998,6 @@ class ELiPdo extends ELiDatabaseDriver
             }else{
                 $chaxun = $this->tablejg[0];
             }
-            
-
             $sql = "SELECT $chaxun FROM  `{$this->table}` {$this->where} {$this->paixu} LIMIT 0 , 1";
             $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = null;
             if ($this->tiaoshi) {
@@ -1047,9 +1025,6 @@ class ELiPdo extends ELiDatabaseDriver
             }else{
                 $baiojiegou = $this->tablejg[0];
             }
-
-      
-
             if ($baiojiegou != "") {
                 $biaogou = explode(",", $baiojiegou);
                 $zuhede = array();
@@ -1060,7 +1035,6 @@ class ELiPdo extends ELiDatabaseDriver
             }
             $wheresd = array();
             $i = 0;
-
             foreach ($this->JOINwhere as $k => $shuju) {
                 $tashiz = explode(',', $k);
                 $wheresd[$i] =  $diyitable . '.' . $tashiz['0'] . ' ' . $shuju . ' @@.' . $tashiz['1'];
@@ -1081,8 +1055,6 @@ class ELiPdo extends ELiDatabaseDriver
                 $shujude = $this->Safeconversion($shujude);
                 $this->shezhi($shujude);
                 $shujude = $this->biao();
-
-
                 if($this-> ZHICHA ){
                     $baiojiegou =$this-> ZHICHA;
                 }else if($this-> PAICHU ){
@@ -1090,15 +1062,11 @@ class ELiPdo extends ELiDatabaseDriver
                 }else{
                     $baiojiegou = $this->tablejg[0];
                 }
-               
-
-
                 if(isset($wheresd[$i])){
                     $wheresd[$i] = str_replace(" ","",$wheresd[$i]);
                 }else{
                     $wheresd[$i] =  "";
                 }
-                
                 if ($i < 1) {
                     $onhouxu .=  $shujude . " ON " . str_replace('@@', $shujude, $wheresd[$i]);
                 } else {
@@ -1133,8 +1101,6 @@ class ELiPdo extends ELiDatabaseDriver
             if (!$row) return false;
             else return $row;
         } else if ($moth == 'select') {
-
-
             if($this-> ZHICHA ){
                 $chaxun =$this-> ZHICHA;
             }else if($this-> PAICHU ){
@@ -1142,8 +1108,6 @@ class ELiPdo extends ELiDatabaseDriver
             }else{
                 $chaxun = $this->tablejg[0];
             }
-
-
             $sql = "SELECT $chaxun FROM  `{$this->table}` {$this->where} {$this->paixu} {$this->lismt}";
             $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = $this->lismt = null;
             $qq = $this->mysql->prepare($sql);
@@ -1203,7 +1167,6 @@ class ELiPdo extends ELiDatabaseDriver
             $sql = "SELECT count(*) as count FROM  `{$this->table}` {$this->where} {$this->paixu} {$this->lismt}";
             $this-> PAICHU = $this-> ZHICHA = $this->where = $this->paixu = $this->lismt = null;
             $qq = $this->mysql->prepare($sql);
-
             if ($this->tiaoshi) {
                 p($sql);
                 $this->tiaoshi = false;
@@ -1288,10 +1251,7 @@ class ELiPdo extends ELiDatabaseDriver
 function ELipost($url,  $para, $Extension = array(), $cacert_url = '')
 {
     $curl = curl_init($url);
-
-
     if (strpos($url, "s://") !== false) {
-
         if ($cacert_url != '') {
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 2);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
@@ -1301,7 +1261,6 @@ function ELipost($url,  $para, $Extension = array(), $cacert_url = '')
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         }
     }
-
     curl_setopt($curl, CURLOPT_TIMEOUT, 240);
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -1309,11 +1268,9 @@ function ELipost($url,  $para, $Extension = array(), $cacert_url = '')
     curl_setopt($curl, CURLOPT_POSTFIELDS, $para);
     if ($Extension) {
         foreach ($Extension as $k => $v) {
-
             curl_setopt($curl, $k, $v);
         }
     }
-
     $responseText = curl_exec($curl);
     curl_close($curl);
     return $responseText;
@@ -1410,12 +1367,8 @@ class ELimemsql
 {
     function __construct($CC = null, $zhiding = [], $dbname = 'memcached')
     {
-
         global $ELiMem, $ELiDataBase;
-
         if (!$ELiMem) $ELiMem = new Textcache;
-
-
         if (!$zhiding) $zhiding = $ELiDataBase;
         if (!$CC) $CC  = db($dbname, $zhiding);
         else  $CC->setbiao($dbname);
@@ -1488,7 +1441,6 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
     else              $ZITI = $sizes;
     $size = rand(30, 40);
     $code1 = "ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmopqrstuvwxyz~!@#$%^&*()_+-=.";
-
     $hhda = [];
     for ($i = 0; $i < $shu; $i++) {
         $hhda[] = $code{
@@ -1504,7 +1456,6 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
     $zhufu = explode(',', $ELiConfig['vcode']);
     $shu *= 2;
     $zzzz = rand(30, 60);
-
     if (class_exists('Imagick')) {
         $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
         $image = new Imagick();
@@ -1790,13 +1741,10 @@ if (!function_exists('upload')) {
             if (is_file($tmp_name)) {
                 @unlink($tmp_name);
             }
-
-
             if (!defined("Residentmemory")) {
                 if (strpos($_SERVER["HTTP_USER_AGENT"]??"", "MSIE")) header('Content-type:text/html; charset=UTF-8');
                 else  header('Content-type:application/json ;charset=UTF-8');
             }
-
             return  array('code' => 1, 'content' =>  array('pic' => $returnfile, 'size' => $file_size, 'houzui' => $file_ext));
         } else  return  array('code' => 0, 'msg' => $LANG['update']['meiwenjian']);
     }
@@ -1805,8 +1753,6 @@ if (!function_exists('upload')) {
 function callELi($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = array(), $fanhui = true)
 {
     $className = 'ELikj_' . $Plus;
-
-
     if (!class_exists($className, false)) {
         ELiLoad($Plus);
     }
@@ -1869,7 +1815,6 @@ function ELicall($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = arr
         }
         $CANSHU['-1'] = $ClassFunc_;
     }
-
     $class->$ClassFunc($CANSHU, $features);
     if ($fanhui) {
         return $class;
@@ -2021,22 +1966,16 @@ function ELiLink($plush,$PAGE = 1)
     if ($ELiConfig['urlpath'] <= 0) {
         $houzui  = "/";
     }
-
     if (!$plush) {
         return WZHOST . $urlpath;
     }
-
     if ($ELiConfig['iscms'] == '1' && $plush['0'] == $ELiConfig['object']) {
         unset($plush['0']);
     }
-
- 
     if($PAGE >  1){
         $plush[]="";
         $houzui = "";
     }
-
-
     return WZHOST . $urlpath . implode($ELiConfig['fenge'], $plush) . $houzui;
 }
 //Safety statement
@@ -2139,8 +2078,6 @@ function  jiaqian($uid = 0, $type = 0, $money = 0, $integral = 0, $currency = 0,
             'atime' => time()
         ));
     }
-
-
     if ($sql == "") {
         return false;
     }
@@ -2276,8 +2213,7 @@ function ELichar($canshu = array(), $data = [])
 }
 //json communication
 function apptoken($data = array(),  $code = '0', $msg = '', $apptoken = '', $kuozan = [])
-{
-    //ob_clean();
+{    //ob_clean();
     //header("Content-Type:application/json; charset=utf-8"); 
     $zhuju = array(
         'code'  => $code,
@@ -2316,18 +2252,14 @@ if (!function_exists("echoapptoken")) {
         if (isset($GLOBALS['isend']) && $GLOBALS['isend']) {
             return true;
         }
-
         if (!defined("Residentmemory")) {
             header("Content-Type:application/json;charset=utf-8");
         }
-
-
         if (isset($GLOBALS['Plugincall']) && $GLOBALS['Plugincall'] == "YES") {
             $GLOBALS['Plugincall'] = "NO";
             return apptoken($data,  $code, $msg, $apptoken, $kuozan);
         }
         echo apptoken($data,  $code, $msg, $apptoken, $kuozan);
-
         $GLOBALS['isend'] = true;
         return true;
     }
@@ -2416,10 +2348,8 @@ function SHA256_verify($content, $sign, $publicKey, $iimm = "SHA256")
     openssl_free_key($key);
     return $ok;
 }
-
 //end funciton Extension
 #######################end funciton Extension####################################
-
 //Load configuration
 $ELiConfig = array(
     'debugging' => '1', // 调试 1 打开 0
@@ -2437,14 +2367,14 @@ $ELiConfig = array(
     'maxsize' => '100000000', //上传尺寸
     'dir' => '/', //二级目录
     'houzui' => '/', //后缀
-    'host' => 'http://127.0.0.1', //开启https
-    'cdnhost' => 'http://127.0.0.1/', //图片资源cdn 资源
+    'host' => 'http://192.168.0.13', //开启https
+    'cdnhost' => 'http://192.168.0.13/', //图片资源cdn 资源
     'lang' => 'cn', //语言包
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
     'security'=> '',//管理后台安全验证 ?security=
-    'whitelist' => 'admin', //白名单不用判断插件开关
+    'whitelist' => 'admin|ewm|lotteryprediction|soumasou', //白名单不用判断插件开关
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
     'behavior' => 'index', //默认行为
@@ -2478,7 +2408,6 @@ if (isset($ELiConfig['debugging']) && $ELiConfig['debugging'] == '0') {
 if (isset($ELiConfig['timezone']) && $ELiConfig['timezone'] != '') {
     @date_default_timezone_set($ELiConfig['timezone']);
 }
-
 //Setting the cache directory
 define('sessionpath', $ELiConfig['sessionpath']);
 //PAGEtrimE  ELifenge
@@ -2520,25 +2449,19 @@ $LANG = array(
 //if(file_exists($LangFile)){
 // $LANG = include  $LangFile;
 //}
-
 //Composer Load switch
 if ($ELiConfig['Composer'] && $ELiConfig['Composer'] == 1) {
     $Composer = include ELikj . "vendor/autoload.php";
 }
-
 $ELiMem = $ELiMemsession =  new Textcache;
-
 //Get route
 ######################################################################
 if (!defined("Residentmemory")) {
-
     if (isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
-
         header('HTTP/1.1 302 Moved Permanently');
         header("Location: " . $ELiConfig['host']);
         return;
     }
-
     $GLOBALS['header'] = [];
     foreach ($_SERVER as $k => $v) {
         $k =  strtolower($k);
@@ -2546,12 +2469,10 @@ if (!defined("Residentmemory")) {
             $GLOBALS['header'][str_replace('http_', '', $k)] = $v;
         }
     }
-
     $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? (file_get_contents('php://input')??"");
     //Header encoding
     header("Access-Control-Allow-Origin: * ");
     header("Access-Control-Allow-Methods: * ");
-     
     ELiUri();
     $ELiHttp = ltrimE(rawurldecode(trimE($_SERVER["REQUEST_URI"])), '/');
     //POST Security filtering
@@ -2562,7 +2483,6 @@ if (!defined("Residentmemory")) {
     }
     //GET Security filtering
     if (php_sapi_name() != "cli") {
-        
         $Filter = array('<', '>', '..', '(', ')', '"', "'", "*", '[', ']', DBprefix, '{', '}', '$');
         foreach ($Filter  as $Filter_) {
             if (strpos(strtolower($ELiHttp), $Filter_) !== false) {
@@ -2573,28 +2493,21 @@ if (!defined("Residentmemory")) {
     } else {
         ELis('Bat_Cli');
     }
-
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
-        
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
-       
     } else if (isset($_COOKIE['apptoken']) && strlen($_COOKIE['apptoken']) > 63) {
         $SESSIONID = $_COOKIE['apptoken'];
         $SESSIONIDMK = true;
-        
     } else {
         $SESSIONIDMK = true;
         $SESSIONID = md5(rand(1, 9999999) . microtime()) . md5(rand(1, 9999999) . sha1(microtime()));
     }
-
-
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
         setcookie('apptoken', $SESSIONID, time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);
     }
-
     if (strstr($ELiHttp, $ELiConfig['houzui'] . '&') !== false) {
         $URI = str_replace($ELiConfig['houzui'] . '&', $ELiConfig['houzui'] . '?', $ELiHttp);
     } else {
@@ -2603,10 +2516,8 @@ if (!defined("Residentmemory")) {
     $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/')), array('/', ''), $URI), $ELiConfig['dir']);
     $TURI = explode('?', ltrimE($URI, '?'));
     $URI  = trimE($TURI['0'], '/');
-
     $URI = str_replace( '..','', $URI);
     $URI = rtrimE($URI,$ELiConfig['houzui']);
-
     if ($URI == '' && $ELiConfig['iscms'] != 1) {
         $URI = $ELiConfig['object'];
     }
@@ -2624,7 +2535,7 @@ if (!defined("Residentmemory")) {
         if (isset($HTTP['2'])) {
             unset($HTTP['2']);
         }
-    } else if ($ELiConfig['iscms'] == 1) {
+    }else if ($ELiConfig['iscms'] == 1) {
 
         if (!isset($HTTP['0']) || $HTTP['0'] == "") {
             $Plus = ELiSecurity($ELiConfig['object']);
