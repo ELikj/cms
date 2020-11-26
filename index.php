@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '10.0.0');
+define("ELikjVER", '10.0.3');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -2367,14 +2367,14 @@ $ELiConfig = array(
     'maxsize' => '100000000', //上传尺寸
     'dir' => '/', //二级目录
     'houzui' => '/', //后缀
-    'host' => 'http://192.168.0.13', //开启https
-    'cdnhost' => 'http://192.168.0.13/', //图片资源cdn 资源
+    'host' => 'http://127.0.0.1', //开启https
+    'cdnhost' => 'http://127.0.0.1/', //图片资源cdn 资源
     'lang' => 'cn', //语言包
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
     'Composer' => 0, //Composer 启用
     'security'=> '',//管理后台安全验证 ?security=
-    'whitelist' => 'admin|ewm|lotteryprediction|soumasou', //白名单不用判断插件开关
+    'whitelist' => 'admin', //白名单不用判断插件开关|
     'iscms' => 0, //只使用cms
     'object' => 'cms', //默认控制器
     'behavior' => 'index', //默认行为
@@ -2384,7 +2384,7 @@ $ELiConfig = array(
 $ELiDataBase = array(
     "write" => array(
         'numbering' => '第一个数据',
-        'hostname' => "192.168.0.13",
+        'hostname' => "127.0.0.1",
         'database' => "ELikj",
         'username' => "root",
         'password' => "qqqqaaaa",

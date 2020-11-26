@@ -2,6 +2,11 @@
     exit( 'Error ELikj'); 
 }
 $GLOBALS['head'] = "html";
+if(isset($_GET['security']) && $_GET['security'] != ""){
+
+    tiaozhuan($ELiConfig['dir'].$ELiConfig['Plus'].$ELiConfig['fenge'].$THIS -> plugin);
+    return ;
+}
 /*
 window.ATEST = ["第 1 个属性","第 2 个属性","第 3 个属性","第 4 个属性","第 5 个属性"];
 window.UIMUI = Array();
