@@ -7,6 +7,7 @@ if(isset($_GET['security']) && $_GET['security'] != ""){
     tiaozhuan($ELiConfig['dir'].$ELiConfig['Plus'].$ELiConfig['fenge'].$THIS -> plugin);
     return ;
 }
+
 /*
 window.ATEST = ["第 1 个属性","第 2 个属性","第 3 个属性","第 4 个属性","第 5 个属性"];
 window.UIMUI = Array();
@@ -199,7 +200,7 @@ function loadurl(url,name){
     }
 
     if(isopen){
-        console.log(url);
+       
         layer.open({
         type: 2,
         title: "<span style='font-size:20px;display:block;text-align:center;color:#1E9FFF;font-weight:bold;'>"+name+"</span>",
@@ -208,10 +209,8 @@ function loadurl(url,name){
         maxmin: false,
         content: url,
         success: function(layero, index){
-               
             }
         });
-
         return ;
     }
 
@@ -293,7 +292,7 @@ function xinzengtext(hhhh){
         }
         tazhi[chandgu].push('');
     }
-    $("."+TTTXUANCLASS+"textqunji_list_"+name).append( textcaidan(name,tazhi,candan,css,500) );
+    $("."+TTTXUANCLASS+" .textqunji_list_"+name).append( textcaidan(name,tazhi,candan,css,500) );
 }
 function textcaidan(name,$zhi,candan,css,outtime){
     var html = "";
@@ -320,12 +319,12 @@ function textcaidan(name,$zhi,candan,css,outtime){
                     html += '<td><input type="text" value="'+(dage[zx]?dage[zx]:"")+'" title="'+huo[1]+'" placeholder="'+huo[1]+'"   name="'+name+'['+x+'][]" id="'+zuid+'" style="float:left;width:80%;margin-right:5px;display: inline-block;" autocomplete="off" class="layui-input"> <button type="button" style="float:left;padding: 0 6px;" class="layui-btn" title="'+huo[1]+'" id="upk_'+zuid+'"><i class="layui-icon layui-icon-upload-drag"></i></button></td>';
                     setTimeout(function(name){
                         layui.upload.render({
-                            elem: '#'+TTTXUANCLASS+'upk_'+name 
+                            elem: '#'+'upk_'+name 
                             ,field:"all"
                             ,url: uploadurl()
                             ,done: function(res){
                                 if(res.code == 1){
-                                    $("#"+TTTXUANCLASS+name).val(res.data);
+                                    $("#"+name).val(res.data);
                                 
                                 }else{
                                     layer.msg(res.msg,{offset: 'c'});
@@ -352,7 +351,7 @@ function ncaidan(name){
     $("#"+TTTXUANCLASS+"idx_"+name).find('.zengjian').remove();
     var i = WEIYI();
     var  zx= "<a style=\\'color:#fff;cursor:pointer;\\' class=\\'caidan_ashanchu\\' data=\\'"+TTTXUANCLASS+"caidan_"+name+'X'+i+"\\'>点击我删除</a>";
-    html ='<div class="layui-input-inline" id="'+TTTXUANCLASS+'caidan_'+name+'X'+i+'" onclick="layer.tips(\''+zx+'\', \'#'+TTTXUANCLASS+'caidan_'+name+'X'+i+'\',{ time:2000,tips: 3,zIndex:9999})" style="margin-bottom:10px;" ><input type="text" name="'+name+'[]" value="" placeholder="请输入值" autocomplete="off" class="layui-input"></div>';
+    html ='<div class="layui-input-inline" id="'+TTTXUANCLASS+'caidan_'+name+'X'+i+'" onclick="layer.tips(\''+zx+'\', \'#'+TTTXUANCLASS+'caidan_'+name+'X'+i+'\',{ time:2000,tips: 3,zIndex:9999})" style="margin-bottom:10px;" ><textarea type="text" name="'+name+'[]" value="" placeholder="请输入值" autocomplete="off" class="layui-input"></textarea></div>';
     html +='<div class="layui-input-inline zengjian" style="margin-bottom:10px;" ><a href="javascript:ncaidan(\''+name+'\')" class="layui-btn">增加菜单</a></div>';
     $("#"+TTTXUANCLASS+"idx_"+name).append(html);
     $('#'+TTTXUANCLASS+'caidan_'+name+'X'+i).click(function(){
@@ -820,7 +819,7 @@ function jsfrom(zifu){
         if($zhi){
            for(var i in $zhi){
                var  zx= "<a style=\\'color:#fff;cursor:pointer;\\' class=\\'caidan_ashanchu\\' data=\\'"+TTTXUANCLASS+"caidan_"+name+'X'+i+"\\'>点击我删除</a>";
-               html +='<div class="layui-input-inline hhhdada" id="'+TTTXUANCLASS+'caidan_'+name+'X'+i+'" onclick="layer.tips(\''+zx+'\', \'#'+TTTXUANCLASS+'caidan_'+name+'X'+i+'\',{ zIndex:999999,time:2000,tips: 3})" style="margin-bottom:10px;" ><input type="text" name="'+name+'[]" value="'+$zhi[i]+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"></div>';
+               html +='<div class="layui-input-inline hhhdada" id="'+TTTXUANCLASS+'caidan_'+name+'X'+i+'" onclick="layer.tips(\''+zx+'\', \'#'+TTTXUANCLASS+'caidan_'+name+'X'+i+'\',{ zIndex:999999,time:2000,tips: 3})" style="margin-bottom:10px;" ><textarea type="text" name="'+name+'[]"  placeholder="'+tishi+'" autocomplete="off" class="layui-input">'+$zhi[i]+'</textarea></div>';
            }
            setTimeout(function(name){
                $("#"+TTTXUANCLASS+"idx_"+name+" .hhhdada").click(function(){
