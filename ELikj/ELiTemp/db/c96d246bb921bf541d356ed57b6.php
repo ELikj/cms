@@ -1,3 +1,0 @@
-<?php #0000000000000
-exit('Error ELikj');?>
-a:2:{i:0;s:91:"`id`,`account`,`password`,`area`,`super`,`groups`,`verifyip`,`off`,`ip`,`atime`,`sessionid`";i:1;a:11:{s:2:"id";s:14:"auto_increment";s:7:"account";s:8:"account_";s:8:"password";s:9:"password_";s:4:"area";s:6:"area_0";s:5:"super";s:6:"super_";s:6:"groups";s:8:"groups_0";s:8:"verifyip";s:10:"verifyip_0";s:3:"off";s:5:"off_0";s:2:"ip";s:3:"ip_";s:5:"atime";s:7:"atime_0";s:9:"sessionid";s:10:"sessionid_";}}

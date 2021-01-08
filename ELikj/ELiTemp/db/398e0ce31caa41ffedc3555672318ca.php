@@ -1,3 +1,0 @@
-<?php #0000000000000
-exit('Error ELikj');?>
-a:2:{i:0;s:99:"`id`,`type`,`qihao`,`weiyi`,`haoma1`,`haoma2`,`haoma3`,`haoma4`,`haoma5`,`haoma6`,`haoma7`,`haoma8`";i:1;a:12:{s:2:"id";s:14:"auto_increment";s:4:"type";s:6:"type_0";s:5:"qihao";s:7:"qihao_0";s:5:"weiyi";s:7:"weiyi_0";s:6:"haoma1";s:8:"haoma1_0";s:6:"haoma2";s:8:"haoma2_0";s:6:"haoma3";s:8:"haoma3_0";s:6:"haoma4";s:8:"haoma4_0";s:6:"haoma5";s:8:"haoma5_0";s:6:"haoma6";s:8:"haoma6_0";s:6:"haoma7";s:8:"haoma7_0";s:6:"haoma8";s:8:"haoma8_0";}}

@@ -1,3 +1,0 @@
-<?php #0000000000000
-exit('Error ELikj');?>
-a:2:{i:0;s:134:"`id`,`name`,`biaoshi`,`appid`,`photo`,`remarks`,`uid`,`off`,`displayswitch`,`audit`,`toubu`,`jili`,`chapin`,`gezi`,`resources`,`atime`";i:1;a:16:{s:2:"id";s:14:"auto_increment";s:4:"name";s:5:"name_";s:7:"biaoshi";s:8:"biaoshi_";s:5:"appid";s:6:"appid_";s:5:"photo";s:6:"photo_";s:7:"remarks";s:8:"remarks_";s:3:"uid";s:5:"uid_0";s:3:"off";s:5:"off_0";s:13:"displayswitch";s:15:"displayswitch_0";s:5:"audit";s:7:"audit_0";s:5:"toubu";s:6:"toubu_";s:4:"jili";s:5:"jili_";s:6:"chapin";s:7:"chapin_";s:4:"gezi";s:5:"gezi_";s:9:"resources";s:10:"resources_";s:5:"atime";s:7:"atime_0";}}
