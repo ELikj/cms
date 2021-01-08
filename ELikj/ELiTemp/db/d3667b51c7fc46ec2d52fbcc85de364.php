@@ -1,0 +1,3 @@
+<?php #0000000000000
+exit('Error ELikj');?>
+a:2:{i:0;s:92:"`id`,`name`,`yjid`,`widht`,`height`,`off`,`liuyan`,`atime`,`ip`,`fenzu`,`fid`,`data`,`gripe`";i:1;a:13:{s:2:"id";s:14:"auto_increment";s:4:"name";s:5:"name_";s:4:"yjid";s:5:"yjid_";s:5:"widht";s:7:"widht_0";s:6:"height";s:8:"height_0";s:3:"off";s:5:"off_0";s:6:"liuyan";s:7:"liuyan_";s:5:"atime";s:7:"atime_0";s:2:"ip";s:3:"ip_";s:5:"fenzu";s:7:"fenzu_0";s:3:"fid";s:5:"fid_0";s:4:"data";s:5:"data_";s:5:"gripe";s:7:"gripe_0";}}

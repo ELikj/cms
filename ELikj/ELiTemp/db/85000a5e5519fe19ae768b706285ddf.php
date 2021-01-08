@@ -1,0 +1,3 @@
+<?php #0000000000000
+exit('Error ELikj');?>
+a:2:{i:0;s:148:"`id`,`name`,`pack`,`zhongren`,`zhongqi`,`zhongjian`,`packrun`,`cshua`,`cshuajg`,`maxtime`,`paixu`,`off`,`atime`,`jqnum`,`num`,`uid`,`danjia`,`allow`";i:1;a:18:{s:2:"id";s:14:"auto_increment";s:4:"name";s:5:"name_";s:4:"pack";s:5:"pack_";s:8:"zhongren";s:9:"zhongren_";s:7:"zhongqi";s:9:"zhongqi_0";s:9:"zhongjian";s:11:"zhongjian_0";s:7:"packrun";s:9:"packrun_0";s:5:"cshua";s:6:"cshua_";s:7:"cshuajg";s:9:"cshuajg_0";s:7:"maxtime";s:9:"maxtime_0";s:5:"paixu";s:7:"paixu_0";s:3:"off";s:5:"off_0";s:5:"atime";s:7:"atime_0";s:5:"jqnum";s:7:"jqnum_0";s:3:"num";s:5:"num_0";s:3:"uid";s:5:"uid_0";s:6:"danjia";s:14:"danjia_0.00000";s:5:"allow";s:6:"allow_";}}

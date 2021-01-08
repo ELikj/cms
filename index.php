@@ -2172,12 +2172,12 @@ function ELiCmd($wezi = "")
 //Read template
 function ELitpl($plugin, $file, $THIS)
 {
-    $file = ELikj . '../Tpl/' . str_replace('..', '', $plugin . '/' . $file) . '.php';
-    if (file_exists($file)) {
+    $file_ = ELikj . '../Tpl/' . str_replace('..', '', $plugin . '/' . $file) . '.php';
+    if (file_exists($file_)) {
         global $ELiConfig, $ELiMem, $CANSHU, $features, $SESSIONID, $LANG;
-        return  include $file;
+        return  include $file_;
     } else {
-        return echoapptoken([], -1, $plugin . ' file does not exist');
+        return echoapptoken([], -1, $plugin .' '.$file. ' file does not exist');
     }
 }
 //Verification post
@@ -2376,7 +2376,7 @@ $ELiConfig = array(
     'security'=> '',//管理后台安全验证 ?security=
     'whitelist' => 'admin', //白名单不用判断插件开关|
     'iscms' => 0, //只使用cms
-    'object' => 'cms', //默认控制器
+    'object' => 'admin', //默认控制器
     'behavior' => 'index', //默认行为
     'superior' => '2',
 );
@@ -2387,9 +2387,9 @@ $ELiDataBase = array(
         'hostname' => "127.0.0.1",
         'database' => "ELikj",
         'username' => "root",
-        'password' => "qqqqaaaa",
+        'password' => "A123Ff3589!~",
         'hostport' => 3306,
-        'charset'  => "utf8",
+        'charset'  => "utf8mb4",
         'prefix'   => 'ELi_'
     )
 );

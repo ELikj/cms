@@ -140,6 +140,9 @@ window.p = console.log;
 window.PAGEHOME = '<?php echo  trim(WZHOST,$ELiConfig['dir']).$GLOBALS['pluginurl'];?>';
 window.TTTXUANCLASS = "";
 $.post = apptongxin;
+window.BASEUP = false; //开启base64上传
+
+
 
 function pichttp(pic){
     if( typeof(pic) == "undefined" ||  pic == '' ){
@@ -322,6 +325,15 @@ function textcaidan(name,$zhi,candan,css,outtime){
                             elem: '#'+'upk_'+name 
                             ,field:"all"
                             ,url: uploadurl()
+                            ,auto: !BASEUP 
+                            ,choose:function(obj){
+                                if(BASEUP){
+                                    obj.preview(function(index, file, result){
+                                        file = new File([result], file.name);
+                                        obj.upload(index, file);
+                                    });
+                                }
+                            }
                             ,done: function(res){
                                 if(res.code == 1){
                                     $("#"+name).val(res.data);
@@ -548,7 +560,11 @@ function jsfrom(zifu){
                         ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
                     ,'</td>'
                     ,'</tr>'].join(''));
-                    
+
+                    if(BASEUP){
+                        files[index] = new File([result], file.name);
+                    }
+
                     tr.find('.demo-reload').on('click', function(){
                         obj.upload(index, file);
                     });
@@ -622,6 +638,15 @@ function jsfrom(zifu){
                     ,accept: 'images' //允许上传的文件类型
                     ,url:uploadurl('?uplx=image') //上传接口
                     ,multiple: true
+                    ,auto: !BASEUP 
+                    ,choose:function(obj){
+                        if(BASEUP){
+                            obj.preview(function(index, file, result){
+                                file = new File([result], file.name);
+                                obj.upload(index, file);
+                            });
+                        }
+                    }
                     ,done: function(res){
                         if(res.code == 1){
                             jishu++;
@@ -677,6 +702,15 @@ function jsfrom(zifu){
                 ,field:"image"
                 ,accept: 'images' //允许上传的文件类型
                 ,url: uploadurl('?uplx=image') //上传接口
+                ,auto: !BASEUP 
+                ,choose:function(obj){
+                    if(BASEUP){
+                        obj.preview(function(index, file, result){
+                            file = new File([result], file.name);
+                            obj.upload(index, file);
+                        });
+                    }
+                }
                 ,done: function(res){
                     if(res.code == 1){
                         $("#"+TTTXUANCLASS+"upv_"+name).val(res.data);
@@ -697,35 +731,6 @@ function jsfrom(zifu){
             $('#'+TTTXUANCLASS+'upshou_'+name).dblclick(hhht);
         },outtime,name,css);
 
-    }else if(type == 'update64'){
-        html +='<div class="layui-input-inline"><input type="text" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;display: inline-block;'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="float:left;padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button> </div><div class="layui-clear"></div>';
-
-        setTimeout(function(name){
-            layui.upload.render({
-                elem: '#'+TTTXUANCLASS+'upk_'+name //绑定元素
-                ,field:"all"
-                ,accept: 'file' //允许上传的文件类型
-                ,url: uploadurl() //上传接口
-                ,auto: false 
-                ,choose:function(obj){
-                    
-                    obj.preview(function(index, file, result){
-                        file = new File([result], file.name);
-                        obj.upload(index, file);
-                    });
-
-                },done: function(res){
-                    if(res.code == 1){
-                        $('#'+TTTXUANCLASS+'upv_'+name).val(res.data);
-                        layer.msg(res.msg,{offset: 'c',time: 1500});
-                    }else{
-                        layer.msg(res.msg,{offset: 'c'});
-                    }
-                }
-            });
-        },outtime,name);
-
-
     }else if(type == 'update'){
 
         html +='<div class="layui-input-inline"><input type="text" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;display: inline-block;'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="float:left;padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button> </div><div class="layui-clear"></div>';
@@ -736,7 +741,15 @@ function jsfrom(zifu){
                 ,field:"all"
                 ,accept: 'file' //允许上传的文件类型
                 ,url: uploadurl() //上传接口
-               
+                ,auto: !BASEUP 
+                ,choose:function(obj){
+                    if(BASEUP){
+                        obj.preview(function(index, file, result){
+                            file = new File([result], file.name);
+                            obj.upload(index, file);
+                        });
+                    }
+                }
                 ,done: function(res){
                     if(res.code == 1){
                         $('#'+TTTXUANCLASS+'upv_'+name).val(res.data);
@@ -748,16 +761,17 @@ function jsfrom(zifu){
             });
         },outtime,name);
     }else if(type == 'ui'){
+        var xxxname = hex_md5(name);
         
-        html+='<textarea name="'+name+'"  id="'+TTTXUANCLASS+'ui_'+name+'" style="'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'"  class="layui-textarea" style="display: none;">'+moren+'</textarea>';
-        setTimeout(function(name,css){
+        html+='<textarea name="'+name+'"  id="'+TTTXUANCLASS+'ui_'+xxxname+'" style="'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'"  class="layui-textarea" style="display: none;">'+moren+'</textarea>';
+        setTimeout(function(name,css,xxxname){
            
-           var kkkk = KindEditor.create('#'+TTTXUANCLASS+'ui_'+name, {
+           var kkkk = KindEditor.create('#'+TTTXUANCLASS+'ui_'+xxxname, {
                 ttttt:name
             });
             UIMUI.push(kkkk);
 
-        },outtime,name,css);
+        },outtime,name,css,xxxname);
 
 
     }else if(type == 'textarea'){
@@ -856,15 +870,13 @@ function jsfrom(zifu){
                 name+'_'+xx['0'],
                 xx['0'],
                 xx['1'],
-                xx['2']?xx['2']:"",
-              '',
-              $zhi[mx]
+                xx['2']?   xx['2'].replace(/\@/g,",").replace(/\$/g,"-")   :"",
+                xx['3']?   xx['3'].replace(/\@/g,",").replace(/\$/g,"-")   :"",
+                $zhi[mx],
+                xx['4']?  xx['4']:""
               
             ]);
         }
-
-       // p(yuliuzhi,$zhi);
-
 
     }else{
         html +='<input type="'+type+'" value="'+moren+'" name="'+name+'" style="'+css+'" lay-verify="'+verify+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input">';

@@ -145,10 +145,11 @@ function upload()
 }
 
 function parse_raw_http_request($input, $CONTENT_TYPE)
-{
+{   
+    
     preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
     if (!isset($matches[1])) {
-        $hujux = toget(rawurldecode(($input)));
+        $hujux = toget( urldecode($input));
         foreach ($hujux as $k => $v) {
             if ($k == "") {
                 continue;
@@ -189,6 +190,7 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
                 'size' => strlen($neirong)
             ];
         } else {
+            $block = urldecode($block);
             preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
             $_POST[$matches[1]] = $matches[2];
         }
