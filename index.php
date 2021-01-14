@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '10.0.3');
+define("ELikjVER", '10.0.5');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -107,7 +107,7 @@ class ELicache
     {
         return $this->md->delete(md5($key));
     }
-    public function f()
+    public function f($key = '')
     {
         return $this->md->flush();
     }
@@ -197,7 +197,11 @@ class Textcache
     }
     public function f($key = '')
     {
-        if ($key == '')  $key = $this->DB;
+        if ($key == ''){
+            $key = $this->DB;
+        }else{
+            $key = ELiTempPath.str_replace('..', '', $key);
+        }
         return ELiRmdir($key);
     }
     public function s($key, $value, $time = 0)
@@ -318,7 +322,10 @@ function getarray($para)
 }
 // to array
 function toget($string)
-{
+{   
+    $string = str_replace('&nbsp;',' ',$string);
+    parse_str($string,$_GET_);
+    return $_GET_;
     $wenzi = explode("&", $string);
     $canshu = array();
     foreach ($wenzi as $shujus) {
@@ -1402,9 +1409,12 @@ class ELimemsql
     {
         return $this->mysql->delete(array('name' => $key));
     }
-    public function f()
-    {
-        return $this->mysql->delete();
+    public function f($key = "" )
+    {   $where = [];
+        if($key != ""){
+            $where['name LIKE'] = '%'.ELixss($key).'%';
+        }
+        return $this->mysql->delete($where);
     }
     public function j($key, $num = 1, $time = 0)
     {
