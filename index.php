@@ -8,7 +8,7 @@
  * ******************************************
 */
 ob_start();
-define("ELikjVER", '10.0.5');
+define("ELikjVER", '10.0.6');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -2375,10 +2375,10 @@ $ELiConfig = array(
     'fenge' => '/', //分割
     'pagetrimE' => 1, //开启替换
     'maxsize' => '100000000', //上传尺寸
-    'dir' => '/', //二级目录
+    'dir' => '###ELiConfig_dir###', //二级目录
     'houzui' => '', //后缀
-    'host' => 'http://127.0.0.1', //开启https
-    'cdnhost' => 'http://127.0.0.1/', //图片资源cdn 资源
+    'host' => '###ELiConfig_host###', //开启https
+    'cdnhost' => '###ELiConfig_host######ELiConfig_dir###', //图片资源cdn 资源
     'lang' => 'cn', //语言包
     'Plus' => '@', //强行读取插件标示
     'urlpath' => '0', // url 模式
@@ -2391,18 +2391,20 @@ $ELiConfig = array(
     'superior' => '2',
 );
 //Load the database qqqqaaaa A123Ff3589!~
+
 $ELiDataBase = array(
     "write" => array(
-        'numbering' => '第一个数据',
-        'hostname' => "127.0.0.1",
-        'database' => "ELikj",
-        'username' => "root",
-        'password' => "A123Ff3589!~",
-        'hostport' => 3306,
-        'charset'  => "utf8mb4",
-        'prefix'   => 'ELi_'
+        'numbering' => '主数据库',
+        'hostname' => '###ELiDataBase_hostname###',
+        'database' => '###ELiDataBase_database###',
+        'username' => '###ELiDataBase_username###',
+        'password' => '###ELiDataBase_password###',
+        'hostport' => '###ELiDataBase_hostport###',
+        'charset'  => 'utf8mb4',
+        'prefix'   => '###ELiDataBase_prefix###'
     )
 );
+
 //Frame path
 if (!defined('ELikj')) {
     define('ELikj', dirname(__FILE__) . '/ELikj/');
@@ -2467,7 +2469,8 @@ $ELiMem = $ELiMemsession =  new Textcache;
 //Get route
 ######################################################################
 if (!defined("Residentmemory")) {
-    if (isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
+
+    if ($ELiConfig['host'] != "###ELiConfig_host###" && isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
         header('HTTP/1.1 302 Moved Permanently');
         header("Location: " . $ELiConfig['host']);
         return;
@@ -2485,6 +2488,13 @@ if (!defined("Residentmemory")) {
     header("Access-Control-Allow-Methods: * ");
     ELiUri();
     $ELiHttp = ltrimE(rawurldecode(trimE($_SERVER["REQUEST_URI"])), '/');
+
+    //install
+    if ( strstr($ELiConfig['host'],"ELiConfig_host" ) !== false ){
+        ELicall("admin", "INSTALL", [], [], false);
+        return ;
+    }
+
     //POST Security filtering
     if ($_POST) {
         if (strstr(strtolower(json_encode($_POST)), DBprefix) !== false) {
@@ -2518,6 +2528,8 @@ if (!defined("Residentmemory")) {
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
         setcookie('apptoken', $SESSIONID, time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);
     }
+
+
     if (strstr($ELiHttp, $ELiConfig['houzui'] . '&') !== false) {
         $URI = str_replace($ELiConfig['houzui'] . '&', $ELiConfig['houzui'] . '?', $ELiHttp);
     } else {
