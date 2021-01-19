@@ -143,6 +143,8 @@ if($kongzhi == 'get'){
         
         $fan = callELi( $_POST['beninstall'] ,"INSTALL",array(), array(),false);
 
+        $ELiMem -> f("db/");
+
         if($fan === true){
             return echoapptoken([],1,'插件安装成功',$SESSIONtoken);
         }else{

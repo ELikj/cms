@@ -1,5 +1,5 @@
 ELi['admin/memcached'] = {
-    url: dir + Plus + FENGE + "admin" + FENGE + "memcached" + FENGE,
+    url: PLUG + FENGE + "memcached" + FENGE,
     init: function () {
         ELi['admin/memcached'].get();
     },

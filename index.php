@@ -1619,46 +1619,71 @@ class SubPages
     }
     function subPageCss2()
     {
+
+    
         $subPageCss2Str = "";
-        $subPageCss2Str .= " <span>" . $this->arrays['dqdi'] . $this->current_page . "/" . $this->pageNums . $this->arrays['ye'] . "</span>";
+
+        if($this->sub_pages > 0 ){  
+            $subPageCss2Str .= " <span>" . $this->arrays['dqdi'] . $this->current_page . "/" . $this->pageNums . $this->arrays['ye'] . "</span>";
+        }
+
+       
+       
         if ($this->current_page > 1) {
 
             if (PAGEtrimE == 1)
                 $dangqian = rtrimE($this->subPage_link, ELifenge);
 
             else $dangqian = $this->subPage_link . '1';
+
             $firstPageUrl = $dangqian . $this->houzui;
             $prewPageUrl = $this->subPage_link . ($this->current_page - 1) . $this->houzui;
-            $subPageCss2Str .= "<a href=\"$firstPageUrl\">" . $this->arrays['home'] . "</a> ";
+
+            if($this->sub_pages > 0 ){  
+                $subPageCss2Str .= "<a href=\"$firstPageUrl\">" . $this->arrays['home'] . "</a> ";
+            }
             if ($this->current_page <= 2) $prewPageUrl = $firstPageUrl;
             $subPageCss2Str .= "<a href=\"$prewPageUrl\">" . $this->arrays['last'] . "</a> ";
         } else {
-            $subPageCss2Str .= " <span>" . $this->arrays['home'] . "</span>";
+
+            if($this->sub_pages > 0 ){
+                $subPageCss2Str .= " <span>" . $this->arrays['home'] . "</span>";
+            }
             $subPageCss2Str .= " <span>" . $this->arrays['last'] . "</span>";
         }
+
         $a = $this->construct_num_Page();
         for ($i = 0; $i < count($a); $i++) {
             $s = $a[$i];
-            if ($s == $this->current_page) $subPageCss2Str .= "<span class='hover'>" . $s . "</span>";
-            else {
+            if ($s == $this->current_page){
+                $subPageCss2Str .= "<span class='hover'>" . $s . "</span>";
+            }else {
                 $url = $this->subPage_link . $s . $this->houzui;
                 if ($s < 2 && PAGEtrimE == 1) $url = rtrimE($this->subPage_link, ELifenge) . $this->houzui;
                 $subPageCss2Str .= " <a href=\"$url\">" . $s . "</a>";
             }
         }
+
         if ($this->current_page < $this->pageNums) {
             $lastPageUrl = $this->subPage_link . $this->pageNums . $this->houzui;
             $nextPageUrl = $this->subPage_link . ($this->current_page + 1) . $this->houzui;
             $subPageCss2Str .= " <a href=\"$nextPageUrl\">" . $this->arrays['next'] . "</a>";
-            $subPageCss2Str .= " <a href=\"$lastPageUrl\">" . $this->arrays['weiye'] . "</a> ";
+            if($this->sub_pages > 0 ){
+                $subPageCss2Str .= " <a href=\"$lastPageUrl\">" . $this->arrays['weiye'] . "</a> ";
+            }
+
         } else {
+
             $subPageCss2Str .= " <span>" . $this->arrays['next'] . "</span>";
-            $subPageCss2Str .= " <span>" . $this->arrays['weiye'] . "</span>";
+            if($this->sub_pages > 0 ){
+                $subPageCss2Str .= " <span>" . $this->arrays['weiye'] . "</span>";
+            }
         }
 
         if (PAGEtrimE == 1 && $this->houzui != "" && $this->houzui != ELifenge) {
             $subPageCss2Str = str_replace(ELifenge . $this->houzui, $this->houzui, $subPageCss2Str);
         }
+
         return $sss[] =  $subPageCss2Str;
     }
 }
