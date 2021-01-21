@@ -1451,17 +1451,17 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
     else              $ZITI = $sizes;
     $size = rand(30, 40);
     $code1 = "ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmopqrstuvwxyz~!@#$%^&*()_+-=.";
-    $hhda = [];
+    $mkqian = [];
+    $code = str_split($code);
+    $code1 = str_split($code1);
     for ($i = 0; $i < $shu; $i++) {
-        $hhda[] = $code{
-            rand(0, strlen($code) - 1)};
+        $mkqian[] = $code[array_rand($code,1)];
     }
     for ($i = 0; $i < $shu; $i++) {
-        $hhda[] = $code1{
-            rand(0, strlen($code1) - 1)};
+        $mkqian[] = $code1[array_rand($code1,1)];
     }
-    shuffle($hhda);
-    $mkqian = implode('', $hhda);
+    shuffle($mkqian);
+
     $mofont = ELikj . '../Tpl/Font/' . $ZITI . '.ttf';
     $zhufu = explode(',', $ELiConfig['vcode']);
     $shu *= 2;
@@ -1488,8 +1488,7 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
                 $ZITI = 11;
                 $draw->setFont(ELikj . '../Tpl/Font/' . $ZITI . '.ttf');
             } else {
-                $char = $mkqian{
-                    $i};
+                $char = $mkqian[$i];
             }
             $shus = $i * ($width / $height) * $xiaos;
             $tux = $shus + rand(5, 10);
@@ -1508,8 +1507,7 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
                 $char = $zhufu[$i] . '                                ....__-$%#$^^6634' . rand(1, 999999);
                 $ZITI = 11;
             } else {
-                $char = $mkqian{
-                    $i};
+                $char = $mkqian[$i];
             }
             $COLOR = imagecolorallocate($image, rand(0, 80), rand(0, 80), rand(0, 80));
             $shus = $i * ($width / $height) * $xiaos;
@@ -1521,8 +1519,7 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
     }
     if ($sizes != -2) {
         $ascii = '';
-        $mmx = str_split($mkqian);
-        foreach ($mmx as $zicu) {
+        foreach ($mkqian as $zicu) {
             if (is_numeric($zicu)) {
                 $ascii .= '' . $zicu;
             }
@@ -2495,7 +2492,7 @@ $ELiMem = $ELiMemsession =  new Textcache;
 ######################################################################
 if (!defined("Residentmemory")) {
 
-    if ($ELiConfig['host'] != "###ELiConfig_host###" && isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
+    if ( strstr($ELiConfig['host'],"ELiConfig_host" ) === false  && isset($_SERVER['HTTP_HOST']) && strstr($ELiConfig['host'], '://' . $_SERVER['HTTP_HOST']) === false) {
         header('HTTP/1.1 302 Moved Permanently');
         header("Location: " . $ELiConfig['host']);
         return;
