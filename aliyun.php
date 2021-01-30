@@ -211,11 +211,12 @@ function tiaozhuan($eangzhan = ""){
 
 include "index.php";
 $GLOBALS['isend'] = false;
+
 function handler($request, $context): Response{
     
     global $ELiConfig,$ELiHttp,$ELiDataBase,$ELiMem, $ELiMemsession,$SESSIONID,
     $LANG,$CANSHU,$features,$URI,$Composer,$HTTP,$YHTTP,$Plus,$ClassFunc,$REQUEST,$SESSIONIDMK,$POSTBODY;
-    $ELiMem= $ELiMemsession =new ELimemsql;
+    $ELiMem= $ELiMemsession = new ELimemsql;
     $_POST = []; 
     $_GET = [];
     $_FILES = [];
@@ -228,13 +229,15 @@ function handler($request, $context): Response{
     foreach($headers as $k =>$v){
         $GLOBALS['header'][ strtolower($k )] = reset($v);
     }
-    
+
+    $GLOBALS['head'] = "json";
     if(strstr($ELiConfig['host'],'://'.$GLOBALS['header']['host']) === false){
 
         return new Response(
             302,
-            ["Access-Control-Allow-Origin"=>"*",
-            "Location"=>$ELiConfig['host']
+            [
+                "Access-Control-Allow-Origin"=>"*",
+                "Location"=>$ELiConfig['host']
             ]
             ,
             ""
@@ -252,18 +255,19 @@ function handler($request, $context): Response{
        parse_raw_http_request($body,($GLOBALS['header']['content-type']));
     }
     
-    if($queries){
-        $_GET = $queries;
-    }
     if( isset($GLOBALS['header']['cookie'])){
-        foreach($GLOBALS['header']['cookie'] as $shuju ){
-            if( $shuju != "" ){
-                list($k,$v)= explode("=",trimE($shuju) );
+        if (isset($GLOBALS['header']['cookie'])) {
+            $headerscookie = toget(  str_replace(';','&',$GLOBALS['header']['cookie']) );
+            foreach ($headerscookie as $k => $v) {
                 $_COOKIE[trimE($k)] = trimE($v);
             }
         }
     }
-    if(strstr($ELiHttp,'Tpl/') !== false  && strstr($ELiHttp,'.php') === false ){
+
+    $HUOMIAN = explode(".",$ELiHttp);
+    $EXT = end($HUOMIAN);
+    if ( (strstr($ELiHttp, 'Tpl/') !== false  && $EXT != "php") ||  $EXT == "txt" ) {
+
         return new Response(
             200,
             ["Access-Control-Allow-Origin"=>"*"]
@@ -274,7 +278,7 @@ function handler($request, $context): Response{
     //POST Security filtering
     if( $_POST ){
         if( strstr( strtolower( json_encode( $_POST)), DBprefix ) !== false ){
-        return ELiError("ELikj: Security filtering");
+            return ELiError("ELikj: Security filtering");
         } 
     }
     //GET Security filtering
@@ -387,10 +391,53 @@ function handler($request, $context): Response{
     ob_clean();
     ELicall($Plus,$ClassFunc,$CANSHU,$features,false );
     $hhh = ob_get_contents();
+    $Content = "text/html; charset=UTF-8;";
+    if ($GLOBALS['head'] == "html") {
+        $Content = "text/html; charset=UTF-8;";
+    } else if ($GLOBALS['head'] == "png") {
+        $Content = "image/png";
+    } else {
+
+        if (strstr($GLOBALS['head'], "/") !== false) {
+            $Content = "text/html; charset=UTF-8;";
+            $url = $GLOBALS['head'];
+            if ($GLOBALS['head']) {
+                unset($GLOBALS['head']);
+            }
+            $SHUJUXX = [
+                "Content-Type" => $Content,
+                "Access-Control-Allow-Origin" => "*", 
+                'Location' => $url
+            ];
+
+            if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
+                $SHUJUXX["Set-Cookie"] = "apptoken=" . $SESSIONID . ";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']);
+            }
+            return new Response(
+                302,
+                $SHUJUXX
+                ,
+                ''
+            );
+
+        } else {
+            $Content = "application/json;charset=UTF-8";
+        }
+    }
+
     if($hhh && $hhh != ""){
         return new Response(
             200,
-            ($SESSIONIDMK && $ELiConfig['sessionSafety'] ?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']),"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            (
+                $SESSIONIDMK && $ELiConfig['sessionSafety'] 
+                ?
+                [   "Content-Type" => $Content,
+                    "Set-Cookie" => "apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime'] ),
+                    "Access-Control-Allow-Origin"=>"*"
+                ]
+                :
+                ["Content-Type" => $Content,"Access-Control-Allow-Origin"=>"*"]
+            )
             ,
             $hhh 
         );
@@ -403,10 +450,16 @@ function handler($request, $context): Response{
         
         return new Response(
             200,
-            ($SESSIONIDMK&& $ELiConfig['sessionSafety']?["Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']),"Access-Control-Allow-Origin"=>"*"]:["Access-Control-Allow-Origin"=>"*"])
+            (
+                $SESSIONIDMK&& $ELiConfig['sessionSafety']
+                ?
+                [   "Set-Cookie" =>"apptoken=".$SESSIONID.";HttpOnly;path=/;Expires=". gmdate('D, d M Y H:i:s \G\M\T',time() + $ELiConfig['sessiontime']),
+                    "Access-Control-Allow-Origin"=>"*"] 
+                :
+                ["Access-Control-Allow-Origin"=>"*"]
+            )
             ,
             '{"code":-1,"data":[],"msg":"no center"}'
         );
     }
-    
 }
