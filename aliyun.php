@@ -185,7 +185,7 @@ function parse_raw_http_request($input, $CONTENT_TYPE )
     }else
     {
       preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
-      $_POST[$matches[1]] = $matches[2];
+      $_POST[$matches[1]] = $matches[2]??"";
     }
   }        
 }
@@ -248,11 +248,14 @@ function handler($request, $context): Response{
     $path       = $request->getAttribute('path');
     $GLOBALS['ip'] = $request->getAttribute("clientIP");
     $ELiHttp = ltrimE( rawurldecode( trimE( $path )),'/');
-    $_SERVER['HTTP_USER_AGENT'] = ( $GLOBALS['header']['user-agent']);
+    $GLOBALS['header']['user_agent'] = $_SERVER['HTTP_USER_AGENT'] = ( $GLOBALS['header']['user-agent']??"");
     $GLOBALS['isend'] = false;
    
     if($body != ""){
        parse_raw_http_request($body,($GLOBALS['header']['content-type']));
+    }
+    if($queries){
+        $_GET = $queries;
     }
     
     if( isset($GLOBALS['header']['cookie'])){
