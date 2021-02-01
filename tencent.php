@@ -231,7 +231,7 @@ function main_handler($request, $context)
     foreach ($headers as $k => $v) {
         $GLOBALS['header'][strtolower($k)] = $v;
     }
-    $_SERVER['HTTP_USER_AGENT'] =  $GLOBALS['header']['user-agent'];
+    $GLOBALS['header']['user_agent'] = $_SERVER['HTTP_USER_AGENT'] =  $GLOBALS['header']['user-agent']??"";
     $GLOBALS['ELiys'] = [];
     $GLOBALS['isend'] = false;
     if ($body != "") {

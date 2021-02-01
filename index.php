@@ -2504,6 +2504,8 @@ if (!defined("Residentmemory")) {
             $GLOBALS['header'][str_replace('http_', '', $k)] = $v;
         }
     }
+    $GLOBALS['header']['user-agent'] = $GLOBALS['header']['user_agent'] = $_SERVER["HTTP_USER_AGENT"]??"";
+    
     $POSTBODY = $GLOBALS['HTTP_RAW_POST_DATA'] ?? (file_get_contents('php://input')??"");
     //Header encoding
     header("Access-Control-Allow-Origin: * ");

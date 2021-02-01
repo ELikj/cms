@@ -80,13 +80,15 @@ $http->on("request", function ($request, $response) {
     }
 
 
-    $_SERVER["HTTP_USER_AGENT"] = $request->header['user-agent'];
-
+  
 
     $GLOBALS['header'] = [];
     foreach ($request->header as $k => $v) {
         $GLOBALS['header'][strtolower($k)] = $v;
     }
+
+    $GLOBALS['header']['user_agent']  = $GLOBALS['header']['user-agent'] =$_SERVER["HTTP_USER_AGENT"] = $request->header['user-agent']??"";
+    
 
     //$_SERVER["header"] =  $request->header;
     if (strstr($ELiConfig['host'], '://' . $request->header['host']) === false) {
