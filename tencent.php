@@ -278,7 +278,7 @@ function main_handler($request, $context)
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
-       
+        $SESSIONIDMK = true;
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
         
@@ -295,8 +295,8 @@ function main_handler($request, $context)
     } else {
         $URI = $ELiHttp;
     }
-    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/')), array('/', ''), $URI), $ELiConfig['dir']);
-    $TURI = explode('?', ltrimE($URI, '?'));
+    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
+    $TURI = explode( '?' , $URI );
     $URI  = trimE($TURI['0'], '/');
     $URI = str_replace( '..','', $URI);
     $URI = rtrimE($URI,$ELiConfig['houzui']);

@@ -63,10 +63,18 @@ function trimE($nn ,$wenzi=""){
     }
     return rtrimE(ltrimE($nn,$wenzi),$wenzi);
 }
+
+function get_magic_quotes_gpc_(){
+    if(version_compare(PHP_VERSION,'7.4.0', '<')){
+        return get_magic_quotes_gpc() ? true : false;
+    }else{
+        return false;
+    }
+}
 //Safe conversion
 function Safeconversion($data)
 {
-    if (!get_magic_quotes_gpc()) return addslashes($data);
+    if (!get_magic_quotes_gpc_()) return addslashes($data);
     else return $data;
 }
 //xss defense
@@ -315,7 +323,7 @@ function getarray($para)
         $zuhe[] = "$k=$v";
     }
     $arg = implode("&", $zuhe);
-    if (get_magic_quotes_gpc()) {
+    if (get_magic_quotes_gpc_()) {
         $arg = stripslashes($arg);
     }
     return $arg;
@@ -961,7 +969,7 @@ class ELiDatabaseDriver
     }
     public function Safeconversion($data)
     {
-        if (!get_magic_quotes_gpc()) return ELiSql(addslashes($data));
+        if (!get_magic_quotes_gpc_()) return ELiSql(addslashes($data));
         else return ELiSql($data);
     }
 }
@@ -1819,13 +1827,19 @@ function callELi($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = arr
     return ;
 }
 //Execute plugin
-function ELibug($shuju)
+function ELibug($shuju,$file = 'bug')
 {
     if (is_array($shuju)) {
         $shuju = json_encode($shuju);
     }
-    file_put_contents(ELikj . 'bug.txt', date('Y-m-d H:i:s') . ' ' . $shuju . "\n", FILE_APPEND);
+    $file = ELiTempPath . str_replace(['.',';','//'],['','','/'],$file).'.php';
+    if(!is_file($file)){
+        ELiCreate($file);
+        file_put_contents($file , '<?php exit("ELikj");?>'. "\n", FILE_APPEND);
+    }
+    file_put_contents($file , date('Y-m-d H:i:s') . ' ' . $shuju . "\n", FILE_APPEND);
 }
+
 function ELicall($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = array(), $fanhui = true)
 {
     $className = 'ELikj_' . $Plus;
@@ -2540,6 +2554,7 @@ if (!defined("Residentmemory")) {
     $SESSIONIDMK = false;
     if (isset($_GET['apptoken']) && strlen($_GET['apptoken']) > 63) {
         $SESSIONID = $_GET['apptoken'];
+        $SESSIONIDMK = true;
     } else if (isset($_POST['apptoken']) && strlen($_POST['apptoken']) > 63) {
         $SESSIONID = $_POST['apptoken'];
     } else if (isset($_COOKIE['apptoken']) && strlen($_COOKIE['apptoken']) > 63) {
@@ -2559,8 +2574,8 @@ if (!defined("Residentmemory")) {
     } else {
         $URI = $ELiHttp;
     }
-    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/')), array('/', ''), $URI), $ELiConfig['dir']);
-    $TURI = explode('?', ltrimE($URI, '?'));
+    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
+    $TURI = explode( '?' , $URI );
     $URI  = trimE($TURI['0'], '/');
     $URI = str_replace( '..','', $URI);
     $URI = rtrimE($URI,$ELiConfig['houzui']);
