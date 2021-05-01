@@ -1,53 +1,77 @@
-```
-/* phpFrame  Application
-* ******************************************
-* home: www.elikj.cn
-* Copyright  ELikj
-* Trademark  ELikj
-* ******************************************
-* 云框架,快速开发框架,集合大家的插件快速开发!
-*/
-前段以 layui , jquery 为基础 kindeditor 富文本编辑器,新增 echarts 图表绘制!
-原创开发的前段快速表单函数,jsfrom 快速生成表单修改新增数据!
-极简路由,根据url访问对应的类调用对应的函数!
-每个插件都是相互独立,又能相互关联,强大又灵活!
-特有的插件函数 Construct 没有找到的类函数全部会调用这里,方便开发多功能系统!
-特有的url访问只能直接访问小写函数,只要函数包含大写,只能通过内部调用!
-万用php基础框架,为开发人员,提供基础系统框架!
-快速脚手架让开发人员快速开发出自己的应用插件,
-独有的支持,云函数运算环境,swoole环境和常见的普通php环境!
-强大的基础管理后台,方便开发人员自主扩展应用插件!
-框架详细讲解部分:
-第一部分 https://mp.weixin.qq.com/s/UrpW5nEMD3op4X9MDKy4ZQ
-第二部分 https://mp.weixin.qq.com/s/o3kaZDUdyZfJyhHyQbp-3Q
+系统名称：[以厘php框架](https://eLiphp.com) 
+官方网址：https://eLiphp.com
+版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。 
+代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
 
-需要为静态支持
-http://127.0.0.1/@/admin
-后台默认账号: admin 密码:qqqqaa
+## 系统介绍
 
-插件开发说明
+最大特色:云php框架,支持阿里云(函数计算),腾讯(函数计算),swoole(webserver模式) 自带管理后台方便快速开发后台管理系统
+前端以 layui , jquery 为基础 kindeditor 富文本编辑器,echarts 图表绘制!
+原创前端快速表单函数,jsfrom 快速生成表单修改新增数据!
+极简路由模式,根据url访问对应的类调用对应的函数!
+每个功能以插件形式集成,使得每个插件都是相互独立,又能相互关联,强大又灵活!
+特有的插件函数 Construct 没有找到的类函数,直接会调用这里,方便开发多功能系统!
+特有的url只能以小写函数名访问 , 大写函数名只能通过内部调用!
+总结:小巧,灵活,强大,方便,支持云的php框架
+
+## 视频教程
+
+链接:https://pan.baidu.com/s/1gtARcr71LJmHIB-yzHmw_Q 
+提取码:2n19 
+
+## 系统注意
+
+需要为静态支持 , php 7+ 系列
+直接安装即可
+
+## 阿里云部署
+
+函数入口 aliyun.handler
+
+
+## 腾讯云部署
+
+执行方法 tencent.main_handler
+
+## swool部署
+
+shell 执行 php swoole.php
+
+## 插件开发说明
+
+插件开发注意 
+插件所有公用功能建议写在插件类,方便其他插件调用!
 插件存放目录 /ELikj/Controller/插件名字小写.Class.php 
-class ELikj_插件名字小写{
+插件的扩展 后台渲染和数据处理 存放到/Tpl/插件目录/ 
+ELitpl函数,加载其他扩展
+插件的扩展中,调用自己的函数 使用 $THIS 调用来调用
 
+``` php
+class ELikj_插件名字小写{
       //function Construct 通用执行函数
       //function Bat_Cli bat 定时任务
+      //插件名字方便调用 
+      public  $plugin = "admin";
 
-      public  $plugin = "admin"; 插件名字方便调用 页可以不实用
-
-      function tiaoshi($CANSHU,$features){  // $CANSHU url的参数 ,$features 插件的参数读取的数据库  tiaoshi 全部小写可以直接通过http 调用
-
-      }
-
-      function Loginok($CANSHU,$features){ // Loginok 包含大写不能通过http 直接调用 需要使用callELi 方能跨插件调用
+      function tiaoshi($CANSHU,$features){  
+            // $CANSHU url的参数 ,$features 插件的参数读取的数据库  
+            //tiaoshi 全部小写可以直接通过http 调用
 
       }
 
-      //一些敏感操作 可以使用 ELix 和 ELiy  设置敏感名字   验证敏感名字 方可调用
+      function Loginok($CANSHU,$features){ 
+            // Loginok 包含大写不能通过http 直接调用 需要使用callELi 方能跨插件调用
+
+      }
+
+      //一些敏感操作 可以使用 ELix 设置敏感名字 和 ELiy     验证敏感名字 方可调用
       function yanzhen($CANSHU,$features){
-            ELiy("woyao");
+            if(ELiy("woyao")){
+                  return false;
+            }
             //必须aix 过的函数才能执行到这里
-
       }
+
       function woyan($CANSHU,$features){
             ELix("woyao");
             $this -> yanzhen($CANSHU,$features);
@@ -59,7 +83,6 @@ class ELikj_插件名字小写{
             }
             //需要bat 执行的 函数 用于日常 定时任务
             //这里写执行逻辑
-
       }
 
       //通用处理函数 没有找到 插件方法的使用默认调用这里 方便实现 cms 各种统一验证的地方
@@ -68,40 +91,34 @@ class ELikj_插件名字小写{
             global $YHTTP;
             $ClassFunc = $CANSHU['-1'];
             unset($CANSHU['-1']);
-            
             /*
             //$mode  管理后台的权限验证 方便插件判断 管理的权限 需要判断的地方才调用
             'get' 读取数据
             'add' 新增数据
             'put' 修改数据
             'del' 删除数据
-                 
             */
-            
             //判断登陆和管理权限
             if( callELi("admin","loginok",[$YHTTP],[],false)){
                   return ;
             }
+
             try {
                   //分文件调用 函数太多的时候 推荐调用 
                   return ELitpl($this -> plugin,$ClassFunc,$this);
-
                   //自身class 调用 不区分大小写 只使用 api 模式 不使用渲染模式 推荐调用 
                   //return $this ->$ClassFunc($CANSHU,$features);
-                  
             } catch (\Throwable $th) {
                   return echoapptoken([],-1,$th->getmessage());
             }
       }
 
 }
-插件开发注意 
-      希望每个人开发的 主插件是一个文件 这里可以写入你常用的 函数 供其他插件调用或者 自己多个处理地方调用
-      其他扩展 后台渲染和 数据处理 存放到/Tpl/插件目录/ 
-      ELitpl 加载方式 插件目录下  调用自己 主插件的函数 使用 $THIS 调用
-      方便云安装 自助下载插件
+```
 
-常用函数和类介绍
+## 常用函数和类介绍
+
+``` php
 ltrimE("待去除得字符串" ,"需要去除得字符串");//去除左边字符
 rtrimE("待去除得字符串" ,"需要去除得字符串");//去除右边字符
 trimE ("待去除得字符串" ,"需要去除得字符串");//去除两边字符
@@ -148,7 +165,7 @@ $Mem ->j($key,$val,$time); //key 减  val数字  time 过期时间
 
 ELiError("字符串");//输出调试错误
 ELiUri(); //获取url 路径 方便路由
-ELisub("字符串", 起始位置=0, 截取长度=1) //截取(字符串,起始位置,截取长度)
+ELisub("字符串", 0, 1) //截取(字符串,起始位置,截取长度)
 p();  //调试函数 p(变量参数 ...);
 azpaixu( $para);  //数组 array A-Z 排序
 Limit( $page_size = 10, $page = 5); //数据库分页解析limit(每页条数,当前页数)
@@ -216,10 +233,6 @@ $D    -> setshiwu(1)  //设置等于1 开启事务
     -> where(array(''=>'查询条件'))//条件
     -> limit('0,1') //读取条数
     -> pwhere()   //输出sql 语句调试 
-
-
-
-
     -> find(); //读取条数一条数据
     -> select();//读取多条数据
     -> delete();//删除数据
@@ -277,8 +290,4 @@ adminid( $uid ,$qx = 0 ,$db = null )//读取管理员( 管理员uid，0 读取 1
 pichttp($pic)  //返回图片地址 可以更改函数配置成cdn 模式
 SHA256_sign($content, $privateKey, $iimm = "SHA256")//生成SH256（值，证书数据，类型）
 SHA256_verify($content, $sign, $publicKey, $iimm = "SHA256")//验证（值，签名，证书，类型）
-
-
-
-
 ```

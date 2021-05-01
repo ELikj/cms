@@ -45,7 +45,7 @@ ELi['login'] = {
                 
                 <div class="layui-trans layadmin-user-login-footer">
                 
-                    <p>© 2020 <a href="http://www.elikj.com/" target="_blank">以厘科技</a></p>
+                    <p>© 2009-2021 <a href="http://www.elikj.com/" target="_blank">以厘科技</a></p>
         
                 </div>
                 </form>

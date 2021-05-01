@@ -1,14 +1,13 @@
 <?php
+/* 
+ * 系统名称：以厘php框架
+ * 官方网址：https://eLiphp.com
+ * 版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。 
+ * 代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
+ */
+
 use RingCentral\Psr7\Response;
 use OSS\OssClient;
-/* ******************************************
- * 系统名称：以厘建站系统
- * 版权所有：成都市以厘科技有限公司 www.eLikj.com
- * 代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
- * 特别申明：本软件不得用于从事违反所在国籍相关法律所禁止的活动， 
- * 对于用户擅自使用本软件从事违法活动不承担任何责任
- * ******************************************
-*/
 /*
 可以改造函数 
     echoapptoken  输出函数

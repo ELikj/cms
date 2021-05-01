@@ -1,23 +1,13 @@
 <?php if( !defined( 'ELikj')){ exit( 'Error ELikj'); }
-/* ******************************************
- * 系统名称：以厘建站系统
- * 版权所有：成都市以厘科技有限公司 www.eLikj.com
+/* 
+ * 系统名称：以厘php框架
+ * 官方网址：https://eLiphp.com
+ * 版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。 
  * 代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
- * 特别申明：本软件不得用于从事违反所在国籍相关法律所禁止的活动， 
- * 对于用户擅自使用本软件从事违法活动不承担任何责任
- * ******************************************
-*/
-//函数名字第一个大写 内部调用 其他可以外部调用
-//不受大小写 callELi 调用
-//private public  plugin pluginurl
-/*
-    adminlog  0登陆 1退出 2 挤掉  3 修改 4 插入 5 删除
-*/
+ */
+
 class ELikj_admin{
-    //public
-    //private
-    //plugin
-    //pluginurl
+
     public  $plugin = "admin";
     function INSTALL($CANSHU,$features){
         $GLOBALS['head'] = "html";
@@ -92,7 +82,7 @@ class ELikj_admin{
         <html>
         <head>
             <meta charset="utf-8">
-            <title>以厘cms安装</title>
+            <title>以厘php框架安装</title>
             <meta name="renderer" content="webkit">
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -108,7 +98,7 @@ class ELikj_admin{
         <body>
         <div class="layadmin-user-login-main">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>以厘cms V<b style="color:#000;font-size:14px;"> <?php echo ELikjVER;?></b> 安装</legend>
+            <legend>以厘php框架 V<b style="color:#000;font-size:14px;"> <?php echo ELikjVER;?></b> 安装</legend>
         </fieldset>
             <div class="layui-tab">
                 <ul class="layui-tab-title">
@@ -119,13 +109,7 @@ class ELikj_admin{
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                     <pre style="font-size:16px;line-height:30px;">
-国家版权局计算机软件著作权登记
-软件名称:以厘建站系统 [简称:以厘cms]
-著作权人:成都市以厘科技有限公司
-登 记 号:2020SR0659108
-联系我们:https://www.elikj.cn
-
-采用开源协议 Apache License Version 2.0 http://www.apache.org/licenses/
+以厘php框架( https://eLiphp.com ) 采用开源协议 Apache License Version 2.0 http://www.apache.org/licenses/
 一切因下载使用 以厘CMS 软件而引致之任何意外、疏忽、合约毁坏、诽谤、版权或知识产权侵犯及其所造成的损失，以厘CMS 概不负责，亦不承担任何法律责任。
 鉴于用户计算机软硬件环境的差异性和复杂性，本软件所提供的各项功能并不能保证在任何情况下都能正常执行或达到用户所期望的结果。用户对使用 以厘CMS 软件自行承担风险，我们不做任何形式的保证，不承担任何责任。
 在您阅读本声明后若不同意此声明中的任何条款，或对本声明存在质疑，请立刻停止使用我们的软件。若您已经开始或正在使用 以厘CMS 软件，则表示您已阅读并同意本声明的所有条款之约定。
