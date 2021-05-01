@@ -1,18 +1,18 @@
-系统名称：[以厘php框架](https://eLiphp.com) 
-官方网址：https://eLiphp.com
-版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。 
-代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
+系统名称：[以厘php框架](https://eLiphp.com)  
+官方网址：https://eLiphp.com  
+版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。   
+代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/  
 
 ## 系统介绍
 
-最大特色:云php框架,支持阿里云(函数计算),腾讯(函数计算),swoole(webserver模式) 自带管理后台方便快速开发后台管理系统
-前端以 layui , jquery 为基础 kindeditor 富文本编辑器,echarts 图表绘制!
-原创前端快速表单函数,jsfrom 快速生成表单修改新增数据!
-极简路由模式,根据url访问对应的类调用对应的函数!
-每个功能以插件形式集成,使得每个插件都是相互独立,又能相互关联,强大又灵活!
-特有的插件函数 Construct 没有找到的类函数,直接会调用这里,方便开发多功能系统!
-特有的url只能以小写函数名访问 , 大写函数名只能通过内部调用!
-总结:小巧,灵活,强大,方便,支持云的php框架
+最大特色:云php框架,支持阿里云(函数计算),腾讯(函数计算),swoole(webserver模式) 自带管理后台方便快速开发后台管理系统  
+前端以 layui , jquery 为基础 kindeditor 富文本编辑器,echarts 图表绘制!  
+原创前端快速表单函数,jsfrom 快速生成表单修改新增数据!  
+极简路由模式,根据url访问对应的类调用对应的函数!  
+每个功能以插件形式集成,使得每个插件都是相互独立,又能相互关联,强大又灵活!  
+特有的插件函数 Construct 没有找到的类函数,直接会调用这里,方便开发多功能系统!  
+特有的url只能以小写函数名访问 , 大写函数名只能通过内部调用!  
+总结:小巧,灵活,强大,方便,支持云的php框架  
 
 ## 视频教程
 
