@@ -1,4 +1,9 @@
 /*
+ * 系统名称：以厘php框架
+ * 官方网址：https://eLiphp.com
+ * 版权所有：2009-2021 以厘科技 (https://eLikj.com) 并保留所有权利。 
+ * 代码协议：开源代码协议 Apache License 2.0 详见 http://www.apache.org/licenses/
+
  Navicat Premium Data Transfer
 
  Source Server         : 192.168.0.13
@@ -36,7 +41,7 @@ CREATE TABLE `ELi_admin` (
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
   KEY `account` (`account`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理员';
 
 -- ----------------------------
 -- Records of ELi_admin
@@ -55,7 +60,7 @@ CREATE TABLE `ELi_admingroup` (
   `describes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '描述',
   `competence` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '权限',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理权限组';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理权限组';
 
 
 -- ----------------------------
@@ -76,7 +81,7 @@ CREATE TABLE `ELi_adminlog` (
   KEY `type` (`type`),
   KEY `controller` (`controller`(250)),
   KEY `mode` (`mode`(250))
-) ENGINE=MyISAM AUTO_INCREMENT=208 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理员日志';
 
 -- ----------------------------
 -- Table structure for ELi_config
@@ -89,7 +94,7 @@ CREATE TABLE `ELi_config` (
   `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '配置详情',
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统配置';
 
 -- ----------------------------
 -- Table structure for ELi_currencylog
@@ -146,7 +151,7 @@ CREATE TABLE `ELi_features` (
   UNIQUE KEY `pluginid` (`pluginid`),
   KEY `type` (`type`),
   KEY `type_2` (`type`,`off`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='插件列表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='插件列表';
 
 -- ----------------------------
 -- Records of ELi_features
@@ -280,6 +285,6 @@ CREATE TABLE `ELi_userlog` (
   KEY `type` (`type`),
   KEY `controller` (`controller`(250)),
   KEY `mode` (`mode`(250))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='user日志';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='user日志';
 
 SET FOREIGN_KEY_CHECKS = 1;

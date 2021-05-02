@@ -12,7 +12,7 @@ ELi['main'] = {
                 layer.alert(data.msg);
             }else if(data.code == 99){
                 setapptoken(data.data);
-                loadjs("login");
+                loadjs("adminlogin");
             }else if(data.code == 0 ){
                 ELi.DATA.user = data.data;
                 loadjs("home");
