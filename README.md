@@ -21,17 +21,19 @@
 
 ## 系统注意
 
-需要为静态支持 , php 7+ 系列
+需要伪静态支持 , php 7+ 系列
 直接安装即可
 
 ## 阿里云部署
 
-函数入口 aliyun.handler
+函数入口 aliyun.handler  
+手工导入数据库 ELikj.sql  
 
 
 ## 腾讯云部署
 
 执行方法 tencent.main_handler
+手工导入数据库 ELikj.sql  
 
 ## swool部署
 
