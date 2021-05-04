@@ -22,7 +22,8 @@
 ## 系统注意
 
 需要伪静态支持 , php 7+ 系列
-直接安装即可
+直接安装即可  
+直接导入ELikj.sql 登陆账号:admin 登陆密码:qqqqaa  
 
 ## 阿里云部署
 
@@ -32,7 +33,7 @@
 
 ## 腾讯云部署
 
-执行方法 tencent.main_handler
+执行方法 tencent.main_handler  
 手工导入数据库 ELikj.sql  
 
 ## swool部署

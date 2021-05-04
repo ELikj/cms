@@ -174,7 +174,7 @@ ELi['home'] = {
 
     });
     $("#LAY_app_tabsheader .home").addClass('layui-this');
-    $("#LAY_app_body .tashilisthha").each(function () {
+    $("#LAY_app_body .layui-tab-item").each(function () {
       if (!$(this).hasClass('home')) {
         $(this).remove();
       }

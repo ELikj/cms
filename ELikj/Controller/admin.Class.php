@@ -12,6 +12,8 @@ class ELikj_admin{
     function INSTALL($CANSHU,$features){
         $GLOBALS['head'] = "html";
         global $ELiHttp;
+        
+        ELiCreate( ELikj.'../attachment/');
         $pad =  [
             'ELiConfig_dir' => "网站目录",
             'ELiConfig_host' => "运行域名",
@@ -109,7 +111,8 @@ class ELikj_admin{
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                     <pre style="font-size:16px;line-height:30px;">
-以厘php框架( https://eLiphp.com ) 采用开源协议 Apache License Version 2.0 http://www.apache.org/licenses/
+以厘php框架( https://eLiphp.com ) 
+采用开源协议 Apache License Version 2.0 http://www.apache.org/licenses/
 一切因下载使用 以厘CMS 软件而引致之任何意外、疏忽、合约毁坏、诽谤、版权或知识产权侵犯及其所造成的损失，以厘CMS 概不负责，亦不承担任何法律责任。
 鉴于用户计算机软硬件环境的差异性和复杂性，本软件所提供的各项功能并不能保证在任何情况下都能正常执行或达到用户所期望的结果。用户对使用 以厘CMS 软件自行承担风险，我们不做任何形式的保证，不承担任何责任。
 在您阅读本声明后若不同意此声明中的任何条款，或对本声明存在质疑，请立刻停止使用我们的软件。若您已经开始或正在使用 以厘CMS 软件，则表示您已阅读并同意本声明的所有条款之约定。
@@ -252,7 +255,7 @@ class ELikj_admin{
             $.post("./",POST,function(ff){
                 if(ff.code == 1){
                     var html = '<button type="button" class="layui-btn layui-btn-danger">安装完成</button><br />';
-                    var xurl = POST.ELiConfig_host+'index.php?/@/admin/';
+                    var xurl = POST.ELiConfig_host+'/index.php?/@/admin/';
                     html+= '后台管理:<a href="'+xurl+'">'+xurl+'</a><br />';
                     html+= '登陆账号:'+POST.adminname ;
                     html+= '<br />登陆密码:'+POST.adminpass;
@@ -603,7 +606,7 @@ class ELikj_admin{
             $Security = $ELiMem ->g($security);
             if($Security){
                 if($Security['num'] > 3){
-                    return ELiError("ELikj: Security filtering !!!!");
+                    return ELiError("ELikj: Security filtering !!!");
                 }
             }
             if( !$Security || $Security['security'] != $ELiConfig['security'] ){
@@ -633,14 +636,16 @@ class ELikj_admin{
             }
 
             if($GLOBALS['header']['user_agent'] != $Security['user_agent']){
-                return ELiError("ELikj: Security filtering !!");
+
+              
+                return ELiError("ELikj: Security filtering agent !");
             }
 
             $ADMIN = adminid($_SESSION['adminid']);
             if($ADMIN){
                 if( $ADMIN['verifyip'] == '1'){
                     if($Security['ip'] != ip()){
-                        return ELiError("ELikj: Security filtering !!!");
+                        return ELiError("ELikj: Security filtering ip !");
                     }
                 }
             }
