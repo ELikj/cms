@@ -157,7 +157,7 @@ public function ja( $key, $num=1,$time = 0)  //加法( name,加上的值,缓存�
 
 ########缓存K V类########
 
-$Mem = new ELicache( array("127.0.0.1:11211"));  //Memcache 内存KV
+$Mem = new ELicache("127.0.0.1");  //Memcached 内存KV
 $Mem = new Textcache($data); // $data 缓存的文件路径
 $Mem = new ELimemsql($data); // $data 缓存的文件路径
 $Mem ->s($key,$val,$time);   //设置key val 值  time 过期时间 0 或者空 不过期

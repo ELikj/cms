@@ -94,18 +94,21 @@ function ELiSql($data)
 //Memcache
 class ELicache
 {
-    function __construct($servers)
+    function __construct($servers =[])
     {
-        $md = new Memcache;
-        if ($servers && is_array($servers[0])) {
-            foreach ($servers as $server) call_user_func_array(array($md, 'addServer'), $server);
-        } else call_user_func_array(array($md, 'addServer'), $servers);
+        $md = new Memcached;
+        if(is_array($servers)){
+            $md->addServers($servers);
+        }else{
+            $md->addServer($servers, 11211);
+        }
         $this->md = $md;
     }
     public function s($key, $value, $time = 0)
     {
-        return $this->md->set(md5($key), $value, MEMCACHE_COMPRESSED, $time);
+        return $this->md->set(md5($key), $value, $time);
     }
+
     public function g($key)
     {
         return $this->md->get(md5($key));
@@ -1545,7 +1548,7 @@ function ELivcode($sizes = '1', $code = "0123456789", $shu = 4, $width = 100, $h
     }
 }
 
-function pagec($xsuu, $page_size = 10, $nums, $sub_pages = 5, $page, $qianzui, $houzui = '')
+function pagec($xsuu =[], $page_size = 10, $nums =10, $sub_pages = 5, $page=1, $qianzui='', $houzui = '')
 {
     $xx = ceil($nums / $page_size);
     if ($page > $xx) return '';
