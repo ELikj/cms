@@ -177,7 +177,6 @@ class Textcache
             return false;
         }
         $fp = fopen($pat, "r");
-
         $content = null;
         if (flock($fp, LOCK_EX)) {
             $content = stream_get_contents($fp);
@@ -189,7 +188,6 @@ class Textcache
             return false;
         }
         $time = (int) substr($content, 8, 12);
-
         if ($time > 0 && $time < time()) {
             @unlink($pat);
             return false;
@@ -1306,6 +1304,7 @@ class ELimemsql
         if (!$zhiding) $zhiding = $ELiDataBase;
         if (!$CC) $CC  = db($dbname, $zhiding);
         else  $CC->setbiao($dbname);
+        
         $this->mysql = $CC->setshiwu('0');
         return $this->mysql;
     }
@@ -2328,6 +2327,7 @@ $ELiConfig = array(
     'vcode' => 'e,L,i,k,j', //默认图形验证阿么
     'sicode' => 1, //1验证大小写 0 小写
     'fenge' => '/', //分割
+    'FENGE' => '/', //不变的分割适合前端处理
     'pagetrimE' => 1, //开启替换
     'maxsize' => '100000000', //上传尺寸
     'dir' => '###ELiConfig_dir###', //二级目录
@@ -2379,7 +2379,7 @@ if (isset($ELiConfig['timezone']) && $ELiConfig['timezone'] != '') {
 define('sessionpath', $ELiConfig['sessionpath']);
 //PAGEtrimE  ELifenge
 define('PAGEtrimE', $ELiConfig['pagetrimE']);
-define('ELifenge', $ELiConfig['fenge']);
+define('ELifenge', $ELiConfig['FENGE']);
 define('DBprefix', $ELiDataBase[$ELiConfig['dbselect']]['prefix']);
 define('WZHOST', $ELiConfig['host'] . $ELiConfig['dir']);
 define('CDNHOST', $ELiConfig['cdnhost']);
@@ -2495,13 +2495,23 @@ if (!defined("Residentmemory")) {
     }
     $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
     $TURI = explode( '?' , $URI );
+    if(count($TURI) > 1){
+        if($TURI['0'] == ''){
+            $TURI['0'] = $TURI['1'];
+        }
+    }
     $URI  = trimE($TURI['0'], '/');
     $URI = str_replace( '..','', $URI);
     $URI = rtrimE($URI,$ELiConfig['houzui']);
     if ($URI == '' && $ELiConfig['iscms'] != 1) {
         $URI = $ELiConfig['object'];
     }
-    $URI = str_replace('&', '?', $URI);
+    if (strstr($URI, $ELiConfig['Plus']. '/admin') !== false || strstr($URI,  '/admin_') !== false ) {
+        $ELiConfig['fenge'] = '/';
+    }else{
+        $ELiConfig['fenge'] = $ELiConfig['FENGE'];
+    }
+    $URI = str_replace('&', $ELiConfig['fenge'], $URI);
     $HTTP = explode($ELiConfig['fenge'], $URI);
     $YHTTP = $HTTP;
     if ($HTTP['0'] == $ELiConfig['Plus']) {

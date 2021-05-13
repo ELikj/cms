@@ -175,6 +175,11 @@ $http->on("request", function ($request, $response) {
     }
     $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
     $TURI = explode( '?' , $URI );
+    if(count($TURI) > 1){
+        if($TURI['0'] == ''){
+            $TURI['0'] = $TURI['1'];
+        }
+    }
     $URI  = trimE($TURI['0'], '/');
     $URI = str_replace( '..','', $URI);
     $URI = rtrimE($URI,$ELiConfig['houzui']);
@@ -183,7 +188,12 @@ $http->on("request", function ($request, $response) {
     if ($URI == '' && $ELiConfig['iscms'] != 1) {
         $URI = $ELiConfig['object'];
     }
-    $URI = str_replace('&', '?', $URI);
+    if (strstr($URI, $ELiConfig['Plus']. '/admin') !== false || strstr($URI,  '/admin_') !== false ) {
+        $ELiConfig['fenge'] = '/';
+    }else{
+        $ELiConfig['fenge'] = $ELiConfig['FENGE'];
+    }
+    $URI = str_replace('&', $ELiConfig['fenge'], $URI);
     $HTTP = explode($ELiConfig['fenge'], $URI);
     $YHTTP = $HTTP;
     if ($HTTP['0'] == $ELiConfig['Plus']) {
