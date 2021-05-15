@@ -335,6 +335,144 @@ function toget($string)
     parse_str($string,$_GET_);
     return $_GET_;
 }
+//Multidimensional array string to array
+function _POST_( &$_POST_ ,$key = "",$zhi = ""){
+    if (strstr($key , '[') !== false ) {
+        $key = str_replace(['[',']'],['($_$)',''],$key);
+        $huoqu = explode('($_$)',$key);
+        $zifu = count($huoqu);
+        if($zifu == 2){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']] =  $zhi;
+        }else if($zifu == 3){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']]  =  $zhi;
+        }else if($zifu == 4){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =$zhi;
+        }else if($zifu == 5){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =$zhi;
+        }else if($zifu == 6){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =$zhi;
+        }else if($zifu == 7){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
+                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =$zhi;
+        }else if($zifu == 8){
+            if(!isset( $_POST_[$huoqu['0']])){
+                 $_POST_[$huoqu['0']] = [];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
+                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
+                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
+            }
+            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']])){
+                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =[];
+            }
+            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']] =$zhi;
+        }else if($zifu == 9){
+                if(!isset( $_POST_[$huoqu['0']])){
+                     $_POST_[$huoqu['0']] = [];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
+                     $_POST_[$huoqu['0']][$huoqu['1']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
+                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
+                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
+                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
+                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']])){
+                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =[];
+                }
+                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']])){
+                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']] =[];
+                }
+                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']][$huoqu['8']] =$zhi;
+        }else{
+            $_POST_[$key] = $zhi;
+        }
+    }else{
+        $_POST_[$key] = $zhi;
+    }
+}
+
 
 //Safe replacement
 function ELiSecurity($name)
@@ -2487,13 +2625,12 @@ if (!defined("Residentmemory")) {
         setcookie('apptoken', $SESSIONID, time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);
     }
 
-
     if (strstr($ELiHttp, $ELiConfig['houzui'] . '&') !== false) {
         $URI = str_replace($ELiConfig['houzui'] . '&', $ELiConfig['houzui'] . '?', $ELiHttp);
     } else {
         $URI = $ELiHttp;
     }
-    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
+    $URI  = ltrimE(str_replace(array('index.php','//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('','/', '','/'), $URI), $ELiConfig['dir']);
     $TURI = explode( '?' , $URI );
     if(count($TURI) > 1){
         if($TURI['0'] == ''){

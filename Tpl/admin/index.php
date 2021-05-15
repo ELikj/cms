@@ -156,9 +156,9 @@ function uploadurl(get){
         get = "";
     }
     if( get !="" ){
-        get = "?"+get+'&apptoken='+APPTOKEN;
+        get = "?&"+get+'&apptoken='+APPTOKEN;
     }else{
-        get = '?apptoken='+APPTOKEN;
+        get = '?&apptoken='+APPTOKEN;
     }
     return UPFILE+'upload/'+get;
 }

@@ -78,9 +78,6 @@ $http->on("request", function ($request, $response) {
         return;
     }
 
-
-  
-
     $GLOBALS['header'] = [];
     foreach ($request->header as $k => $v) {
         $GLOBALS['header'][strtolower($k)] = $v;
@@ -89,17 +86,17 @@ $http->on("request", function ($request, $response) {
     $GLOBALS['header']['user_agent']  = $GLOBALS['header']['user-agent'] = $_SERVER["HTTP_USER_AGENT"] = $request->header['user-agent']??"";
     
 
-    //$_SERVER["header"] =  $request->header;
     if (strstr($ELiConfig['host'], '://' . $request->header['host']) === false) {
         $response->redirect($ELiConfig['host'], 302);
         return "";
     }
 
+    
     $ELiHttp = ltrimE(rawurldecode(trimE($request->server['path_info'])), '/');
     $BAOHANFIEL = [
         'attachment',
         'tpl',
-        'txt'
+        '.txt'
     ];
 
     $response->header('Access-Control-Allow-Origin', '*', true);
@@ -121,6 +118,9 @@ $http->on("request", function ($request, $response) {
         }
     }
 
+    if(isset($request->server['query_string']) && $request->server['query_string'] != ""){
+        $ELiHttp .= "?".$request->server['query_string'];
+    }
     ob_start();
     $_GET = $request->get;
     $_POST = $request->post;
@@ -173,7 +173,7 @@ $http->on("request", function ($request, $response) {
     } else {
         $URI = $ELiHttp;
     }
-    $URI  = ltrimE(str_replace(array('//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('/', '','/'), $URI), $ELiConfig['dir']);
+    $URI  = ltrimE(str_replace(array('index.php','//', trimE($_SERVER['SCRIPT_NAME'], '/'),'?/'), array('','/', '','/'), $URI), $ELiConfig['dir']);
     $TURI = explode( '?' , $URI );
     if(count($TURI) > 1){
         if($TURI['0'] == ''){
@@ -261,17 +261,16 @@ $http->on("request", function ($request, $response) {
 
     $hhh = ob_get_contents();
 
-
+    if ($GLOBALS['isend']) {
+        ob_end_clean();
+        return "";
+    }  
     if ($hhh && $hhh != "") {
         $response->end($hhh);
         ob_end_clean();
         return "";
     }
-
-    if ($GLOBALS['isend']) {
-
-        return "";
-    }
+    
 
     $response->end("");
     return "";
