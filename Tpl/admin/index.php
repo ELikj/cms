@@ -99,12 +99,15 @@ function apptongxin( url ,canshu,hanshu,method){
     if(!method){
         method = "POST";
     }
-    canshu.apptoken = APPTOKEN;
+    var request = new FormData();                   
+    $.each(canshu, function(i, obj) { request.append(i, obj); });    
+    request.append('apptoken', APPTOKEN);
     $.ajax({
         type :method,
         url : url,
-        data : canshu,
-        dataType:"json",
+        data : request,
+        processData : false,
+        contentType : false, 
         success : function(result) {
             hanshu(result);
         },
