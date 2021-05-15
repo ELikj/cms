@@ -244,9 +244,7 @@ function handler($request, $context): Response{
         return "";
     }
 
-    $path       = $request->getAttribute('path');
-    $GLOBALS['ip'] = $request->getAttribute("clientIP");
-    $ELiHttp = ltrimE( rawurldecode( trimE( $path )),'/');
+   
     $GLOBALS['header']['user_agent'] = $_SERVER['HTTP_USER_AGENT'] = ( $GLOBALS['header']['user-agent']??"");
     $GLOBALS['isend'] = false;
    
@@ -256,6 +254,14 @@ function handler($request, $context): Response{
     if($queries){
         $_GET = $queries;
     }
+
+    $path       = $request->getAttribute('path');
+    if ( strstr($path, 'index.php') !== false){
+        $path .= getarray($_GET);
+    }
+
+    $GLOBALS['ip'] = $request->getAttribute("clientIP");
+    $ELiHttp = ltrimE( rawurldecode( trimE( $path )),'/');
     
     if( isset($GLOBALS['header']['cookie'])){
         if (isset($GLOBALS['header']['cookie'])) {

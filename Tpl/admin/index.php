@@ -126,7 +126,7 @@ window.WZHOST = "<?php echo WZHOST;?>";
 window.dir = '<?php  echo WZHOST;?>';
 window.FENGE = '<?php  echo $ELiConfig['fenge'];?>';
 window.Plus = '<?php  echo $ELiConfig['Plus'];?>';
-window.PLUG = '<?php echo WZHOST.'index.php?/'.$ELiConfig['Plus'].$ELiConfig['fenge'].$THIS->plugin.$ELiConfig['fenge'];?>';
+window.PLUG = '<?php echo WZHOST.'index.php/'.$ELiConfig['Plus'].$ELiConfig['fenge'].$THIS->plugin.$ELiConfig['fenge'];?>';
 window.UPFILE = PLUG;
 window.p = console.log;
 window.PAGEHOME = '<?php echo  trim(WZHOST,$ELiConfig['dir']).$GLOBALS['pluginurl'];?>';
@@ -153,9 +153,9 @@ function uploadurl(get){
         get = "";
     }
     if( get !="" ){
-        get = "&"+get+'&apptoken='+APPTOKEN;
+        get = "?"+get+'&apptoken='+APPTOKEN;
     }else{
-        get = '&apptoken='+APPTOKEN;
+        get = '?apptoken='+APPTOKEN;
     }
     return UPFILE+'upload/'+get;
 }
