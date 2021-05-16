@@ -289,9 +289,7 @@ function textcaidan(name,$zhi,candan,css,outtime){
             continue ;
         }
         for(var zx in candan){
-
             var mmm = candan[zx];
-          
             var huo = mmm.split('-');
             if(huo.length > 1){
 

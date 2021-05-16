@@ -1886,7 +1886,7 @@ function callELi($Plus = "", $ClassFunc = "", $CANSHU = array(), $features = arr
 function ELibug($shuju,$file = 'bug')
 {
     if (is_array($shuju)) {
-        $shuju = json_encode($shuju);
+        $shuju = json_encode($shuju,JSON_UNESCAPED_UNICODE);
     }
     $file = ELiTempPath . str_replace(['.',';','//'],['','','/'],$file).'.php';
     if(!is_file($file)){
@@ -2376,7 +2376,7 @@ function ELilog($baio = "adminlog", $id = 0, $type = 0, $data = "", $mode = "", 
     return $db->insert([
         'uid' => (int)$id,
         'type' => (int)$type,
-        'data' => is_string($data) ? $data : json_encode($data),
+        'data' => is_string($data) ? $data : json_encode($data,JSON_UNESCAPED_UNICODE),
         'controller' => $plugin == "" ? $GLOBALS['plugin'] : $plugin,
         'mode' => $mode,
         'atime' => time(),
