@@ -351,6 +351,9 @@ function ncaidan(name){
 
 function jsfrom(zifu){
     /*'标签名字#显示名字#输入的类型#css样式#提示信息#默认值#verify模块需要验证的类型'*/
+    if(!zifu){
+        return "";
+    }
     if(typeof(zifu) == 'string') {
         if(zifu == ""){
             return "";

@@ -451,6 +451,7 @@ ELi['admin/features'] = {
 
         html += '<div class="layui-tab-item">';
         html += '<div class="' + $class + 'xxxxlist2">';
+        html += jsfrom('图片上传($$)图片上传($$)update($$)($$)($$)');
         if (D.configure) {
             for (var i in D.configure) {
 
