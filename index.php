@@ -1200,9 +1200,10 @@ class ELiPdo extends ELiDatabaseDriver
                 $this->tiaoshi = false;
             }
             $qq = $this->mysql->prepare($sql);
-            $qq->execute();
+            $fan = $qq->execute();
             $id = $this->mysql->lastInsertId();
-            if ($id) return $id;
+            if ($id && $fan) return $id;
+            else if($fan) return true;
             else return false;
         } else if ($moth == 'shanchu') {
             $sql = "DELETE FROM  `{$this->table}` {$this->where}  {$this->lismt}";
