@@ -2074,6 +2074,8 @@ function ELiLink($plush,$PAGE = 1)
     }
     if ($ELiConfig['iscms'] == '1' && $plush['0'] == $ELiConfig['object']) {
         unset($plush['0']);
+    }else if ($ELiConfig['iscms'] == '1'){
+        array_unshift($plush,$ELiConfig['Plus']);
     }
     if($PAGE >  1){
         $plush[]="";
