@@ -140,10 +140,15 @@ function pichttp(pic){
     if( typeof(pic) == "undefined" ||  pic == '' ){
         return WZHOST+'Tpl/noimg.png';
     }
+    
     if(pic.indexOf("://") > -1){
         return pic;
+    }else if(pic.indexOf("/") <= -1 && pic.indexOf(".") <= -1){
+        return WZHOST+'Tpl/noimg.png';
     }else{
         var zifu = pic.substr(0,1);
+
+
         if(zifu == '/'){
             return CDNHOST+pic.substr(1);
         }else{
