@@ -654,7 +654,7 @@ function jsfrom(zifu){
 
     }else if(type == 'updateshow'){
 
-        html +='<div class="layui-input-inline"><input type="hidden" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;'+css+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button></div><div class="layui-clear"></div>';
+        html +='<div class="layui-input-inline" style="'+(tishi=='show'?'width:80%;':'')+'"><input type="'+(tishi=='show'?'text':'hidden')+'" value="'+moren+'" name="'+name+'" id="'+TTTXUANCLASS+'upv_'+name+'" style="float:left;width:80%;margin-right:5px;'+css+'" placeholder="'+tishi+'" autocomplete="off" class="layui-input"> <button type="button" style="padding: 0 6px;" class="layui-btn" id="'+TTTXUANCLASS+'upk_'+name+'"><i class="layui-icon layui-icon-upload-drag"></i></button></div><div class="layui-clear"></div>';
         html +='<div class="layui-upload-list fujiguanxi'+name+'"> <img class="layui-upload-img" style="'+css+'" src="'+pichttp(moren)+'" id="'+TTTXUANCLASS+'upshou_'+name+'"> </div>';
         setTimeout(function(name,css){
             layui.upload.render({
