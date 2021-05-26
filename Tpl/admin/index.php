@@ -134,7 +134,7 @@ window.PAGEHOME = '<?php echo  trim(WZHOST,$ELiConfig['dir']).$GLOBALS['pluginur
 window.TTTXUANCLASS = "";
 $.post = apptongxin;
 window.BASEUP = false; //开启base64上传
-window.kindURL = WZHOST+"/Tpl/layui";
+window.kindURL = WZHOST+"Tpl/layui/";
 function pichttp(pic){
     if( typeof(pic) == "undefined" ||  pic == '' ){
         return WZHOST+'Tpl/noimg.png';
