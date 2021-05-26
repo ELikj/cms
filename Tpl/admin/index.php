@@ -85,8 +85,6 @@ var BIAO = Array(
 </html>
 <script src="<?php echo WZHOST.'Tpl/';?>jquery.js"></script>
 <script src="<?php echo WZHOST.'Tpl/';?>layui/layui.all.js"></script>
-<!--<script src="<?php echo WZHOST.'Tpl/';?>layui/echarts.min.js"></script>-->
-<script src="<?php echo WZHOST.'Tpl/';?>layui/kindeditor-all-min.js"></script>
 <script>
 window.VER = '<?php echo ELikjVER;?>';
 window.UIMUI =[];
@@ -136,6 +134,7 @@ window.PAGEHOME = '<?php echo  trim(WZHOST,$ELiConfig['dir']).$GLOBALS['pluginur
 window.TTTXUANCLASS = "";
 $.post = apptongxin;
 window.BASEUP = false; //开启base64上传
+window.kindURL = WZHOST+"/Tpl/layui";
 function pichttp(pic){
     if( typeof(pic) == "undefined" ||  pic == '' ){
         return WZHOST+'Tpl/noimg.png';
@@ -824,6 +823,12 @@ function jsfrom(zifu){
 }
 
 $(function(){
+    setTimeout(() => {
+        jQuery.getScript('<?php echo WZHOST.'Tpl/';?>layui/echarts.min.js');
+    }, 500);
+    setTimeout(() => {
+        jQuery.getScript('<?php echo WZHOST.'Tpl/';?>layui/kindeditor-all-min.js');
+    }, 300);
     loadjs('mian');
 });
 window.onbeforeunload = function(event) {
