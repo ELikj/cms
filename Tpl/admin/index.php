@@ -85,7 +85,7 @@ var BIAO = Array(
 </html>
 <script src="<?php echo WZHOST.'Tpl/';?>jquery.js"></script>
 <script src="<?php echo WZHOST.'Tpl/';?>layui/layui.all.js"></script>
-<script src="<?php echo WZHOST.'Tpl/';?>layui/echarts.min.js"></script>
+<!--<script src="<?php echo WZHOST.'Tpl/';?>layui/echarts.min.js"></script>-->
 <script src="<?php echo WZHOST.'Tpl/';?>layui/kindeditor-all-min.js"></script>
 <script>
 window.VER = '<?php echo ELikjVER;?>';
@@ -140,15 +140,12 @@ function pichttp(pic){
     if( typeof(pic) == "undefined" ||  pic == '' ){
         return WZHOST+'Tpl/noimg.png';
     }
-    
     if(pic.indexOf("://") > -1){
         return pic;
     }else if(pic.indexOf("/") <= -1 && pic.indexOf(".") <= -1){
         return WZHOST+'Tpl/noimg.png';
     }else{
         var zifu = pic.substr(0,1);
-
-
         if(zifu == '/'){
             return CDNHOST+pic.substr(1);
         }else{
