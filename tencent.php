@@ -217,6 +217,7 @@ function main_handler($request, $context)
     global $ELiConfig, $ELiHttp, $ELiDataBase, $ELiMem, $ELiMemsession, $SESSIONID,
         $LANG, $CANSHU, $features, $URI, $Composer, $HTTP, $YHTTP, $Plus, $ClassFunc, $REQUEST, $SESSIONIDMK, $POSTBODY;
     $ELiMem = $ELiMemsession = new ELimemsql;
+    $SESSIONID = "";
     $GLOBALS['head'] = "json";
     $_POST = [];
     $_GET = [];
@@ -224,7 +225,7 @@ function main_handler($request, $context)
     $_COOKIE = [];
     $queries    = (array)($request->queryString ?? []);
     $headers    = (array)($request->headers ?? []);
-    $POSTBODY = $body = $request->body ?? "";
+    $POSTBODY = $body = base64_decode($request->body ?? "");
     $path       = ltrimE($request->path ?? "", $request->requestContext->path ?? "");
     $GLOBALS['ip'] = $request->requestContext->sourceIp ?? "";
     $ELiHttp = ltrimE(rawurldecode(trimE($path)), '/');

@@ -7,7 +7,7 @@
  */
 
 ob_start();
-define("ELikjVER", '10.6.8');
+define("ELikjVER", '10.7.0');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;

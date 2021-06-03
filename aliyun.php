@@ -217,6 +217,7 @@ function handler($request, $context): Response{
     global $ELiConfig,$ELiHttp,$ELiDataBase,$ELiMem, $ELiMemsession,$SESSIONID,
     $LANG,$CANSHU,$features,$URI,$Composer,$HTTP,$YHTTP,$Plus,$ClassFunc,$REQUEST,$SESSIONIDMK,$POSTBODY;
     $ELiMem= $ELiMemsession = new ELimemsql;
+    $SESSIONID = "";
     $_POST = []; 
     $_GET = [];
     $_FILES = [];
