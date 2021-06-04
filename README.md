@@ -27,7 +27,7 @@
 直接安装即可  
 直接导入ELikj.sql 登陆账号:admin 登陆密码:qqqqaa  
 云函数部署建议购买同区域的便宜机器作为数据库! 还可以执行定时任务脚本!  
-[阿里云购买](https://www.aliyun.com/activity?userCode=zcvawx5i) [腾讯云购买](https://cloud.tencent.com/act/cps/redirect?redirect=1077&cps_key=96c30efae7fe8e17fb873b8a3571230b&from=console)  
+
 
 ## 阿里云部署
 
