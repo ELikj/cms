@@ -266,11 +266,7 @@ function main_handler($request, $context)
             return ELiError("ELikj: Security filtering");
         }
     }
-    
-    if($_GET){
-        $ELiHttp.='?'.getarray($_GET);
-    }
-
+ 
     if (php_sapi_name() != "cli") {
         $Filter = array('<', '>', '..', '(', ')', '"', "'", "*", '[', ']', DBprefix, '{', '}', '$');
         foreach ($Filter  as $Filter_) {
