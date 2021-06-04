@@ -83,6 +83,8 @@ class ELikj_admin{
 
             $NNN = str_replace($yyy,$ttt,$NNN);
             file_put_contents($peizhii,$NNN);
+            //打包整体项目需要自动安装的插件可以这样写 可以多个
+            //ELicall("cms", "INSTALL", $_POST['ELiDataBase_prefix'], [], false);
             return echoapptoken($_POST,1);
         }
         ?>

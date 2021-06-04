@@ -14,6 +14,8 @@
 特有的url只能以小写函数名访问 , 大写函数名只能通过内部调用!  
 总结:小巧,灵活,强大,方便,支持云的php框架  
 
+## 强烈建议! 实战中类,函数接收2个参数最佳!
+
 ## 视频教程
 
 链接:https://pan.baidu.com/s/1gtARcr71LJmHIB-yzHmw_Q 
@@ -24,6 +26,8 @@
 需要伪静态支持 , php 7+ 系列
 直接安装即可  
 直接导入ELikj.sql 登陆账号:admin 登陆密码:qqqqaa  
+云函数部署建议购买同区域的便宜机器作为数据库! 还可以执行定时任务脚本!  
+[阿里云购买](https://www.aliyun.com/activity?userCode=zcvawx5i) [腾讯云购买](https://cloud.tencent.com/act/cps/redirect?redirect=1077&cps_key=96c30efae7fe8e17fb873b8a3571230b&from=console)  
 
 ## 阿里云部署
 
