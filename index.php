@@ -617,15 +617,21 @@ class ELiDatabaseDriver
         return $this;
     }
     function wherezuhe($data = '')
-    {
+    {   
+        
         $x = '';
         if (is_array($data)) {
             $zhsss = count($data);
-            if ($zhsss < 1) return;
+            if ($zhsss < 1) return "";
+            $ZIDUAN = $this->tablejg['1'];
             foreach ($data as $k => $v) {
                 $k = $this->Safeconversion($k);
                 if (!is_array($v)) {
                     $v = $this->Safeconversion($v);
+                }
+                $guize = str_replace(['>=','>','(',')','<=','<','!=','OLK','LIKE','OR','IN','DAYD','DAY','XIYD','XIY','DEY',' ','='], '', $k);
+                if(!isset($ZIDUAN [$guize ])){
+                    continue ;
                 }
                 if (strstr($k, '>=') !== false) {
                     $k = trimE(str_replace('>=', '', $k));
@@ -832,13 +838,17 @@ class ELiDatabaseDriver
             $hhx = explode(',', $zhiduan);
             $zuhe = [];
             foreach ($hhx as $zifu) {
-                $zuhe[] = '`' . ELiSql($zifu) . '`';
+                if(isset($this->tablejg['1'][$zifu])){
+                    $zuhe[] = '`' . ELiSql($zifu) . '`';
+                }
             }
-            
-            $this->ZHICHA = implode(',', $zuhe);
+            if($zuhe){
+                $this->ZHICHA = implode(',', $zuhe);
+            }
         }
         return $this;
     }
+    
     function paichu($datasl = '')
     {
         if ($datasl != '') {
