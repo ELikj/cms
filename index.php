@@ -7,7 +7,7 @@
  */
 
 ob_start();
-define("ELikjVER", '10.7.0');
+define("ELikjVER", '10.8.0');
 $ELiMem = $ELiMemsession = null;
 $REQUEST = null;
 $Composer = null;
@@ -108,7 +108,6 @@ class ELicache
     {
         return $this->md->set(md5($key), $value, $time);
     }
-
     public function g($key)
     {
         return $this->md->get(md5($key));
@@ -236,7 +235,6 @@ function ELiError($ELiError)
     } else if (isset($_GET['Format'])) {
         $ELiError_ = $_GET['Format'];
     }
-
     return echoapptoken([], -1, $ELiError, "");
 }
 //Get route function
@@ -1437,6 +1435,7 @@ function ELihhSet($k, $v = null)
     }
     return $session_data;
 }
+
 function ELihhDel($k = "")
 {
     global $ELiConfig, $SESSIONID, $ELiMemsession;
@@ -1712,13 +1711,9 @@ class SubPages
 
     
         $subPageCss2Str = "";
-
         if($this->sub_pages > 0 ){  
             $subPageCss2Str .= " <span>" . $this->arrays['dqdi'] . $this->current_page . "/" . $this->pageNums . $this->arrays['ye'] . "</span>";
         }
-
-       
-       
         if ($this->current_page > 1) {
 
             if (PAGEtrimE == 1)
@@ -1741,7 +1736,6 @@ class SubPages
             }
             $subPageCss2Str .= " <span>" . $this->arrays['last'] . "</span>";
         }
-
         $a = $this->construct_num_Page();
         for ($i = 0; $i < count($a); $i++) {
             $s = $a[$i];
@@ -1753,7 +1747,6 @@ class SubPages
                 $subPageCss2Str .= " <a href=\"$url\">" . $s . "</a>";
             }
         }
-
         if ($this->current_page < $this->pageNums) {
             $lastPageUrl = $this->subPage_link . $this->pageNums . $this->houzui;
             $nextPageUrl = $this->subPage_link . ($this->current_page + 1) . $this->houzui;
@@ -1769,11 +1762,9 @@ class SubPages
                 $subPageCss2Str .= " <span>" . $this->arrays['weiye'] . "</span>";
             }
         }
-
         if (PAGEtrimE == 1 && $this->houzui != "" && $this->houzui != ELifenge) {
             $subPageCss2Str = str_replace(ELifenge . $this->houzui, $this->houzui, $subPageCss2Str);
         }
-
         return $sss[] =  $subPageCss2Str;
     }
 }
@@ -1798,7 +1789,6 @@ if (!function_exists('upload')) {
             return  array('code' => '0', 'msg' => $LANG['update']['meiwenjian']);
         }
         if (!empty($_FILES[$LX]['error'])) {
-
             switch ($_FILES[$LX]['error']) {
                 case '1':
                     $error = $LANG['update']['error1'];
@@ -1854,12 +1844,10 @@ if (!function_exists('upload')) {
             if (strpos(strtolower($tmpneirong), '<?php') !== false) {
                 return  array('code' => 0, 'msg' => $LANG['update']['meiwenjian']);
             }
-
             if (strpos(substr($tmpneirong, 0, 50), ';base64,') !== false) {
                 $nnn = explode(';base64,', $tmpneirong);
                 file_put_contents($tmp_name, base64_decode($nnn['1']));
             }
-
             $CDN = '';
             if (move_uploaded_file($tmp_name, $WJIAN . $Nfile) === false) return array('code' => '0', 'msg' => $LANG['update']['chuanshibai']);
             @chmod($WJIAN . $Nfile, 0644);
@@ -2257,9 +2245,9 @@ function platform($anget)
     }
     if (strpos(strtolower($anget), "android") !== false) {
         $xitong = "Android ";
-    } else if (strpos($anget, "iOS") !== false) {
+    }else if (strpos($anget, "iOS") !== false) {
         $xitong = "iOS ";
-    } else {
+    }else {
         if ($system && count($system) > 1) {
             $xitong = $system['1'];
         } else {
@@ -2348,8 +2336,7 @@ function ELichar($canshu = array(), $data = [])
 }
 //json communication
 function apptoken($data = array(),  $code = '0', $msg = '', $apptoken = '', $kuozan = [])
-{    //ob_clean();
-    //header("Content-Type:application/json; charset=utf-8"); 
+{    
     $zhuju = array(
         'code'  => $code,
         'data' => $data,
@@ -2458,7 +2445,6 @@ function pichttp($pic)
         return CDNHOST . ltrimE($pic, '/');
     }
 }
-
 //sha256WithRSA 签名
 function SHA256_sign($content, $privateKey, $iimm = "SHA256")
 {
@@ -2517,7 +2503,6 @@ $ELiConfig = array(
     'superior' => '2',
 );
 //Load the database qqqqaaaa A123Ff3589!~
-
 $ELiDataBase = array(
     "write" => array(
         'numbering' => '主数据库',
@@ -2530,7 +2515,6 @@ $ELiDataBase = array(
         'prefix'   => '###ELiDataBase_prefix###'
     )
 );
-
 //Frame path
 if (!defined('ELikj')) {
     define('ELikj', dirname(__FILE__) . '/ELikj/');
@@ -2555,7 +2539,6 @@ define('DBprefix', $ELiDataBase[$ELiConfig['dbselect']]['prefix']);
 define('WZHOST', $ELiConfig['host'] . $ELiConfig['dir']);
 define('CDNHOST', $ELiConfig['cdnhost']);
 //Language pack
-//$LangFile =  ELikj.'../Tpl/Lang/'. ELiSecurity($ELiConfig['lang']).'.php';
 $LANG = array(
 
     'update' => array(
@@ -2584,9 +2567,6 @@ $LANG = array(
     )
 
 );
-//if(file_exists($LangFile)){
-// $LANG = include  $LangFile;
-//}
 //Composer Load switch
 if ($ELiConfig['Composer'] && $ELiConfig['Composer'] == 1) {
     $Composer = include ELikj . "vendor/autoload.php";
@@ -2616,13 +2596,11 @@ if (!defined("Residentmemory")) {
     header("Access-Control-Allow-Methods: * ");
     ELiUri();
     $ELiHttp = ltrimE(rawurldecode(trimE($_SERVER["REQUEST_URI"])), '/');
-
     //install
     if ( strstr($ELiConfig['host'],"ELiConfig_host" ) !== false ){
         ELicall("admin", "INSTALL", [], [], false);
         return ;
     }
-
     //POST Security filtering
     if ($_POST) {
         if (strstr(strtolower(json_encode($_POST)), DBprefix) !== false) {
@@ -2637,7 +2615,6 @@ if (!defined("Residentmemory")) {
                 return ELiError("ELikj: Security filtering " . $Filter_);
             }
         }
-
     } else {
         ELis('Bat_Cli');
     }
@@ -2657,7 +2634,6 @@ if (!defined("Residentmemory")) {
     if ($SESSIONIDMK && $ELiConfig['sessionSafety']) {
         setcookie('apptoken', $SESSIONID, time() + $ELiConfig['sessiontime'], '/', null, null, TRUE);
     }
-
     if (strstr($ELiHttp, $ELiConfig['houzui'] . '&') !== false) {
         $URI = str_replace($ELiConfig['houzui'] . '&', $ELiConfig['houzui'] . '?', $ELiHttp);
     } else {
