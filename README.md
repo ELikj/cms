@@ -197,8 +197,9 @@ function order($data='')  ;//排序（字符串）
 function where($data='')  ;//传入where条件（数组）
 function pwhere()  ;//设置输出 方便调试sql 错误
 function find($data='')  ;//查询单挑数据（可以为查询条件）
-function setshiwu($wo = 0)  ;//开启事务（1打开0关闭）
+function setshiwu($wo = 0)  ;//开启事务（1打开0关闭） qurey shiwu 执行完后会自动关闭事务下一条需要在设置打开事务 
 function zhicha($datasl)  ;//设置只查字段('字段1,字段2')
+function setku($datasl)  ;//设置临时库 跨库联合操作不需要重新链接 而且不影响db() 原有库  
 function paichu($datasl = '') ;// 排除的字段(排除的字段其他全部显示)
 function total($data='') ;// 统计总数（可为查询条件）
 function select($data='') ;// 查询多条数据(可为查询条件)

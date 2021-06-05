@@ -827,15 +827,18 @@ class ELiDatabaseDriver
     }
     function setshiwu($wo = 0)
     {
-        $this->SHIWU = $wo;
+        $this->SHIWU = (int)$wo;
         return $this;
     }
 
     function zhicha($datasl)
     {
         if ($datasl != '') {
-            $zhiduan = $datasl;
-            $hhx = explode(',', $zhiduan);
+            if(is_array($datasl)){
+                $hhx = $datasl;
+            }else{
+                $hhx = explode(',', $datasl);
+            }
             $zuhe = [];
             foreach ($hhx as $zifu) {
                 if(isset($this->tablejg['1'][$zifu])){
@@ -852,7 +855,11 @@ class ELiDatabaseDriver
     function paichu($datasl = '')
     {
         if ($datasl != '') {
-            $hhx = array_flip(explode(',', $datasl));
+            if(is_array($datasl)){
+                $hhx = array_flip($datasl);
+            }else{
+                $hhx = array_flip(explode(',', $datasl));
+            }
             $zuhe = [];
             foreach ($this->tablejg['1']  as $k => $v) {
                 if (!isset($hhx[$k])) {
@@ -967,6 +974,14 @@ class ELiDatabaseDriver
         }
         return $jsondate;
     }
+    function setku($data = '')
+    {      
+        if($data != ''){
+            $this->sql = 'USE `' . ELisql($data) . '`;';
+            $this->zhixing('other');
+        }
+        return $this;
+    }
     function setbiao($data = '')
     {
         global $ELiConfig, $ELiMem;
@@ -1057,7 +1072,7 @@ class ELiPdo extends ELiDatabaseDriver
         return $pdo;
     }
 
-    public  function zhixing($moth = '', $sql = '')
+    public  function zhixing($moth = '')
     {
 
         global $ELiConfig;
@@ -1310,12 +1325,14 @@ class ELiPdo extends ELiDatabaseDriver
                         $this->mysql->rollback();
                         $this->sql = NULL;
                         $this->mysql->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+                        $this->SHIWU = 0;
                         return false;
                     }
                 }
                 $fanhui =  $this->mysql->commit();
                 $this->sql = NULL;
                 $this->mysql->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+                $this->SHIWU = 0;
                 return  $fanhui;
             } catch (PDOExecption $e) {
                 $wodw = new Textcache;
@@ -1323,6 +1340,7 @@ class ELiPdo extends ELiDatabaseDriver
                 $this->mysql->rollback();
                 $this->sql = NULL;
                 $this->mysql->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+                $this->SHIWU = 0;
                 return false;
             }
         }
