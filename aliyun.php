@@ -414,7 +414,7 @@ function handler($request, $context): Response{
         $Content = "image/png";
     } else {
 
-        if (strstr($GLOBALS['head'], "/") !== false) {
+        if (strstr($GLOBALS['head'], "/") !== false && strstr($GLOBALS['head'], ";") === false) {
             $Content = "text/html; charset=UTF-8;";
             $url = $GLOBALS['head'];
             if ($GLOBALS['head']) {
