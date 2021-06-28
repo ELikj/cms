@@ -334,143 +334,22 @@ function toget($string)
     return $_GET_;
 }
 //Multidimensional array string to array
-//Multidimensional array string to array
 function _POST_( &$_POST_ ,$key = "",$zhi = ""){
     if (strstr($key , '[') !== false ) {
+        unset($_POST_[$key]);
         $key = str_replace(['[',']'],['{@@}',''],$key);
-        $huoqu = explode('{@@}',$key);
-        $zifu = count($huoqu);
-        if($zifu == 2){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
+        $klist = explode('{@@}',$key);
+        $chang = count($klist)-1;
+        for ($i = 0; $i < $chang ; $i++) {
+            if (!isset($_POST_[$klist[$i]])){
+                $_POST_[$klist[$i]] = [];
             }
-            $_POST_[$huoqu['0']][$huoqu['1']] =  $zhi;
-        }else if($zifu == 3){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']]  =  $zhi;
-        }else if($zifu == 4){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =$zhi;
-        }else if($zifu == 5){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =$zhi;
-        }else if($zifu == 6){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =$zhi;
-        }else if($zifu == 7){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
-                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =$zhi;
-        }else if($zifu == 8){
-            if(!isset( $_POST_[$huoqu['0']])){
-                 $_POST_[$huoqu['0']] = [];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
-                 $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
-                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
-            }
-            if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']])){
-                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =[];
-            }
-            $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']] =$zhi;
-        }else if($zifu == 9){
-                if(!isset( $_POST_[$huoqu['0']])){
-                     $_POST_[$huoqu['0']] = [];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']])){
-                     $_POST_[$huoqu['0']][$huoqu['1']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']])){
-                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']])){
-                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']])){
-                     $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']])){
-                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']])){
-                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']] =[];
-                }
-                if(!isset( $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']])){
-                    $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']] =[];
-                }
-                $_POST_[$huoqu['0']][$huoqu['1']][$huoqu['2']][$huoqu['3']][$huoqu['4']][$huoqu['5']][$huoqu['6']][$huoqu['7']][$huoqu['8']] =$zhi;
-        }else{
-            $_POST_[$key] = $zhi;
+            $_POST_ = & $_POST_[$klist[$i]];
         }
-    }else{
-        $_POST_[$key] = $zhi;
+        $_POST_[$klist[$chang]] = $zhi;
     }
 }
+
 //Safe replacement
 function ELiSecurity($name)
 {

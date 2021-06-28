@@ -92,7 +92,6 @@ function upload()
             $nnn = explode(';base64,', $tmpneirong);
             $tmpneirong = base64_decode($nnn['1']);
         }
-
         $request_url = "腾讯上传网址";
         $APID = "SecretId";
         $APKY = "SecretKey";
@@ -148,21 +147,23 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
     
     preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
     if (!isset($matches[1])) {
-        $hujux = toget( ($input));
+        $hujux = toget( $input);
         foreach ($hujux as $k => $v) {
             if ($k == "") {
                 continue;
             }
             $_POST[$k] = $v;
         }
-        return;
+        foreach($_POST as $kk =>$vv){
+            _POST_($_POST,$kk,$vv);
+        }
+        return ;
     }
     $boundary = $matches[1];
     $a_blocks = preg_split("/-+$boundary/", $input);
     array_pop($a_blocks);
     foreach ($a_blocks as $id => $block) {
-        if (empty($block))
-            continue;
+        if (empty($block))  continue;
         if (strpos($block, 'filename=') !== FALSE) {
             $bodyzi = explode("\r\n", $block);
             $name_ = explode('=', $bodyzi['1']);
@@ -191,8 +192,13 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
         } else {
             $block = ($block);
             preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
-            _POST_($_POST,$matches[1]??"",$matches[2]??"");
+            $elik = $matches[1]??"";
+            $eliv = $matches[2]??"";
+            $_POST[$elik]=$eliv;
         }
+    }
+    foreach($_POST as $kk =>$vv){
+        _POST_($_POST,$kk,$vv);
     }
 }
 

@@ -132,61 +132,65 @@ function upload(){
 
 function parse_raw_http_request($input, $CONTENT_TYPE )
 {
-  preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
-  if(!isset($matches[1])){
-    $hujux= toget(rawurldecode(($input)));
-    foreach($hujux as $k =>$v){
-        if($k == ""){
-            continue ;
+    preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
+    if(!isset($matches[1])){
+        $hujux= toget(rawurldecode(($input)));
+        foreach($hujux as $k =>$v){
+            if($k == ""){
+                continue ;
+            }
+            $_POST[$k] = $v;
         }
-       $_POST[$k] = $v;
-   }
-    return ;
-  }
-  $boundary = $matches[1];
-  
-  $a_blocks = preg_split("/-+$boundary/", $input);
-  array_pop($a_blocks);
-  // loop data blocks
-  foreach ($a_blocks as $id => $block)
-  {
-    if (empty($block))
-      continue;
-    if (strpos($block, 'filename=') !== FALSE)
-    {
-        $bodyzi = explode("\r\n",$block);
-        $name_ = explode('=',$bodyzi['1']); 
-        $filex_ = explode('"',$name_['1']);
-        $file = trimE($filex_['1']);
-        $name = trimE(trimE($name_['2']),'"');
-        $type_ =  explode('Content-Type:',$bodyzi['2']);
-        if(!isset($type_['1'])){
-            continue ;
+        foreach($_POST as $kk =>$vv){
+            _POST_($_POST,$kk,$vv);
         }
-        
-        $type = trimE($type_['1']);
-        unset($bodyzi['0']);
-        unset($bodyzi['1']);
-        unset($bodyzi['2']);
-        unset($bodyzi['3']);
-        $neirong = implode("\r\n",$bodyzi);
-
-        $linshitmep = ELiTempPath.md5( $name.uuid() ).'.temp';
-        file_put_contents($linshitmep,$neirong);
-        $_FILES[$file] =[
-            'name'=>$name,
-            'type'=>$type,
-            'tmp_name'=>$linshitmep,
-            'error'=>0,
-            'size'=> strlen($neirong)
-        ];
-
-    }else
-    {
-      preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
-      _POST_($_POST,$matches[1]??"",$matches[2]??"");
+        return ;
     }
-  }        
+    $boundary = $matches[1];
+    $a_blocks = preg_split("/-+$boundary/", $input);
+    array_pop($a_blocks);
+    foreach ($a_blocks as $id => $block)
+    {
+        if (empty($block)) continue;
+        if (strpos($block, 'filename=') !== FALSE)
+        {
+            $bodyzi = explode("\r\n",$block);
+            $name_ = explode('=',$bodyzi['1']); 
+            $filex_ = explode('"',$name_['1']);
+            $file = trimE($filex_['1']);
+            $name = trimE(trimE($name_['2']),'"');
+            $type_ =  explode('Content-Type:',$bodyzi['2']);
+            if(!isset($type_['1'])){
+                continue ;
+            }
+            
+            $type = trimE($type_['1']);
+            unset($bodyzi['0']);
+            unset($bodyzi['1']);
+            unset($bodyzi['2']);
+            unset($bodyzi['3']);
+            $neirong = implode("\r\n",$bodyzi);
+
+            $linshitmep = ELiTempPath.md5( $name.uuid() ).'.temp';
+            file_put_contents($linshitmep,$neirong);
+            $_FILES[$file] =[
+                'name'=>$name,
+                'type'=>$type,
+                'tmp_name'=>$linshitmep,
+                'error'=>0,
+                'size'=> strlen($neirong)
+            ];
+
+        }else {
+            preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
+            $elik = $matches[1]??"";
+            $eliv = $matches[2]??"";
+            $_POST[$elik]=$eliv;
+        }
+    }  
+    foreach($_POST as $kk =>$vv){
+        _POST_($_POST,$kk,$vv);
+    }      
 }
 
 
