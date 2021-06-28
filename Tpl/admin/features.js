@@ -501,7 +501,6 @@ ELi['admin/features'] = {
                     ELi['admin/features'].menuconfig = {};
                 }
 
-                console.log(ELi['admin/features'].menuconfig);
 
                 ELi['admin/features'].trueshouw();
 

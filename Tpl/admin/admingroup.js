@@ -35,9 +35,12 @@ ELi['admin/admingroup'] = {
                 
                 };
 
-            if(temp.length == 4){
+            if(temp.length && temp.length >= 4){
                 hhhf.checked =true;
-            }  
+
+            }else if(Object.keys(temp).length >= 4 ){
+                hhhf.checked =true;
+            } 
           
             if(zcaidan[x].men){
                 hhhf.children =ELi['admin/admingroup'].xuanhtml(zcaidan[x].men, mmgege );

@@ -148,7 +148,7 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
     
     preg_match('/boundary=(.*)$/', $CONTENT_TYPE, $matches);
     if (!isset($matches[1])) {
-        $hujux = toget( urldecode($input));
+        $hujux = toget( ($input));
         foreach ($hujux as $k => $v) {
             if ($k == "") {
                 continue;
@@ -189,7 +189,7 @@ function parse_raw_http_request($input, $CONTENT_TYPE)
                 'size' => strlen($neirong)
             ];
         } else {
-            $block = urldecode($block);
+            $block = ($block);
             preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $block, $matches);
             _POST_($_POST,$matches[1]??"",$matches[2]??"");
         }

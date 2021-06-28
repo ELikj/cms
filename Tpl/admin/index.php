@@ -80,7 +80,6 @@ var BIAO = Array(
 </style>
 </head>
 <body layadmin-themealias="ocean" class="layui-layout-body">
-</div>
 </body>
 </html>
 <script src="<?php echo WZHOST.'Tpl/';?>jquery.js"></script>
