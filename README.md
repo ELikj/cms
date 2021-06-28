@@ -18,8 +18,8 @@
 
 ## 视频教程
 
-链接:https://pan.baidu.com/s/1gtARcr71LJmHIB-yzHmw_Q 
-提取码:2n19 
+链接:https://pan.baidu.com/s/1mN43bS0ziKnJGVtA3rm_Wg  
+提取码:5avj  
 
 ## 系统注意
 
