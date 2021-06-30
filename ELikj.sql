@@ -93,7 +93,7 @@ CREATE TABLE `ELi_config` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '配置描述',
   `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '配置详情',
   PRIMARY KEY (`id`),
-  KEY `type` (`type`)
+  UNIQUE KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统配置';
 
 -- ----------------------------
@@ -195,7 +195,7 @@ CREATE TABLE `ELi_memcached` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '名字',
   `keval` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '值',
-  `atime` int DEFAULT '0' COMMENT '缓存时间',
+  `atime` int unsigned DEFAULT '0' COMMENT '缓存时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='数据库缓存系统';

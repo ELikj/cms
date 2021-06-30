@@ -105,7 +105,6 @@ ELi['admin/user'] = {
             var title ="新建用户";
         }
 
-        window.UIMUI = Array();
         var D = OBJ.data;
         var BIAO = [];
         var html ='<form name="form" id="form" class="layui-form '+$class+'">';
@@ -209,8 +208,7 @@ ELi['admin/user'] = {
     },add(){
         ELi['admin/user'].edit({
             data:
-                {"id":"0","nickname":"","avatar":"","super":"","recharge":"","money":"","integral":"","currency":"","accountoff":"1","fullname":"","identity":"","sex":"","grade":"","level":"","age":"","regtime":"","regip":"","logintime":"","loginip":"","security":"","verifyip":"0","superior0":"","superior1":"","superior2":"","superior3":"","superior4":"","superior5":"","superior6":"","superior7":"","superior8":"","superior9":"","superior10":""}
-            
+            {"id":0,"nickname":"","avatar":"","super":"","recharge":"0.00000","money":"0.00000","integral":"0","currency":"0.00000","accountoff":"0","fullname":"","identity":"","sex":"-1","grade":"0","level":"0","age":"0","regtime":"0","regip":"","logintime":"0","loginip":"","security":"","verifyip":"0","superior0":"0","superior1":"0"}
         },'add');
     },del(OBJ){
         var fromdata = {

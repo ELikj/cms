@@ -60,7 +60,7 @@ ELi['admin/admingroup'] = {
             diercai = "put";
         }
     
-        window.UIMUI = Array();
+      
 
         var D = OBJ.data;
         if(D.competence && D.competence != ""){

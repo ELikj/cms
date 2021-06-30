@@ -1,5 +1,5 @@
 ELi['admin/memcached'] = {
-    url: PLUG + FENGE + "memcached" + FENGE,
+    url: PLUG + "memcached" + FENGE,
     init: function () {
         ELi['admin/memcached'].get();
     },
@@ -10,7 +10,7 @@ ELi['admin/memcached'] = {
         } else {
             var title = "新建用户";
         }
-        window.UIMUI = Array();
+      
         var D = OBJ.data;
         var BIAO = [];
         var html = '<form name="form" id="form" class="layui-form ' + $class + '">';

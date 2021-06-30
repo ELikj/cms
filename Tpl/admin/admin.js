@@ -7,7 +7,7 @@ ELi['admin/admin'] = {
 
   },edit(OBJ){
 
-    window.UIMUI = Array();
+  
     var D = OBJ.data;
     var html ='<form name="form" id="form" class="layui-form">';
     var BIAO = Array(
@@ -81,7 +81,7 @@ ELi['admin/admin'] = {
     });
 
   },add(){
-    window.UIMUI = Array();
+    
 
     var html ='<form name="form" id="form" class="layui-form">';
     var BIAO = Array(

@@ -392,7 +392,7 @@ ELi['admin/features'] = {
         if (diercai != "add") {
             diercai = "put";
         }
-        window.UIMUI = Array();
+    
         var D = OBJ.data;
         var BIAO = [];
         var html = '<form name="form" id="form" class="layui-form ' + $class + '">';

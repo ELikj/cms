@@ -107,7 +107,7 @@ ELi['admin/adminlog'] = {
       
     },edit(OBJ){
       var html ='<form name="form" id="form" class="layui-form">';
-      window.UIMUI = Array();
+  
       var D = OBJ.data;
       var BIAO = Array(
       

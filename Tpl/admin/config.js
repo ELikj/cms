@@ -58,7 +58,7 @@ ELi['admin/config'] = {
         }else{
             var title ="新建配置";
         }
-        window.UIMUI = Array();
+       
         var D = OBJ.data;
 
         var html ='<form name="form" id="form" class="layui-form">';
@@ -82,7 +82,7 @@ ELi['admin/config'] = {
             type: 1,
             zIndex:10000,
             title:title,
-            area:['360px', '420px'],
+            area:['720px', '420px'],
             fixed: true, 
             maxmin: true,
             content: html,
