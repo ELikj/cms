@@ -157,7 +157,7 @@ function aitpl(str){
     if (!match) {
 		return ('解析html失败');
 	}
-    return match[1];
+    return layui.laytpl(match[1]).render([]);
 }
 function WEIYI(){
     return  new Date().getTime();
